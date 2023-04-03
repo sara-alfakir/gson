@@ -81,36 +81,7 @@ public class PerformanceTest {
     assertThat(target.stackTrace).contains("Yippie");
   }
 
-  private static class ExceptionHolder {
-    public final String message;
-    public final String stackTrace;
-    
-    // For use by Gson
-    @SuppressWarnings("unused")
-    private ExceptionHolder() {
-      this("", "");
-    }
-    public ExceptionHolder(String message, String stackTrace) {
-      this.message = message;
-      this.stackTrace = stackTrace;
-    }
-  }
-
-  @SuppressWarnings("unused")
-  private static class CollectionEntry {
-    final String name;
-    final String value;
-
-    // For use by Gson
-    private CollectionEntry() {
-      this(null, null);
-    }
-
-    CollectionEntry(String name, String value) {
-      this.name = name;
-      this.value = value;
-    }
-  }
+  
   
   /**
    * Created in response to http://code.google.com/p/google-gson/issues/detail?id=96
@@ -367,4 +338,36 @@ public class PerformanceTest {
       this.field = field; 
     } 
   }
+
+  private static class ExceptionHolder {
+    public final String message;
+    public final String stackTrace;
+    
+    // For use by Gson
+    @SuppressWarnings("unused")
+    private ExceptionHolder() {
+      this("", "");
+    }
+    public ExceptionHolder(String message, String stackTrace) {
+      this.message = message;
+      this.stackTrace = stackTrace;
+    }
+  }
+
+  @SuppressWarnings("unused")
+  private static class CollectionEntry {
+    final String name;
+    final String value;
+
+    // For use by Gson
+    private CollectionEntry() {
+      this(null, null);
+    }
+
+    CollectionEntry(String name, String value) {
+      this.name = name;
+      this.value = value;
+    }
+  }
+  
 }

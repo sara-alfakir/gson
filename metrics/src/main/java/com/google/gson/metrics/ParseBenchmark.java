@@ -125,6 +125,13 @@ public final class ParseBenchmark {
     }
   }
 
+  /**
+  Returns a File object corresponding to the resource at the given path, which must be relative to the
+  classpath. Throws an IllegalArgumentException if the resource is not found or if it is not a file.
+  @param path the path to the resource
+  @return a File object representing the resource
+  @throws IllegalArgumentException if the resource is not found or if it is not a file
+  */
   private static File getResourceFile(String path) throws Exception {
     URL url = ParseBenchmark.class.getResource(path);
     if (url == null) {

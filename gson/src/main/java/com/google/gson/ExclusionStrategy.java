@@ -66,7 +66,7 @@ package com.google.gson;
  * ExclusionStrategy excludeStrings = new UserDefinedExclusionStrategy(String.class);
  * Gson gson = new GsonBuilder()
  *     .setExclusionStrategies(excludeStrings)
- *     .create();
+ *     .build();
  * </pre>
  *
  * <p>For certain model classes, you may only want to serialize a field, but exclude it for
@@ -78,7 +78,7 @@ package com.google.gson;
  * ExclusionStrategy excludeStrings = new UserDefinedExclusionStrategy(String.class);
  * Gson gson = new GsonBuilder()
  *     .addDeserializationExclusionStrategy(excludeStrings)
- *     .create();
+ *     .build();
  * </pre>
  *
  * @author Inderjeet Singh

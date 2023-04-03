@@ -54,7 +54,7 @@ import java.util.Objects;
  * <p>Use this builder to construct a {@link Gson} instance when you need to set configuration
  * options other than the default. For {@link Gson} with default configuration, it is simpler to
  * use {@code new Gson()}. {@code GsonBuilder} is best used by creating it, and then invoking its
- * various configuration methods, and finally calling create.</p>
+ * various configuration methods, and finally calling build.</p>
  *
  * <p>The following is an example shows how to use the {@code GsonBuilder} to construct a Gson
  * instance:
@@ -68,7 +68,7 @@ import java.util.Objects;
  *     .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
  *     .setPrettyPrinting()
  *     .setVersion(1.0)
- *     .create();
+ *     .build();
  * </pre>
  *
  * <p>NOTES:
@@ -110,7 +110,7 @@ public final class GsonBuilder {
    * Creates a GsonBuilder instance that can be used to build Gson with various configuration
    * settings. GsonBuilder follows the builder pattern, and it is typically used by first
    * invoking various configuration methods to set desired options, and finally calling
-   * {@link #create()}.
+   * {@link #build()}.
    */
   public GsonBuilder() {
   }
@@ -246,7 +246,7 @@ public final class GsonBuilder {
    *   Gson gson = new GsonBuilder()
    *       .register(Point.class, new MyPointTypeAdapter())
    *       .enableComplexMapKeySerialization()
-   *       .create();
+   *       .build();
    *
    *   Map<Point, String> original = new LinkedHashMap<>();
    *   original.put(new Point(5, 6), "a");
@@ -274,7 +274,7 @@ public final class GsonBuilder {
    * <pre> {@code
    *   Gson gson = new GsonBuilder()
    *       .enableComplexMapKeySerialization()
-   *       .create();
+   *       .build();
    *
    *   Map<Point, String> original = new LinkedHashMap<>();
    *   original.put(new Point(5, 6), "a");
@@ -645,7 +645,7 @@ public final class GsonBuilder {
    * is designed to handle a large number of factories, so you should consider registering
    * them to be at par with registering an individual type adapter.
    *
-   * <p>The created Gson instance might only use the factory once to create an adapter for
+   * <p>The created Gson instance might only use the factory once to build an adapter for
    * a specific type and cache the result. It is not guaranteed that the factory will be used
    * again every time the type is serialized or deserialized.
    *
@@ -715,7 +715,7 @@ public final class GsonBuilder {
   /**
    * Disables usage of JDK's {@code sun.misc.Unsafe}.
    *
-   * <p>By default Gson uses {@code Unsafe} to create instances of classes which don't have
+   * <p>By default Gson uses {@code Unsafe} to build instances of classes which don't have
    * a no-args constructor. However, {@code Unsafe} might not be available for all Java
    * runtimes. For example Android does not provide {@code Unsafe}, or only with limited
    * functionality. Additionally {@code Unsafe} creates instances without executing any
@@ -765,7 +765,7 @@ public final class GsonBuilder {
    *
    * @return an instance of Gson configured with the options currently set in this builder
    */
-  public Gson create() {
+  public Gson build() {
     List<TypeAdapterFactory> factories = new ArrayList<>(this.factories.size() + this.hierarchyFactories.size() + 3);
     factories.addAll(this.factories);
     Collections.reverse(factories);

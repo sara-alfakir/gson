@@ -222,6 +222,7 @@ public class JsonReader implements Closeable {
   private static final int NUMBER_CHAR_EXP_E = 5;
   private static final int NUMBER_CHAR_EXP_SIGN = 6;
   private static final int NUMBER_CHAR_EXP_DIGIT = 7;
+  private static final int STACK_SIZE = 32;
 
   /** The input JSON. */
   private final Reader in;
@@ -267,7 +268,7 @@ public class JsonReader implements Closeable {
   /*
    * The nesting stack. Using a manual array rather than an ArrayList saves 20%.
    */
-  private int[] stack = new int[32];
+  private int[] stack = new int[STACK_SIZE];
   private int stackSize = 0;
   {
     stack[stackSize++] = JsonScope.EMPTY_DOCUMENT;

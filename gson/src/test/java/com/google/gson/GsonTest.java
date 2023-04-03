@@ -91,7 +91,7 @@ public final class GsonTest {
         .registerTypeAdapter(Object.class, new TestTypeAdapter())
         .create();
 
-    assertThat(clone.factories).hasSize(original.factories.size() + 1);
+    assertThat(clone.typeAdapterFactoryList).hasSize(original.typeAdapterFactoryList.size() + 1);
   }
 
   private static final class TestTypeAdapter extends TypeAdapter<Object> {

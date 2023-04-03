@@ -88,8 +88,8 @@ public final class GsonBuilder {
   private LongSerializationPolicy longSerializationPolicy = LongSerializationPolicy.DEFAULT;
   private FieldNamingStrategy fieldNamingPolicy = FieldNamingPolicy.IDENTITY;
   private final Map<Type, InstanceCreator<?>> instanceCreators = new HashMap<>();
-  private final List<TypeAdapterFactory> factories = new ArrayList<>();
-  /** tree-style hierarchy factories. These come after factories for backwards compatibility. */
+  private final List<TypeAdapterFactory> typeAdapterFactoryList = new ArrayList<>();
+  /** tree-style hierarchy typeAdapterFactoryList. These come after typeAdapterFactoryList for backwards compatibility. */
   private final List<TypeAdapterFactory> hierarchyFactories = new ArrayList<>();
   private boolean serializeNulls = DEFAULT_SERIALIZE_NULLS;
   private String datePattern = DEFAULT_DATE_PATTERN;
@@ -136,7 +136,7 @@ public final class GsonBuilder {
     this.datePattern = gson.datePattern;
     this.dateStyle = gson.dateStyle;
     this.timeStyle = gson.timeStyle;
-    this.factories.addAll(gson.builderFactories);
+    this.typeAdapterFactoryList.addAll(gson.builderFactories);
     this.hierarchyFactories.addAll(gson.builderHierarchyFactories);
     this.useJdkUnsafe = gson.useJdkUnsafe;
     this.objectToNumberStrategy = gson.objectToNumberStrategy;
@@ -629,12 +629,12 @@ public final class GsonBuilder {
     }
     if (typeAdapter instanceof JsonSerializer<?> || typeAdapter instanceof JsonDeserializer<?>) {
       TypeToken<?> typeToken = TypeToken.get(type);
-      factories.add(TreeTypeAdapter.newFactoryWithMatchRawType(typeToken, typeAdapter));
+      typeAdapterFactoryList.add(TreeTypeAdapter.newFactoryWithMatchRawType(typeToken, typeAdapter));
     }
     if (typeAdapter instanceof TypeAdapter<?>) {
       @SuppressWarnings({"unchecked", "rawtypes"})
       TypeAdapterFactory factory = TypeAdapters.newFactory(TypeToken.get(type), (TypeAdapter)typeAdapter);
-      factories.add(factory);
+      typeAdapterFactoryList.add(factory);
     }
     return this;
   }
@@ -642,7 +642,7 @@ public final class GsonBuilder {
   /**
    * Register a factory for type adapters. Registering a factory is useful when the type
    * adapter needs to be configured based on the type of the field being processed. Gson
-   * is designed to handle a large number of factories, so you should consider registering
+   * is designed to handle a large number of typeAdapterFactoryList, so you should consider registering
    * them to be at par with registering an individual type adapter.
    *
    * <p>The created Gson instance might only use the factory once to build an adapter for
@@ -653,7 +653,7 @@ public final class GsonBuilder {
    */
   public GsonBuilder registerTypeAdapterFactory(TypeAdapterFactory factory) {
     Objects.requireNonNull(factory);
-    factories.add(factory);
+    typeAdapterFactoryList.add(factory);
     return this;
   }
 
@@ -682,7 +682,7 @@ public final class GsonBuilder {
     if (typeAdapter instanceof TypeAdapter<?>) {
       @SuppressWarnings({"unchecked", "rawtypes"})
       TypeAdapterFactory factory = TypeAdapters.newTypeHierarchyFactory(baseType, (TypeAdapter)typeAdapter);
-      factories.add(factory);
+      typeAdapterFactoryList.add(factory);
     }
     return this;
   }
@@ -766,27 +766,27 @@ public final class GsonBuilder {
    * @return an instance of Gson configured with the options currently set in this builder
    */
   public Gson build() {
-    List<TypeAdapterFactory> factories = new ArrayList<>(this.factories.size() + this.hierarchyFactories.size() + 3);
-    factories.addAll(this.factories);
-    Collections.reverse(factories);
+    List<TypeAdapterFactory> typeAdapterFactoryList = new ArrayList<>(this.typeAdapterFactoryList.size() + this.hierarchyFactories.size() + 3);
+    typeAdapterFactoryList.addAll(this.typeAdapterFactoryList);
+    Collections.reverse(typeAdapterFactoryList);
 
     List<TypeAdapterFactory> hierarchyFactories = new ArrayList<>(this.hierarchyFactories);
     Collections.reverse(hierarchyFactories);
-    factories.addAll(hierarchyFactories);
+    typeAdapterFactoryList.addAll(hierarchyFactories);
 
-    addTypeAdaptersForDate(datePattern, dateStyle, timeStyle, factories);
+    addTypeAdaptersForDate(datePattern, dateStyle, timeStyle, typeAdapterFactoryList);
 
     return new Gson(excluder, fieldNamingPolicy, new HashMap<>(instanceCreators),
         serializeNulls, complexMapKeySerialization,
         generateNonExecutableJson, escapeHtmlChars, formattingStyle, lenient,
         serializeSpecialFloatingPointValues, useJdkUnsafe, longSerializationPolicy,
-        datePattern, dateStyle, timeStyle, new ArrayList<>(this.factories),
-        new ArrayList<>(this.hierarchyFactories), factories,
+        datePattern, dateStyle, timeStyle, new ArrayList<>(this.typeAdapterFactoryList),
+        new ArrayList<>(this.hierarchyFactories), typeAdapterFactoryList,
         objectToNumberStrategy, numberToNumberStrategy, new ArrayList<>(reflectionFilters));
   }
 
   private void addTypeAdaptersForDate(String datePattern, int dateStyle, int timeStyle,
-      List<TypeAdapterFactory> factories) {
+      List<TypeAdapterFactory> typeAdapterFactoryList) {
     TypeAdapterFactory dateAdapterFactory;
     boolean sqlTypesSupported = SqlTypesSupport.SUPPORTS_SQL_TYPES;
     TypeAdapterFactory sqlTimestampAdapterFactory = null;
@@ -810,10 +810,10 @@ public final class GsonBuilder {
       return;
     }
 
-    factories.add(dateAdapterFactory);
+    typeAdapterFactoryList.add(dateAdapterFactory);
     if (sqlTypesSupported) {
-      factories.add(sqlTimestampAdapterFactory);
-      factories.add(sqlDateAdapterFactory);
+      typeAdapterFactoryList.add(sqlTimestampAdapterFactory);
+      typeAdapterFactoryList.add(sqlDateAdapterFactory);
     }
   }
 }

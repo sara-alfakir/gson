@@ -19,7 +19,7 @@ package com.google.gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * Creates type adapters for set of related types. Type adapter factories are
+ * Creates type adapters for set of related types. Type adapter typeAdapterFactoryList are
  * most useful when several types share similar structure in their JSON form.
  *
  * <h2>Examples</h2>
@@ -67,9 +67,9 @@ import com.google.gson.reflect.TypeToken;
  *   }
  * }</pre>
  *
- * <p>Type adapter factories select which types they provide type adapters
+ * <p>Type adapter typeAdapterFactoryList select which types they provide type adapters
  * for. If a factory cannot support a given type, it must return null when
- * that type is passed to {@link #create}. Factories should expect {@code
+ * that type is passed to {@link #create}. typeAdapterFactoryList should expect {@code
  * create()} to be called on them for many types and should return null for
  * most of those types. In the above example the factory returns null for
  * calls to {@code create()} where {@code type} is not an enum.
@@ -80,7 +80,7 @@ import com.google.gson.reflect.TypeToken;
  * read()} and {@code write()} methods can be very fast. In this example the
  * mapping from lowercase name to enum value is computed eagerly.
  *
- * <p>As with type adapters, factories must be <i>registered</i> with a {@link
+ * <p>As with type adapters, typeAdapterFactoryList must be <i>registered</i> with a {@link
  * com.google.gson.GsonBuilder} for them to take effect: <pre>   {@code
  *
  *  GsonBuilder builder = new GsonBuilder();
@@ -88,7 +88,7 @@ import com.google.gson.reflect.TypeToken;
  *  ...
  *  Gson gson = builder.create();
  * }</pre>
- * If multiple factories support the same type, the factory registered earlier
+ * If multiple typeAdapterFactoryList support the same type, the factory registered earlier
  * takes precedence.
  *
  * <h3>Example: Composing other type adapters</h3>

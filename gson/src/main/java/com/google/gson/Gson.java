@@ -174,7 +174,7 @@ public final class Gson {
   private final ConstructorConstructor constructorConstructor;
   private final JsonAdapterAnnotationTypeAdapterFactory jsonAdapterFactory;
 
-  final List<TypeAdapterFactory> factories;
+  final List<TypeAdapterFactory> typeAdapterFactoryList;
 
   final Excluder excluder;
   final FieldNamingStrategy fieldNamingStrategy;
@@ -278,76 +278,76 @@ public final class Gson {
     this.numberToNumberStrategy = numberToNumberStrategy;
     this.reflectionFilters = reflectionFilters;
 
-    List<TypeAdapterFactory> factories = new ArrayList<>();
+    List<TypeAdapterFactory> typeAdapterFactoryList = new ArrayList<>();
 
     // built-in type adapters that cannot be overridden
-    factories.add(TypeAdapters.JSON_ELEMENT_FACTORY);
-    factories.add(ObjectTypeAdapter.getFactory(objectToNumberStrategy));
+    typeAdapterFactoryList.add(TypeAdapters.JSON_ELEMENT_FACTORY);
+    typeAdapterFactoryList.add(ObjectTypeAdapter.getFactory(objectToNumberStrategy));
 
     // the excluder must precede all adapters that handle user-defined types
-    factories.add(excluder);
+    typeAdapterFactoryList.add(excluder);
 
     // users' type adapters
-    factories.addAll(factoriesToBeAdded);
+    typeAdapterFactoryList.addAll(factoriesToBeAdded);
 
     // type adapters for basic platform types
-    factories.add(TypeAdapters.STRING_FACTORY);
-    factories.add(TypeAdapters.INTEGER_FACTORY);
-    factories.add(TypeAdapters.BOOLEAN_FACTORY);
-    factories.add(TypeAdapters.BYTE_FACTORY);
-    factories.add(TypeAdapters.SHORT_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.STRING_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.INTEGER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.BOOLEAN_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.BYTE_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.SHORT_FACTORY);
     TypeAdapter<Number> longAdapter = longAdapter(longSerializationPolicy);
-    factories.add(TypeAdapters.newFactory(long.class, Long.class, longAdapter));
-    factories.add(TypeAdapters.newFactory(double.class, Double.class,
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(long.class, Long.class, longAdapter));
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(double.class, Double.class,
             doubleAdapter(serializeSpecialFloatingPointValues)));
-    factories.add(TypeAdapters.newFactory(float.class, Float.class,
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(float.class, Float.class,
             floatAdapter(serializeSpecialFloatingPointValues)));
-    factories.add(NumberTypeAdapter.getFactory(numberToNumberStrategy));
-    factories.add(TypeAdapters.ATOMIC_INTEGER_FACTORY);
-    factories.add(TypeAdapters.ATOMIC_BOOLEAN_FACTORY);
-    factories.add(TypeAdapters.newFactory(AtomicLong.class, atomicLongAdapter(longAdapter)));
-    factories.add(TypeAdapters.newFactory(AtomicLongArray.class, atomicLongArrayAdapter(longAdapter)));
-    factories.add(TypeAdapters.ATOMIC_INTEGER_ARRAY_FACTORY);
-    factories.add(TypeAdapters.CHARACTER_FACTORY);
-    factories.add(TypeAdapters.STRING_BUILDER_FACTORY);
-    factories.add(TypeAdapters.STRING_BUFFER_FACTORY);
-    factories.add(TypeAdapters.newFactory(BigDecimal.class, TypeAdapters.BIG_DECIMAL));
-    factories.add(TypeAdapters.newFactory(BigInteger.class, TypeAdapters.BIG_INTEGER));
+    typeAdapterFactoryList.add(NumberTypeAdapter.getFactory(numberToNumberStrategy));
+    typeAdapterFactoryList.add(TypeAdapters.ATOMIC_INTEGER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.ATOMIC_BOOLEAN_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(AtomicLong.class, atomicLongAdapter(longAdapter)));
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(AtomicLongArray.class, atomicLongArrayAdapter(longAdapter)));
+    typeAdapterFactoryList.add(TypeAdapters.ATOMIC_INTEGER_ARRAY_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CHARACTER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.STRING_BUILDER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.STRING_BUFFER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(BigDecimal.class, TypeAdapters.BIG_DECIMAL));
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(BigInteger.class, TypeAdapters.BIG_INTEGER));
     // Add adapter for LazilyParsedNumber because user can obtain it from Gson and then try to serialize it again
-    factories.add(TypeAdapters.newFactory(LazilyParsedNumber.class, TypeAdapters.LAZILY_PARSED_NUMBER));
-    factories.add(TypeAdapters.URL_FACTORY);
-    factories.add(TypeAdapters.URI_FACTORY);
-    factories.add(TypeAdapters.UUID_FACTORY);
-    factories.add(TypeAdapters.CURRENCY_FACTORY);
-    factories.add(TypeAdapters.LOCALE_FACTORY);
-    factories.add(TypeAdapters.INET_ADDRESS_FACTORY);
-    factories.add(TypeAdapters.BIT_SET_FACTORY);
-    factories.add(DateTypeAdapter.FACTORY);
-    factories.add(TypeAdapters.CALENDAR_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.newFactory(LazilyParsedNumber.class, TypeAdapters.LAZILY_PARSED_NUMBER));
+    typeAdapterFactoryList.add(TypeAdapters.URL_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.URI_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.UUID_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CURRENCY_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.LOCALE_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.INET_ADDRESS_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.BIT_SET_FACTORY);
+    typeAdapterFactoryList.add(DateTypeAdapter.FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CALENDAR_FACTORY);
 
     if (SqlTypesSupport.SUPPORTS_SQL_TYPES) {
-      factories.add(SqlTypesSupport.TIME_FACTORY);
-      factories.add(SqlTypesSupport.DATE_FACTORY);
-      factories.add(SqlTypesSupport.TIMESTAMP_FACTORY);
+      typeAdapterFactoryList.add(SqlTypesSupport.TIME_FACTORY);
+      typeAdapterFactoryList.add(SqlTypesSupport.DATE_FACTORY);
+      typeAdapterFactoryList.add(SqlTypesSupport.TIMESTAMP_FACTORY);
     }
 
-    factories.add(ArrayTypeAdapter.FACTORY);
-    factories.add(TypeAdapters.CLASS_FACTORY);
+    typeAdapterFactoryList.add(ArrayTypeAdapter.FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CLASS_FACTORY);
 
     // type adapters for composite and user-defined types
-    factories.add(new CollectionTypeAdapterFactory(constructorConstructor));
-    factories.add(new MapTypeAdapterFactory(constructorConstructor, complexMapKeySerialization));
+    typeAdapterFactoryList.add(new CollectionTypeAdapterFactory(constructorConstructor));
+    typeAdapterFactoryList.add(new MapTypeAdapterFactory(constructorConstructor, complexMapKeySerialization));
     this.jsonAdapterFactory = new JsonAdapterAnnotationTypeAdapterFactory(constructorConstructor);
-    factories.add(jsonAdapterFactory);
-    factories.add(TypeAdapters.ENUM_FACTORY);
-    factories.add(new ReflectiveTypeAdapterFactory(
+    typeAdapterFactoryList.add(jsonAdapterFactory);
+    typeAdapterFactoryList.add(TypeAdapters.ENUM_FACTORY);
+    typeAdapterFactoryList.add(new ReflectiveTypeAdapterFactory(
         constructorConstructor, fieldNamingStrategy, excluder, jsonAdapterFactory, reflectionFilters));
 
-    this.factories = Collections.unmodifiableList(factories);
+    this.typeAdapterFactoryList = Collections.unmodifiableList(typeAdapterFactoryList);
   }
 
   /**
-   * Returns a new GsonBuilder containing all custom factories and configuration used by the current
+   * Returns a new GsonBuilder containing all custom typeAdapterFactoryList and configuration used by the current
    * instance.
    *
    * @return a GsonBuilder instance.
@@ -555,7 +555,7 @@ public final class Gson {
       FutureTypeAdapter<T> call = new FutureTypeAdapter<>();
       threadCalls.put(type, call);
 
-      for (TypeAdapterFactory factory : factories) {
+      for (TypeAdapterFactory factory : typeAdapterFactoryList) {
         candidate = factory.create(this, type);
         if (candidate != null) {
           call.setDelegate(candidate);
@@ -622,11 +622,11 @@ public final class Gson {
    *  System.out.println("Num JSON reads" + stats.numReads);
    *  System.out.println("Num JSON writes" + stats.numWrites);
    *  }</pre>
-   *  Note that this call will skip all factories registered before {@code skipPast}. In case of
+   *  Note that this call will skip all typeAdapterFactoryList registered before {@code skipPast}. In case of
    *  multiple TypeAdapterFactories registered it is up to the caller of this function to insure
    *  that the order of registration does not prevent this method from reaching a factory they
    *  would expect to reply from this call.
-   *  Note that since you can not override type adapter factories for String and Java primitive
+   *  Note that since you can not override type adapter typeAdapterFactoryList for String and Java primitive
    *  types, our stats factory will not count the number of String or primitives that will be
    *  read or written.
    * @param skipPast The type adapter factory that needs to be skipped while searching for
@@ -639,12 +639,12 @@ public final class Gson {
   public <T> TypeAdapter<T> getDelegateAdapter(TypeAdapterFactory skipPast, TypeToken<T> type) {
     // Hack. If the skipPast factory isn't registered, assume the factory is being requested via
     // our @JsonAdapter annotation.
-    if (!factories.contains(skipPast)) {
+    if (!typeAdapterFactoryList.contains(skipPast)) {
       skipPast = jsonAdapterFactory;
     }
 
     boolean skipPastFound = false;
-    for (TypeAdapterFactory factory : factories) {
+    for (TypeAdapterFactory factory : typeAdapterFactoryList) {
       if (!skipPastFound) {
         if (factory == skipPast) {
           skipPastFound = true;
@@ -1377,7 +1377,7 @@ public final class Gson {
   @Override
   public String toString() {
     return "{serializeNulls:" + serializeNulls
-        + ",factories:" + factories
+        + ",typeAdapterFactoryList:" + typeAdapterFactoryList
         + ",instanceCreators:" + constructorConstructor
         + "}";
   }

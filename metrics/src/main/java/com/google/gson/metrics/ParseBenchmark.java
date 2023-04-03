@@ -114,7 +114,7 @@ public final class ParseBenchmark {
   private Parser parser;
 
   @BeforeExperiment
-  void setUp() throws Exception {
+  void setUp() throws JsonReadException {
     text = resourceToString(document.name() + ".json").toCharArray();
     parser = api.newParser();
   }
@@ -138,8 +138,8 @@ public final class ParseBenchmark {
   }
 
   private static String resourceToString(String fileName) throws Exception {
-    int BUFFER_SIZE = 8192;
-
+    private static final int BUFFER_SIZE = 8192;
+    
     ZipFile zipFile = new ZipFile(getResourceFile("/ParseBenchmarkData.zip"));
     try {
       ZipEntry zipEntry = zipFile.getEntry(fileName);

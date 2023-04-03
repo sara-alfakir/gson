@@ -346,56 +346,7 @@ public final class Gson {
     this.typeAdapterFactoryList = Collections.unmodifiableList(typeAdapterFactoryList);
   }
 
-  /**
-   * Returns a new GsonBuilder containing all custom typeAdapterFactoryList and configuration used by the current
-   * instance.
-   *
-   * @return a GsonBuilder instance.
-   * @since 2.8.3
-   */
-  public GsonBuilder newBuilder() {
-    return new GsonBuilder(this);
-  }
-
-  /**
-   * @deprecated This method by accident exposes an internal Gson class; it might be removed in a
-   * future version.
-   */
-  @Deprecated
-  public Excluder excluder() {
-    return excluder;
-  }
-
-  /**
-   * Returns the field naming strategy used by this Gson instance.
-   *
-   * @see GsonBuilder#setFieldNamingStrategy(FieldNamingStrategy)
-   */
-  public FieldNamingStrategy fieldNamingStrategy() {
-    return fieldNamingStrategy;
-  }
-
-  /**
-   * Returns whether this Gson instance is serializing JSON object properties with
-   * {@code null} values, or just omits them.
-   *
-   * @see GsonBuilder#serializeNulls()
-   */
-  public boolean serializeNulls() {
-    return serializeNulls;
-  }
-
-  /**
-   * Returns whether this Gson instance produces JSON output which is
-   * HTML-safe, that means all HTML characters are escaped.
-   *
-   * @see GsonBuilder#disableHtmlEscaping()
-   */
-  public boolean htmlSafe() {
-    return htmlSafe;
-  }
-
-  private TypeAdapter<Number> doubleAdapter(boolean serializeSpecialFloatingPointValues) {
+   private TypeAdapter<Number> doubleAdapter(boolean serializeSpecialFloatingPointValues) {
     if (serializeSpecialFloatingPointValues) {
       return TypeAdapters.DOUBLE;
     }
@@ -514,6 +465,58 @@ public final class Gson {
       }
     }.nullSafe();
   }
+  
+
+  /**
+   * Returns a new GsonBuilder containing all custom typeAdapterFactoryList and configuration used by the current
+   * instance.
+   *
+   * @return a GsonBuilder instance.
+   * @since 2.8.3
+   */
+  public GsonBuilder newBuilder() {
+    return new GsonBuilder(this);
+  }
+
+  /**
+   * @deprecated This method by accident exposes an internal Gson class; it might be removed in a
+   * future version.
+   */
+  @Deprecated
+  public Excluder excluder() {
+    return excluder;
+  }
+
+  /**
+   * Returns the field naming strategy used by this Gson instance.
+   *
+   * @see GsonBuilder#setFieldNamingStrategy(FieldNamingStrategy)
+   */
+  public FieldNamingStrategy fieldNamingStrategy() {
+    return fieldNamingStrategy;
+  }
+
+  /**
+   * Returns whether this Gson instance is serializing JSON object properties with
+   * {@code null} values, or just omits them.
+   *
+   * @see GsonBuilder#serializeNulls()
+   */
+  public boolean serializeNulls() {
+    return serializeNulls;
+  }
+
+  /**
+   * Returns whether this Gson instance produces JSON output which is
+   * HTML-safe, that means all HTML characters are escaped.
+   *
+   * @see GsonBuilder#disableHtmlEscaping()
+   */
+  public boolean htmlSafe() {
+    return htmlSafe;
+  }
+
+ 
 
   /**
    * Returns the type adapter for {@code type}.

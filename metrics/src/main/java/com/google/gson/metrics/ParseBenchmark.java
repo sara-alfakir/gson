@@ -58,6 +58,8 @@ public final class ParseBenchmark {
   @Param Document document;
   @Param Api api;
 
+  
+
   private enum Document {
     TWEETS(new TypeToken<List<Tweet>>() {}, new TypeReference<List<Tweet>>() {}),
     READER_SHORT(new TypeToken<Feed>() {}, new TypeReference<Feed>() {}),
@@ -136,11 +138,13 @@ public final class ParseBenchmark {
   }
 
   private static String resourceToString(String fileName) throws Exception {
+    int BUFFER_SIZE = 8192;
+
     ZipFile zipFile = new ZipFile(getResourceFile("/ParseBenchmarkData.zip"));
     try {
       ZipEntry zipEntry = zipFile.getEntry(fileName);
       Reader reader = new InputStreamReader(zipFile.getInputStream(zipEntry), StandardCharsets.UTF_8);
-      char[] buffer = new char[8192];
+      char[] buffer = new char[BUFFER_SIZE];
       StringWriter writer = new StringWriter();
       int count;
       while ((count = reader.read(buffer)) != -1) {

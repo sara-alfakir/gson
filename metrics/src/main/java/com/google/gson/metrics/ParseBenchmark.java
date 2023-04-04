@@ -144,8 +144,9 @@ public final class ParseBenchmark {
     return file;
   }
 
+  
   private static String resourceToString(String fileName) throws Exception {
-    private static final int BUFFER_SIZE = 8192;
+    int BUFFER_SIZE = 8192;
     
     ZipFile zipFile = new ZipFile(getResourceFile("/ParseBenchmarkData.zip"));
     try {

@@ -291,42 +291,12 @@ public final class Gson {
     typeAdapterFactoryList.addAll(factoriesToBeAdded);
 
     
-    private static final List<TypeAdapterFactory> BASIC_ADAPTER_FACTORIES = Arrays.asList(
-    		// type adapters for basic platform types
-    		TypeAdapters.STRING_FACTORY, 
-    		TypeAdapters.INTEGER_FACTORY,
-    		TypeAdapters.BOOLEAN_FACTORY, 
-    		TypeAdapters.BYTE_FACTORY,
-    		TypeAdapters.SHORT_FACTORY, 
-    		TypeAdapters.ATOMIC_INTEGER_FACTORY,
-    		TypeAdapters.ATOMIC_BOOLEAN_FACTORY,
-    		TypeAdapters.ATOMIC_INTEGER_ARRAY_FACTORY,
-    		TypeAdapters.CHARACTER_FACTORY,
-    		TypeAdapters.STRING_BUILDER_FACTORY,
-    		TypeAdapters.STRING_BUFFER_FACTORY, 
-    		
-    )
-    
-    private static final List<TypeAdapterFactory> ADAPTERS_LIZILY_PARSED_NUMBER = Arrays.asList(
-    		// Add adapter for LazilyParsedNumber because user can obtain it from Gson and then try to serialize it again
-    		TypeAdapters.URL_FACTORY, 
-    		TypeAdapters.URI_FACTORY,
-    		TypeAdapters.UUID_FACTORY, 
-    		TypeAdapters.CURRENCY_FACTORY, 
-    		TypeAdapters.LOCALE_FACTORY, 
-    		TypeAdapters.INET_ADDRESS_FACTORY, 
-    		TypeAdapters.BIT_SET_FACTORY, 
-    		DateTypeAdapter.FACTORY, 
-    		TypeAdapters.CALENDAR_FACTORY, 
-    		ArrayTypeAdapter.FACTORY,
-    		TypeAdapters.CLASS_FACTORY,
-    		
-    )
-    		
-    typeAdapterFactoryList.addAll(BASIC_ADAPTER_FACTORIES);
-    typeAdapterFactoryList.addAll(ADAPTERS_LIZILY_PARSED_NUMBER);
-    
     // type adapters for basic platform types
+    typeAdapterFactoryList.add(TypeAdapters.STRING_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.INTEGER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.BOOLEAN_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.BYTE_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.SHORT_FACTORY);
     TypeAdapter<Number> longAdapter = longAdapter(longSerializationPolicy);
     typeAdapterFactoryList.add(TypeAdapters.newFactory(long.class, Long.class, longAdapter));
     typeAdapterFactoryList.add(TypeAdapters.newFactory(double.class, Double.class,
@@ -334,19 +304,37 @@ public final class Gson {
     typeAdapterFactoryList.add(TypeAdapters.newFactory(float.class, Float.class,
             floatAdapter(serializeSpecialFloatingPointValues)));
     typeAdapterFactoryList.add(NumberTypeAdapter.getFactory(numberToNumberStrategy));
+    typeAdapterFactoryList.add(TypeAdapters.ATOMIC_INTEGER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.ATOMIC_BOOLEAN_FACTORY);
     typeAdapterFactoryList.add(TypeAdapters.newFactory(AtomicLong.class, atomicLongAdapter(longAdapter)));
     typeAdapterFactoryList.add(TypeAdapters.newFactory(AtomicLongArray.class, atomicLongArrayAdapter(longAdapter)));
+    typeAdapterFactoryList.add(TypeAdapters.ATOMIC_INTEGER_ARRAY_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CHARACTER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.STRING_BUILDER_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.STRING_BUFFER_FACTORY);
     typeAdapterFactoryList.add(TypeAdapters.newFactory(BigDecimal.class, TypeAdapters.BIG_DECIMAL));
     typeAdapterFactoryList.add(TypeAdapters.newFactory(BigInteger.class, TypeAdapters.BIG_INTEGER));
-    
+
     // Add adapter for LazilyParsedNumber because user can obtain it from Gson and then try to serialize it again
     typeAdapterFactoryList.add(TypeAdapters.newFactory(LazilyParsedNumber.class, TypeAdapters.LAZILY_PARSED_NUMBER));
+    typeAdapterFactoryList.add(TypeAdapters.URL_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.URI_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.UUID_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CURRENCY_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.LOCALE_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.INET_ADDRESS_FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.BIT_SET_FACTORY);
+    typeAdapterFactoryList.add(DateTypeAdapter.FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CALENDAR_FACTORY);
 
     if (SqlTypesSupport.SUPPORTS_SQL_TYPES) {
       typeAdapterFactoryList.add(SqlTypesSupport.TIME_FACTORY);
       typeAdapterFactoryList.add(SqlTypesSupport.DATE_FACTORY);
       typeAdapterFactoryList.add(SqlTypesSupport.TIMESTAMP_FACTORY);
     }
+
+    typeAdapterFactoryList.add(ArrayTypeAdapter.FACTORY);
+    typeAdapterFactoryList.add(TypeAdapters.CLASS_FACTORY);
 
     // type adapters for composite and user-defined types
     typeAdapterFactoryList.add(new CollectionTypeAdapterFactory(constructorConstructor));
@@ -659,7 +647,7 @@ public final class Gson {
     if (!typeAdapterFactoryList.contains(skipPast)) {
       skipPast = jsonAdapterFactory;
     }
-
+    
     boolean skipPastFound = false;
     for (TypeAdapterFactory factory : typeAdapterFactoryList) {
       if (!skipPastFound) {
@@ -675,6 +663,9 @@ public final class Gson {
       }
     }
     throw new IllegalArgumentException("GSON cannot serialize " + type);
+    
+   
+  
   }
 
   /**

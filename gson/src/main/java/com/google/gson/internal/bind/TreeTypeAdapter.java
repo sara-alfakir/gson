@@ -156,7 +156,7 @@ public final class TreeTypeAdapter<T> extends SerializationDelegatingTypeAdapter
 
     @SuppressWarnings("unchecked") // guarded by typeToken.equals() call
     @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+    public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type) {
       boolean matches = exactType != null
           ? exactType.equals(type) || (matchRawType && exactType.getType() == type.getRawType())
           : hierarchyType.isAssignableFrom(type.getRawType());

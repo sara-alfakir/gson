@@ -2,7 +2,7 @@
     Thank you for your contribution!
     Please see the contributing guide: https://github.com/google/.github/blob/master/CONTRIBUTING.md
 
-    Keep in mind that Gson is in maintenance mode. If you want to add a new feature, please first search for existing GitHub issues, or create a new one to discuss the feature and get feedback.
+    Keep in mind that Gson is in maintenance mode. If you want to add a new feature, please first search for existing GitHub issues, or build a new one to discuss the feature and get feedback.
 -->
 
 ### Purpose

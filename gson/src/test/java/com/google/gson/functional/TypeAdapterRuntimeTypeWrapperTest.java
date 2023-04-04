@@ -64,7 +64,7 @@ public class TypeAdapterRuntimeTypeWrapperTest {
           return new JsonPrimitive("serializer");
         }
       })
-      .create();
+      .build();
 
     String json = gson.toJson(new Container());
     assertThat(json).isEqualTo("{\"b\":\"serializer\"}");
@@ -79,7 +79,7 @@ public class TypeAdapterRuntimeTypeWrapperTest {
   public void testJsonDeserializer_ReflectiveSerializerDelegate() {
     Gson gson = new GsonBuilder()
       .registerTypeAdapter(Base.class, new Deserializer())
-      .create();
+      .build();
 
     String json = gson.toJson(new Container());
     assertThat(json).isEqualTo("{\"b\":{\"f\":\"test\"}}");
@@ -105,7 +105,7 @@ public class TypeAdapterRuntimeTypeWrapperTest {
         }
       })
       .registerTypeAdapter(Base.class, new Deserializer())
-      .create();
+      .build();
 
     String json = gson.toJson(new Container());
     assertThat(json).isEqualTo("{\"b\":\"custom delegate\"}");
@@ -122,7 +122,7 @@ public class TypeAdapterRuntimeTypeWrapperTest {
       // Register delegate which itself falls back to reflective serialization
       .registerTypeAdapter(Base.class, new Deserializer())
       .registerTypeAdapter(Base.class, new Deserializer())
-      .create();
+      .build();
 
     String json = gson.toJson(new Container());
     assertThat(json).isEqualTo("{\"b\":{\"f\":\"test\"}}");
@@ -144,7 +144,7 @@ public class TypeAdapterRuntimeTypeWrapperTest {
         }
       })
       .registerTypeAdapter(Base.class, new Deserializer())
-      .create();
+      .build();
 
     String json = gson.toJson(new Container());
     assertThat(json).isEqualTo("{\"b\":\"custom delegate\"}");
@@ -173,7 +173,7 @@ public class TypeAdapterRuntimeTypeWrapperTest {
           return new JsonPrimitive("base");
         }
       })
-      .create();
+      .build();
 
     String json = gson.toJson(new Container());
     assertThat(json).isEqualTo("{\"b\":{\"f\":\"test\"}}");

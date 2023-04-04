@@ -43,7 +43,7 @@ public class LongSerializationPolicyTest {
   public void testDefaultLongSerializationIntegration() {
     Gson gson = new GsonBuilder()
       .setLongSerializationPolicy(LongSerializationPolicy.DEFAULT)
-      .create();
+      .build();
     assertThat(gson.toJson(new long[] { 1L }, long[].class)).isEqualTo("[1]");
     assertThat(gson.toJson(new Long[] { 1L }, Long[].class)).isEqualTo("[1]");
   }
@@ -55,7 +55,7 @@ public class LongSerializationPolicyTest {
 
     Gson gson = new GsonBuilder()
       .setLongSerializationPolicy(policy)
-      .create();
+      .build();
     assertThat(gson.toJson(null, Long.class)).isEqualTo("null");
   }
 
@@ -74,7 +74,7 @@ public class LongSerializationPolicyTest {
   public void testStringLongSerializationIntegration() {
     Gson gson = new GsonBuilder()
       .setLongSerializationPolicy(LongSerializationPolicy.STRING)
-      .create();
+      .build();
     assertThat(gson.toJson(new long[] { 1L }, long[].class)).isEqualTo("[\"1\"]");
     assertThat(gson.toJson(new Long[] { 1L }, long[].class)).isEqualTo("[\"1\"]");
   }
@@ -86,7 +86,7 @@ public class LongSerializationPolicyTest {
 
     Gson gson = new GsonBuilder()
       .setLongSerializationPolicy(policy)
-      .create();
+      .build();
     assertThat(gson.toJson(null, Long.class)).isEqualTo("null");
   }
 }

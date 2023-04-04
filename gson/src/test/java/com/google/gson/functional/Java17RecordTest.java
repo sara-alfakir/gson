@@ -98,7 +98,7 @@ public final class Java17RecordTest {
 
     Gson gson = new GsonBuilder()
         .setFieldNamingStrategy(f -> f.getName() + "-custom")
-        .create();
+        .build();
 
     assertThat(gson.toJson(new LocalRecord(1))).isEqualTo("{\"i-custom\":1}");
     assertThat(gson.fromJson("{\"i-custom\":2}", LocalRecord.class)).isEqualTo(new LocalRecord(2));
@@ -248,7 +248,7 @@ public final class Java17RecordTest {
             throw new AssertionError("not needed for test");
           }
         })
-        .create();
+        .build();
 
     String s = "{'aString': 's', 'aByte': 0}";
     var exception = assertThrows(JsonParseException.class, () -> gson.fromJson(s, RecordWithPrimitives.class));
@@ -282,7 +282,7 @@ public final class Java17RecordTest {
     Gson gson = new GsonBuilder()
         // Include static fields
         .excludeFieldsWithModifiers(0)
-        .create();
+        .build();
 
     String json = gson.toJson(new RecordWithStaticField());
     assertThat(json).isEqualTo("{\"s\":\"initial\"}");
@@ -303,7 +303,7 @@ public final class Java17RecordTest {
     Gson gson = new GsonBuilder()
         // Include static fields
         .excludeFieldsWithModifiers(0)
-        .create();
+        .build();
 
     String oldValue = RecordWithStaticField.s;
     try {
@@ -327,7 +327,7 @@ public final class Java17RecordTest {
         int b
     ) {}
 
-    Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().build();
     String json = gson.toJson(new RecordWithExpose(1, 2));
     assertThat(json).isEqualTo("{\"a\":1}");
   }
@@ -346,7 +346,7 @@ public final class Java17RecordTest {
             return clazz == double.class;
           }
         })
-        .create();
+        .build();
 
     assertThat(gson.toJson(new LocalRecord(1, 2, 3.0))).isEqualTo("{\"b\":2}");
   }
@@ -377,7 +377,7 @@ public final class Java17RecordTest {
 
     Gson gson = new GsonBuilder()
         .addReflectionAccessFilter(c -> c == Allowed.class ? FilterResult.ALLOW : FilterResult.BLOCK_ALL)
-        .create();
+        .build();
 
     String json = gson.toJson(new Allowed(1));
     assertThat(json).isEqualTo("{\"a\":1}");
@@ -392,7 +392,7 @@ public final class Java17RecordTest {
   public void testReflectionFilterBlockInaccessible() {
     Gson gson = new GsonBuilder()
         .addReflectionAccessFilter(c -> FilterResult.BLOCK_INACCESSIBLE)
-        .create();
+        .build();
 
     var exception = assertThrows(JsonIOException.class, () -> gson.toJson(new PrivateRecord(1)));
     assertThat(exception).hasMessageThat()

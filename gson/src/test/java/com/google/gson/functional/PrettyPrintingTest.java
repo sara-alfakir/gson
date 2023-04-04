@@ -46,7 +46,7 @@ public class PrettyPrintingTest {
 
   @Before
   public void setUp() throws Exception {
-    gson = new GsonBuilder().setPrettyPrinting().create();
+    gson = new GsonBuilder().setPrettyPrinting().build();
   }
 
   @Test

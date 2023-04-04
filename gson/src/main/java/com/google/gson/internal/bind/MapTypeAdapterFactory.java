@@ -77,7 +77,7 @@ import java.util.Map;
  * <pre>   {@code
  *   Gson gson = new GsonBuilder()
  *     .registerTypeAdapter(Map.class, new MapAsArrayTypeAdapter())
- *     .create();
+ *     .build();
  * }</pre>
  * This will change the structure of the JSON emitted by the code above. Now we
  * get an array. In this case the arrays elements are map entries:
@@ -112,7 +112,7 @@ public final class MapTypeAdapterFactory implements TypeAdapterFactory {
     this.complexMapKeySerialization = complexMapKeySerialization;
   }
 
-  @Override public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
+  @Override public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> typeToken) {
     Type type = typeToken.getType();
 
     Class<? super T> rawType = typeToken.getRawType();

@@ -147,7 +147,7 @@ public final class RuntimeTypeAdapterFactoryFunctionalTest {
       return registerSubtype(type, type.getSimpleName());
     }
 
-    @Override public <R> TypeAdapter<R> create(Gson gson, TypeToken<R> type) {
+    @Override public <R> TypeAdapter<R> build(Gson gson, TypeToken<R> type) {
       if (type.getRawType() != baseType) {
         return null;
       }

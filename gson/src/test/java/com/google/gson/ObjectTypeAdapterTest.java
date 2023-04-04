@@ -27,7 +27,7 @@ import java.util.Map;
 import org.junit.Test;
 
 public final class ObjectTypeAdapterTest {
-  private final Gson gson = new GsonBuilder().create();
+  private final Gson gson = new GsonBuilder().build();
   private final TypeAdapter<Object> adapter = gson.getAdapter(Object.class);
 
   @Test

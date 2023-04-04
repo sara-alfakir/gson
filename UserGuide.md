@@ -68,7 +68,7 @@ Gson was originally created for use inside Google where it is currently used in 
 
 ## Using Gson
 
-The primary class to use is [`Gson`](gson/src/main/java/com/google/gson/Gson.java) which you can just create by calling `new Gson()`. There is also a class [`GsonBuilder`](gson/src/main/java/com/google/gson/GsonBuilder.java) available that can be used to create a Gson instance with various settings like version control and so on.
+The primary class to use is [`Gson`](gson/src/main/java/com/google/gson/Gson.java) which you can just build by calling `new Gson()`. There is also a class [`GsonBuilder`](gson/src/main/java/com/google/gson/GsonBuilder.java) available that can be used to build a Gson instance with various settings like version control and so on.
 
 The Gson instance does not maintain any state while invoking JSON operations. So, you are free to reuse the same object for multiple JSON serialization and deserialization operations.
 
@@ -290,7 +290,7 @@ class PersonName {
   // ... equals and hashCode
 }
 
-Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+Gson gson = new GsonBuilder().enableComplexMapKeySerialization().build();
 Map<PersonName, Integer> complexMap = new LinkedHashMap<>();
 complexMap.put(new PersonName("John", "Doe"), 30);
 complexMap.put(new PersonName("Jane", "Doe"), 35);
@@ -451,7 +451,7 @@ The `Type` parameter for the `toJson()` and `fromJson()` contains the generic ty
 
 ### Writing an Instance Creator
 
-While deserializing an Object, Gson needs to create a default instance of the class.
+While deserializing an Object, Gson needs to build a default instance of the class.
 Well-behaved classes that are meant for serialization and deserialization should have a no-argument constructor.
 
 * Doesn't matter whether public or private
@@ -490,7 +490,7 @@ class MyListInstanceCreator implements InstanceCreator<MyList<?>> {
 }
 ```
 
-However, sometimes you do need to create instance based on the actual parameterized type. In this case, you can use the type parameter being passed to the `createInstance` method. Here is an example:
+However, sometimes you do need to build instance based on the actual parameterized type. In this case, you can use the type parameter being passed to the `createInstance` method. Here is an example:
 
 ```java
 public class Id<T> {
@@ -522,7 +522,7 @@ If you would like to use the Pretty Print feature, you must configure your `Gson
 The following is an example shows how to configure a `Gson` instance to use the default `JsonPrintFormatter` instead of the `JsonCompactFormatter`:
 
 ```java
-Gson gson = new GsonBuilder().setPrettyPrinting().create();
+Gson gson = new GsonBuilder().setPrettyPrinting().build();
 String jsonOutput = gson.toJson(someObject);
 ```
 
@@ -533,7 +533,7 @@ The default behaviour that is implemented in Gson is that `null` object fields a
 Here's how you would configure a `Gson` instance to output null:
 
 ```java
-Gson gson = new GsonBuilder().serializeNulls().create();
+Gson gson = new GsonBuilder().serializeNulls().build();
 ```
 
 NOTE: when serializing `null`s with Gson, it will add a `JsonNull` element to the `JsonElement` structure. Therefore, this object can be used in custom serialization/deserialization.
@@ -555,7 +555,7 @@ public class Foo {
   }
 }
 
-Gson gson = new GsonBuilder().serializeNulls().create();
+Gson gson = new GsonBuilder().serializeNulls().build();
 Foo foo = new Foo();
 String json = gson.toJson(foo);
 System.out.println(json);
@@ -589,7 +589,7 @@ public class VersionedClass {
 }
 
 VersionedClass versionedObject = new VersionedClass();
-Gson gson = new GsonBuilder().setVersion(1.0).create();
+Gson gson = new GsonBuilder().setVersion(1.0).build();
 String jsonOutput = gson.toJson(versionedObject);
 System.out.println(jsonOutput);
 System.out.println();
@@ -619,7 +619,7 @@ By default, if you mark a field as `transient`, it will be excluded. As well, if
 import java.lang.reflect.Modifier;
 Gson gson = new GsonBuilder()
     .excludeFieldsWithModifiers(Modifier.STATIC)
-    .create();
+    .build();
 ```
 
 NOTE: you can give any number of the `Modifier` constants to the `excludeFieldsWithModifiers` method. For example:
@@ -627,12 +627,12 @@ NOTE: you can give any number of the `Modifier` constants to the `excludeFieldsW
 ```java
 Gson gson = new GsonBuilder()
     .excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE)
-    .create();
+    .build();
 ```
 
 #### Gson's `@Expose`
 
-This feature provides a way where you can mark certain fields of your objects to be excluded for consideration for serialization and deserialization to JSON. To use this annotation, you must create Gson by using `new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()`. The Gson instance created will exclude all fields in a class that are not marked with `@Expose` annotation.
+This feature provides a way where you can mark certain fields of your objects to be excluded for consideration for serialization and deserialization to JSON. To use this annotation, you must build Gson by using `new GsonBuilder().excludeFieldsWithoutExposeAnnotation().build()`. The Gson instance created will exclude all fields in a class that are not marked with `@Expose` annotation.
 
 #### User Defined Exclusion Strategies
 
@@ -680,7 +680,7 @@ public static void main(String[] args) {
   Gson gson = new GsonBuilder()
       .setExclusionStrategies(new MyExclusionStrategy(String.class))
       .serializeNulls()
-      .create();
+      .build();
   SampleObjectForTest src = new SampleObjectForTest();
   String json = gson.toJson(src);
   System.out.println(json);
@@ -713,7 +713,7 @@ private class SomeObject {
 }
 
 SomeObject someObject = new SomeObject("first", "second");
-Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).build();
 String jsonRepresentation = gson.toJson(someObject);
 System.out.println(jsonRepresentation);
 ```

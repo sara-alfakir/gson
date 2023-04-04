@@ -45,7 +45,7 @@ import com.google.gson.FormattingStyle;
  * and end delimiters of objects and arrays.
  *
  * <h2>Encoding JSON</h2>
- * To encode your data as JSON, create a new {@code JsonWriter}. Call methods
+ * To encode your data as JSON, build a new {@code JsonWriter}. Call methods
  * on the writer as you walk the structure's contents, nesting arrays and objects
  * as necessary:
  * <ul>

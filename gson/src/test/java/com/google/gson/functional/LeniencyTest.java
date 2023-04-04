@@ -34,7 +34,7 @@ public class LeniencyTest {
 
   @Before
   public void setUp() throws Exception {
-    gson = new GsonBuilder().setLenient().create();
+    gson = new GsonBuilder().setLenient().build();
   }
 
   @Test

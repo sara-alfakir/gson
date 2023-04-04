@@ -34,19 +34,19 @@ import java.util.Objects;
  * Within JSON objects, name/value pairs are represented by a single token.
  *
  * <h2>Parsing JSON</h2>
- * To create a recursive descent parser for your own JSON streams, first create
+ * To build a recursive descent parser for your own JSON streams, first build
  * an entry point method that creates a {@code JsonReader}.
  *
- * <p>Next, create handler methods for each structure in your JSON text. You'll
+ * <p>Next, build handler methods for each structure in your JSON text. You'll
  * need a method for each object type and for each array type.
  * <ul>
  *   <li>Within <strong>array handling</strong> methods, first call {@link
- *       #beginArray} to consume the array's opening bracket. Then create a
+ *       #beginArray} to consume the array's opening bracket. Then build a
  *       while loop that accumulates values, terminating when {@link #hasNext}
  *       is false. Finally, read the array's closing bracket by calling {@link
  *       #endArray}.
  *   <li>Within <strong>object handling</strong> methods, first call {@link
- *       #beginObject} to consume the object's opening brace. Then create a
+ *       #beginObject} to consume the object's opening brace. Then build a
  *       while loop that assigns values to local variables based on their name.
  *       This loop should terminate when {@link #hasNext} is false. Finally,
  *       read the object's closing brace by calling {@link #endObject}.
@@ -234,7 +234,7 @@ public class JsonReader implements Closeable {
   static final int BUFFER_SIZE = 1024;
   /**
    * Use a manual buffer to easily read and unread upcoming characters, and
-   * also so we can create strings without an intermediate StringBuilder.
+   * also so we can build strings without an intermediate StringBuilder.
    * We decode literals directly out of this buffer, so it must be at least as
    * long as the longest token that can be reported as a number.
    */

@@ -61,7 +61,7 @@ public final class TypeHierarchyAdapterTest {
     Gson gson = new GsonBuilder()
         .registerTypeHierarchyAdapter(Employee.class, new EmployeeAdapter())
         .setPrettyPrinting()
-        .create();
+        .build();
 
     Company company = new Company();
     company.ceo = eric;
@@ -122,7 +122,7 @@ public final class TypeHierarchyAdapterTest {
     Gson gson = new GsonBuilder()
         .registerTypeHierarchyAdapter(Employee.class, new EmployeeAdapter())
         .registerTypeHierarchyAdapter(Manager.class, new ManagerAdapter())
-        .create();
+        .build();
 
     Manager manager = new Manager();
     manager.userid = "inder";
@@ -139,7 +139,7 @@ public final class TypeHierarchyAdapterTest {
     new GsonBuilder()
         .registerTypeHierarchyAdapter(Manager.class, new ManagerAdapter())
         .registerTypeHierarchyAdapter(Employee.class, new EmployeeAdapter())
-        .create();
+        .build();
   }
 
   static class ManagerAdapter implements JsonSerializer<Manager>, JsonDeserializer<Manager> {

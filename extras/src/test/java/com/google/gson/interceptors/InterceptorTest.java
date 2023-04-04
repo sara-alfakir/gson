@@ -49,7 +49,7 @@ public final class InterceptorTest {
     this.gson = new GsonBuilder()
         .registerTypeAdapterFactory(new InterceptorFactory())
         .enableComplexMapKeySerialization()
-        .create();
+        .build();
   }
 
   @Test
@@ -119,7 +119,7 @@ public final class InterceptorTest {
           }
         })
         .registerTypeAdapterFactory(new InterceptorFactory())
-        .create();
+        .build();
     UserGroup userGroup = gson.fromJson("{user:{name:'bob',password:'pwd'}}", UserGroup.class);
     assertEquals(User.DEFAULT_EMAIL, userGroup.user.email);
   }

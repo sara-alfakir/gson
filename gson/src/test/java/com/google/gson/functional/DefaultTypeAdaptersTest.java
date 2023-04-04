@@ -97,7 +97,7 @@ public class DefaultTypeAdaptersTest {
     } catch (UnsupportedOperationException expected) {
     }
     // Override with a custom type adapter for class.
-    gson = new GsonBuilder().registerTypeAdapter(Class.class, new MyClassTypeAdapter()).create();
+    gson = new GsonBuilder().registerTypeAdapter(Class.class, new MyClassTypeAdapter()).build();
     assertThat(gson.toJson(String.class)).isEqualTo("\"java.lang.String\"");
   }
 
@@ -109,7 +109,7 @@ public class DefaultTypeAdaptersTest {
     } catch (UnsupportedOperationException expected) {
     }
     // Override with a custom type adapter for class.
-    gson = new GsonBuilder().registerTypeAdapter(Class.class, new MyClassTypeAdapter()).create();
+    gson = new GsonBuilder().registerTypeAdapter(Class.class, new MyClassTypeAdapter()).build();
     assertThat(gson.fromJson("java.lang.String", Class.class)).isAssignableTo(String.class);
   }
 
@@ -304,7 +304,7 @@ public class DefaultTypeAdaptersTest {
   public void testOverrideBigIntegerTypeAdapter() throws Exception {
     gson = new GsonBuilder()
         .registerTypeAdapter(BigInteger.class, new NumberAsStringAdapter(BigInteger.class))
-        .create();
+        .build();
     assertThat(gson.toJson(new BigInteger("123"), BigInteger.class)).isEqualTo("\"123\"");
     assertThat(gson.fromJson("\"123\"", BigInteger.class)).isEqualTo(new BigInteger("123"));
   }
@@ -313,7 +313,7 @@ public class DefaultTypeAdaptersTest {
   public void testOverrideBigDecimalTypeAdapter() throws Exception {
     gson = new GsonBuilder()
         .registerTypeAdapter(BigDecimal.class, new NumberAsStringAdapter(BigDecimal.class))
-        .create();
+        .build();
     assertThat(gson.toJson(new BigDecimal("1.1"), BigDecimal.class)).isEqualTo("\"1.1\"");
     assertThat(gson.fromJson("\"1.1\"", BigDecimal.class)).isEqualTo(new BigDecimal("1.1"));
   }
@@ -413,7 +413,7 @@ public class DefaultTypeAdaptersTest {
 
   @Test
   public void testDefaultDateSerializationUsingBuilder() {
-    Gson gson = new GsonBuilder().create();
+    Gson gson = new GsonBuilder().build();
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     if (JavaVersion.isJava9OrLater()) {
@@ -425,7 +425,7 @@ public class DefaultTypeAdaptersTest {
 
   @Test
   public void testDefaultDateDeserializationUsingBuilder() {
-    Gson gson = new GsonBuilder().create();
+    Gson gson = new GsonBuilder().build();
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     Date extracted = gson.fromJson(json, Date.class);
@@ -434,7 +434,7 @@ public class DefaultTypeAdaptersTest {
 
   @Test
   public void testDefaultCalendarSerialization() {
-    Gson gson = new GsonBuilder().create();
+    Gson gson = new GsonBuilder().build();
     String json = gson.toJson(Calendar.getInstance());
     assertThat(json).contains("year");
     assertThat(json).contains("month");
@@ -446,7 +446,7 @@ public class DefaultTypeAdaptersTest {
 
   @Test
   public void testDefaultCalendarDeserialization() {
-    Gson gson = new GsonBuilder().create();
+    Gson gson = new GsonBuilder().build();
     String json = "{year:2009,month:2,dayOfMonth:11,hourOfDay:14,minute:29,second:23}";
     Calendar cal = gson.fromJson(json, Calendar.class);
     assertThat(cal.get(Calendar.YEAR)).isEqualTo(2009);
@@ -459,7 +459,7 @@ public class DefaultTypeAdaptersTest {
 
   @Test
   public void testDefaultGregorianCalendarSerialization() {
-    Gson gson = new GsonBuilder().create();
+    Gson gson = new GsonBuilder().build();
     GregorianCalendar cal = new GregorianCalendar();
     String json = gson.toJson(cal);
     assertThat(json).contains("year");
@@ -472,7 +472,7 @@ public class DefaultTypeAdaptersTest {
 
   @Test
   public void testDefaultGregorianCalendarDeserialization() {
-    Gson gson = new GsonBuilder().create();
+    Gson gson = new GsonBuilder().build();
     String json = "{year:2009,month:2,dayOfMonth:11,hourOfDay:14,minute:29,second:23}";
     GregorianCalendar cal = gson.fromJson(json, GregorianCalendar.class);
     assertThat(cal.get(Calendar.YEAR)).isEqualTo(2009);
@@ -486,7 +486,7 @@ public class DefaultTypeAdaptersTest {
   @Test
   public void testDateSerializationWithPattern() {
     String pattern = "yyyy-MM-dd";
-    Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL).setDateFormat(pattern).create();
+    Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL).setDateFormat(pattern).build();
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     assertThat(json).isEqualTo("\"2011-09-11\"");
@@ -496,7 +496,7 @@ public class DefaultTypeAdaptersTest {
   @Test
   public void testDateDeserializationWithPattern() {
     String pattern = "yyyy-MM-dd";
-    Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL).setDateFormat(pattern).create();
+    Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL).setDateFormat(pattern).build();
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     Date extracted = gson.fromJson(json, Date.class);
@@ -517,7 +517,7 @@ public class DefaultTypeAdaptersTest {
             return new Date(1315806903103L);
           }
         })
-        .create();
+        .build();
 
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
@@ -533,7 +533,7 @@ public class DefaultTypeAdaptersTest {
     Locale defaultLocale = Locale.getDefault();
     Locale.setDefault(Locale.US);
     try {
-      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").build();
       List<Date> dates = Arrays.asList(new Date(0));
       String json = gson.toJson(dates, listOfDates);
       assertThat(json).isEqualTo("[\"1970-01-01\"]");

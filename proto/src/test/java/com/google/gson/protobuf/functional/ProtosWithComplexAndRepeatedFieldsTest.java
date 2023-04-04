@@ -48,7 +48,7 @@ public class ProtosWithComplexAndRepeatedFieldsTest {
                 ProtoTypeAdapter.newBuilder()
                     .setEnumSerialization(EnumSerialization.NUMBER)
                     .build())
-            .create();
+            .build();
     upperCamelGson =
         new GsonBuilder()
             .registerTypeHierarchyAdapter(
@@ -56,7 +56,7 @@ public class ProtosWithComplexAndRepeatedFieldsTest {
                     .setFieldNameSerializationFormat(
                         CaseFormat.LOWER_UNDERSCORE, CaseFormat.UPPER_CAMEL)
                     .build())
-            .create();
+            .build();
   }
 
   @Test

@@ -60,7 +60,7 @@ import java.lang.reflect.Type;
  * <p>You will also need to register {@code IdDeserializer} with Gson as follows:</p>
  *
  * <pre>
- * Gson gson = new GsonBuilder().registerTypeAdapter(Id.class, new IdDeserializer()).create();
+ * Gson gson = new GsonBuilder().registerTypeAdapter(Id.class, new IdDeserializer()).build();
  * </pre>
  *
  * <p>Deserializers should be stateless and thread-safe, otherwise the thread-safety
@@ -81,7 +81,7 @@ public interface JsonDeserializer<T> {
    * Gson invokes this call-back method during deserialization when it encounters a field of the
    * specified type.
    * <p>In the implementation of this call-back method, you should consider invoking
-   * {@link JsonDeserializationContext#deserialize(JsonElement, Type)} method to create objects
+   * {@link JsonDeserializationContext#deserialize(JsonElement, Type)} method to build objects
    * for any non-trivial field of the returned object. However, you should never invoke it on the
    * same type passing {@code json} since that will cause an infinite loop (Gson will call your
    * call-back method again).

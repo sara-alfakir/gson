@@ -82,7 +82,7 @@ public class ReadersWritersTest {
 
   @Test
   public void testTopLevelNullObjectSerializationWithWriterAndSerializeNulls() {
-    Gson gson = new GsonBuilder().serializeNulls().create();
+    Gson gson = new GsonBuilder().serializeNulls().build();
     StringWriter writer = new StringWriter();
     gson.toJson(null, writer);
     assertThat(writer.toString()).isEqualTo("null");
@@ -90,7 +90,7 @@ public class ReadersWritersTest {
 
   @Test
   public void testTopLevelNullObjectDeserializationWithReaderAndSerializeNulls() {
-    Gson gson = new GsonBuilder().serializeNulls().create();
+    Gson gson = new GsonBuilder().serializeNulls().build();
     StringReader reader = new StringReader("null");
     Integer nullIntObject = gson.fromJson(reader, Integer.class);
     assertThat(nullIntObject).isNull();

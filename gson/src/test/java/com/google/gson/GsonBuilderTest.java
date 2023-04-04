@@ -45,9 +45,9 @@ public class GsonBuilderTest {
   @Test
   public void testCreatingMoreThanOnce() {
     GsonBuilder builder = new GsonBuilder();
-    Gson gson = builder.create();
+    Gson gson = builder.build();
     assertThat(gson).isNotNull();
-    assertThat(builder.create()).isNotNull();
+    assertThat(builder.build()).isNotNull();
 
     builder.setFieldNamingStrategy(new FieldNamingStrategy() {
       @Override public String translateName(Field f) {
@@ -55,7 +55,7 @@ public class GsonBuilderTest {
       }
     });
 
-    Gson otherGson = builder.create();
+    Gson otherGson = builder.build();
     assertThat(otherGson).isNotNull();
     // Should be different instances because builder has been modified in the meantime
     assertThat(gson).isNotSameInstanceAs(otherGson);
@@ -68,7 +68,7 @@ public class GsonBuilderTest {
   @Test
   public void testModificationAfterCreate() {
     GsonBuilder gsonBuilder = new GsonBuilder();
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     // Modifications of `gsonBuilder` should not affect `gson` object
     gsonBuilder.registerTypeAdapter(CustomClass1.class, new TypeAdapter<CustomClass1>() {
@@ -95,10 +95,10 @@ public class GsonBuilderTest {
     assertDefaultGson(gson);
     // New GsonBuilder created from `gson` should not have been affected by changes
     // to `gsonBuilder` either
-    assertDefaultGson(gson.newBuilder().create());
+    assertDefaultGson(gson.newBuilder().build());
 
     // New Gson instance from modified GsonBuilder should be affected by changes
-    assertCustomGson(gsonBuilder.create());
+    assertCustomGson(gsonBuilder.build());
   }
 
   private static void assertDefaultGson(Gson gson) {
@@ -146,7 +146,7 @@ public class GsonBuilderTest {
   public void testExcludeFieldsWithModifiers() {
     Gson gson = new GsonBuilder()
         .excludeFieldsWithModifiers(Modifier.VOLATILE, Modifier.PRIVATE)
-        .create();
+        .build();
     assertThat(gson.toJson(new HasModifiers())).isEqualTo("{\"d\":\"d\"}");
   }
 
@@ -162,7 +162,7 @@ public class GsonBuilderTest {
   public void testTransientFieldExclusion() {
     Gson gson = new GsonBuilder()
         .excludeFieldsWithModifiers()
-        .create();
+        .build();
     assertThat(gson.toJson(new HasTransients())).isEqualTo("{\"a\":\"a\"}");
   }
 
@@ -189,13 +189,13 @@ public class GsonBuilderTest {
   public void testDisableJdkUnsafe() {
     Gson gson = new GsonBuilder()
         .disableJdkUnsafe()
-        .create();
+        .build();
     try {
       gson.fromJson("{}", ClassWithoutNoArgsConstructor.class);
       fail("Expected exception");
     } catch (JsonIOException expected) {
       assertThat(expected).hasMessageThat().isEqualTo(
-          "Unable to create instance of class com.google.gson.GsonBuilderTest$ClassWithoutNoArgsConstructor; "
+          "Unable to build instance of class com.google.gson.GsonBuilderTest$ClassWithoutNoArgsConstructor; "
           + "usage of JDK Unsafe is disabled. Registering an InstanceCreator or a TypeAdapter for this type, "
           + "adding a no-args constructor, or enabling usage of JDK Unsafe may fix this problem.");
     }

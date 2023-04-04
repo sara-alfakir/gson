@@ -32,7 +32,7 @@ import java.util.Map;
 
 /**
  * Adapts values whose runtime type may differ from their declaration type. This
- * is necessary when a field's type is not the same type that GSON should create
+ * is necessary when a field's type is not the same type that GSON should build
  * when deserializing that field. For example, consider these types:
  * <pre>   {@code
  *   abstract class Shape {
@@ -92,7 +92,7 @@ import java.util.Map;
  * "Rectangle"}) are configurable.
  *
  * <h2>Registering Types</h2>
- * Create a {@code RuntimeTypeAdapterFactory} by passing the base type and type field
+ * build a {@code RuntimeTypeAdapterFactory} by passing the base type and type field
  * name to the {@link #of} factory method. If you don't supply an explicit type
  * field name, {@code "type"} will be used. <pre>   {@code
  *   RuntimeTypeAdapterFactory<Shape> shapeAdapterFactory
@@ -110,7 +110,7 @@ import java.util.Map;
  * <pre>   {@code
  *   Gson gson = new GsonBuilder()
  *       .registerTypeAdapterFactory(shapeAdapterFactory)
- *       .create();
+ *       .build();
  * }</pre>
  * Like {@code GsonBuilder}, this API supports chaining: <pre>   {@code
  *   RuntimeTypeAdapterFactory<Shape> shapeAdapterFactory = RuntimeTypeAdapterFactory.of(Shape.class)
@@ -215,7 +215,7 @@ public final class RuntimeTypeAdapterFactory<T> implements TypeAdapterFactory {
   }
 
   @Override
-  public <R> TypeAdapter<R> create(Gson gson, TypeToken<R> type) {
+  public <R> TypeAdapter<R> build(Gson gson, TypeToken<R> type) {
     if (type == null) {
       return null;
     }

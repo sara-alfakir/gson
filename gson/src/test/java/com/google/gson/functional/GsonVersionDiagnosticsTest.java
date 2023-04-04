@@ -48,7 +48,7 @@ public class GsonVersionDiagnosticsTest {
       @Override public TestType read(JsonReader in) {
         throw new AssertionError("Expected during deserialization");
       }
-    }).create();
+    }).build();
   }
 
   @Test

@@ -44,7 +44,7 @@ public final class GraphAdapterBuilderTest {
     new GraphAdapterBuilder()
         .addType(Roshambo.class)
         .registerOn(gsonBuilder);
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     assertEquals("{'0x1':{'name':'ROCK','beats':'0x2'}," +
         "'0x2':{'name':'SCISSORS','beats':'0x3'}," +
@@ -62,7 +62,7 @@ public final class GraphAdapterBuilderTest {
     new GraphAdapterBuilder()
         .addType(Roshambo.class)
         .registerOn(gsonBuilder);
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     Roshambo rock = gson.fromJson(json, Roshambo.class);
     assertEquals("ROCK", rock.name);
@@ -81,7 +81,7 @@ public final class GraphAdapterBuilderTest {
     new GraphAdapterBuilder()
         .addType(Roshambo.class)
         .registerOn(gsonBuilder);
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     Roshambo suicide = gson.fromJson(json, Roshambo.class);
     assertEquals("SUICIDE", suicide.name);
@@ -102,7 +102,7 @@ public final class GraphAdapterBuilderTest {
         .addType(listOfListsType)
         .addType(listOfAnyType)
         .registerOn(gsonBuilder);
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     String json = gson.toJson(listOfLists, listOfListsType);
     assertEquals("{'0x1':['0x1','0x2'],'0x2':[]}", json.replace('"', '\''));
@@ -118,7 +118,7 @@ public final class GraphAdapterBuilderTest {
         .addType(listOfListsType)
         .addType(listOfAnyType)
         .registerOn(gsonBuilder);
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     List<List<?>> listOfLists = gson.fromJson("{'0x1':['0x1','0x2'],'0x2':[]}", listOfListsType);
     assertEquals(2, listOfLists.size());
@@ -137,7 +137,7 @@ public final class GraphAdapterBuilderTest {
         .addType(Company.class)
         .addType(Employee.class)
         .registerOn(gsonBuilder);
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     assertEquals("{'0x1':{'name':'Google','employees':['0x2','0x3']},"
         + "'0x2':{'name':'Jesse','company':'0x1'},"
@@ -152,7 +152,7 @@ public final class GraphAdapterBuilderTest {
         .addType(Company.class)
         .addType(Employee.class)
         .registerOn(gsonBuilder);
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     String json = "{'0x1':{'name':'Google','employees':['0x2','0x3']},"
         + "'0x2':{'name':'Jesse','company':'0x1'},"

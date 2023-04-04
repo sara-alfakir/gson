@@ -63,7 +63,7 @@ public class Java17ReflectiveTypeAdapterFactoryTest {
         new GsonBuilder()
             .registerTypeAdapter(UserPrincipal.class, new PrincipalTypeAdapter<>())
             .registerTypeAdapter(GroupPrincipal.class, new PrincipalTypeAdapter<>())
-            .create();
+            .build();
 
     UserPrincipal userPrincipal = gson.fromJson("\"user\"", UserPrincipal.class);
     GroupPrincipal groupPrincipal = gson.fromJson("\"group\"", GroupPrincipal.class);

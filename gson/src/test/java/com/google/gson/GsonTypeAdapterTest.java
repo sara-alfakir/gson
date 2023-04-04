@@ -40,7 +40,7 @@ public class GsonTypeAdapterTest {
     gson = new GsonBuilder()
         .registerTypeAdapter(AtomicLong.class, new ExceptionTypeAdapter())
         .registerTypeAdapter(AtomicInteger.class, new AtomicIntegerTypeAdapter())
-        .create();
+        .build();
   }
 
   @Test
@@ -156,7 +156,7 @@ public class GsonTypeAdapterTest {
     if (registerAbstractHierarchyDeserializer) {
       builder.registerTypeHierarchyAdapter(Abstract.class, deserializer);
     }
-    Gson gson = builder.create();
+    Gson gson = builder.build();
     assertThat(gson.toJson(instance, instanceType)).isEqualTo(expected);
   }
 }

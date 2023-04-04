@@ -69,7 +69,7 @@ public class PrintFormattingTest {
 
   @Test
   public void testJsonObjectWithNullValuesSerialized() {
-    gson = new GsonBuilder().serializeNulls().create();
+    gson = new GsonBuilder().serializeNulls().build();
     JsonObject obj = new JsonObject();
     obj.addProperty("field1", "value1");
     obj.addProperty("field2", (String) null);

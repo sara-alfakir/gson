@@ -45,7 +45,7 @@ public class CustomDeserializerTest {
 
   @Before
   public void setUp() throws Exception {
-    gson = new GsonBuilder().registerTypeAdapter(DataHolder.class, new DataHolderDeserializer()).create();
+    gson = new GsonBuilder().registerTypeAdapter(DataHolder.class, new DataHolderDeserializer()).build();
   }
 
   @Test
@@ -121,7 +121,7 @@ public class CustomDeserializerTest {
         String type = json.getAsJsonObject().get(MyBase.TYPE_ACCESS).getAsString();
         return context.deserialize(json, SubTypes.valueOf(type).getSubclass());
       }
-    }).create();
+    }).build();
     SubType1 target = (SubType1) gson.fromJson(json, MyBase.class);
     assertThat(target.field1).isEqualTo("abc");
   }
@@ -161,7 +161,7 @@ public class CustomDeserializerTest {
             throws JsonParseException {
           return null;
         }
-      }).create();
+      }).build();
     String json = "{baseName:'Base',subName:'SubRevised'}";
     Base target = gson.fromJson(json, Base.class);
     assertThat(target).isNull();
@@ -176,7 +176,7 @@ public class CustomDeserializerTest {
             throws JsonParseException {
           return null;
         }
-      }).create();
+      }).build();
     String json = "{base:{baseName:'Base',subName:'SubRevised'}}";
     ClassWithBaseField target = gson.fromJson(json, ClassWithBaseField.class);
     assertThat(target.base).isNull();
@@ -191,7 +191,7 @@ public class CustomDeserializerTest {
             throws JsonParseException {
           return null;
         }
-      }).create();
+      }).build();
     String json = "[{baseName:'Base'},{baseName:'Base'}]";
     Base[] target = gson.fromJson(json, Base[].class);
     assertThat(target[0]).isNull();
@@ -207,7 +207,7 @@ public class CustomDeserializerTest {
             throws JsonParseException {
           return null;
         }
-      }).create();
+      }).build();
     String json = "{bases:[{baseName:'Base'},{baseName:'Base'}]}";
     ClassWithBaseArray target = gson.fromJson(json, ClassWithBaseArray.class);
     assertThat(target.bases[0]).isNull();

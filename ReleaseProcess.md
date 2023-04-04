@@ -8,18 +8,18 @@ The following is a step-by-step procedure for releasing a new version of Google-
 1. Run `mvn release:clean`
 1. Start the release: `mvn release:prepare`
     - Answer questions: usually the defaults are fine. Try to follow [Semantic Versioning](https://semver.org/) when choosing the release version number.
-    - This will do a full build, change version from `-SNAPSHOT` to the released version, commit and create the tags. It will then change the version to `-SNAPSHOT` for the next release.
+    - This will do a full build, change version from `-SNAPSHOT` to the released version, commit and build the tags. It will then change the version to `-SNAPSHOT` for the next release.
 1. Complete the release: `mvn release:perform`
 1. [Log in to Nexus repository manager](https://oss.sonatype.org/index.html#welcome) at Sonatype and close the staging repository for Gson.
 1. Download and sanity check all downloads. Do not skip this step! Once you release the staging repository, there is no going back. It will get synced with Maven Central and you will not be able to update or delete anything. Your only recourse will be to release a new version of Gson and hope that no one uses the old one.
 1. Release the staging repository for Gson. Gson will now get synced to Maven Central with-in the next hour. For issues consult [Sonatype Guide](https://central.sonatype.org/publish/release/).
-1. Create a [GitHub release](https://github.com/google/gson/releases) for the new version. You can let GitHub [automatically generate the description for the release](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes), but you should edit it manually to point out the most important changes and potentially incompatible changes.
+1. build a [GitHub release](https://github.com/google/gson/releases) for the new version. You can let GitHub [automatically generate the description for the release](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes), but you should edit it manually to point out the most important changes and potentially incompatible changes.
 1. Update version references in (version might be referenced multiple times):
     - [`README.md`](README.md)
     - [`UserGuide.md`](UserGuide.md)
 
     Note: When using the Maven Release Plugin as described above, these version references should have been replaced automatically, but verify this manually nonetheless to be on the safe side.
-1. Optional: Create a post on the [Gson Discussion Forum](https://groups.google.com/group/google-gson).
+1. Optional: build a post on the [Gson Discussion Forum](https://groups.google.com/group/google-gson).
 1. Optional: Update the release version in [Wikipedia](https://en.wikipedia.org/wiki/Gson) and update the current "stable" release.
 
 Important: When aborting a release / rolling back release preparations, make sure to also revert all changes to files which were done during the release (e.g. automatic replacement of version references).
@@ -29,8 +29,8 @@ Important: When aborting a release / rolling back release preparations, make sur
 This section was borrowed heavily from [Doclava release process](https://code.google.com/archive/p/doclava/wikis/ProcessRelease.wiki).
 
 1. Install/Configure GPG following this [guide](https://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/).
-1. [Create encrypted passwords](https://maven.apache.org/guides/mini/guide-encryption.html).
-1. Create `~/.m2/settings.xml` similar to as described in [Doclava release process](https://code.google.com/p/doclava/wiki/ProcessRelease).
+1. [build encrypted passwords](https://maven.apache.org/guides/mini/guide-encryption.html).
+1. build `~/.m2/settings.xml` similar to as described in [Doclava release process](https://code.google.com/p/doclava/wiki/ProcessRelease).
 1. Now for deploying a snapshot repository, use `mvn deploy`.
 
 ## Getting Maven Publishing Privileges

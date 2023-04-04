@@ -50,7 +50,7 @@ public class FormattingStyleTest {
 
   @Test
   public void testDefault() {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    Gson gson = new GsonBuilder().setPrettyPrinting().build();
     String json = gson.toJson(INPUT);
     // Make sure the default uses LF, like before.
     assertThat(json).isEqualTo(EXPECTED_LF);
@@ -59,7 +59,7 @@ public class FormattingStyleTest {
   @Test
   public void testNewlineCrLf() {
     FormattingStyle style = FormattingStyle.DEFAULT.withNewline("\r\n");
-    Gson gson = new GsonBuilder().setPrettyPrinting(style).create();
+    Gson gson = new GsonBuilder().setPrettyPrinting(style).build();
     String json = gson.toJson(INPUT);
     assertThat(json).isEqualTo(EXPECTED_CRLF);
   }
@@ -67,7 +67,7 @@ public class FormattingStyleTest {
   @Test
   public void testNewlineLf() {
     FormattingStyle style = FormattingStyle.DEFAULT.withNewline("\n");
-    Gson gson = new GsonBuilder().setPrettyPrinting(style).create();
+    Gson gson = new GsonBuilder().setPrettyPrinting(style).build();
     String json = gson.toJson(INPUT);
     assertThat(json).isEqualTo(EXPECTED_LF);
   }
@@ -75,7 +75,7 @@ public class FormattingStyleTest {
   @Test
   public void testNewlineCr() {
     FormattingStyle style = FormattingStyle.DEFAULT.withNewline("\r");
-    Gson gson = new GsonBuilder().setPrettyPrinting(style).create();
+    Gson gson = new GsonBuilder().setPrettyPrinting(style).build();
     String json = gson.toJson(INPUT);
     assertThat(json).isEqualTo(EXPECTED_CR);
   }
@@ -83,7 +83,7 @@ public class FormattingStyleTest {
   @Test
   public void testNewlineOs() {
     FormattingStyle style = FormattingStyle.DEFAULT.withNewline(System.lineSeparator());
-    Gson gson = new GsonBuilder().setPrettyPrinting(style).create();
+    Gson gson = new GsonBuilder().setPrettyPrinting(style).build();
     String json = gson.toJson(INPUT);
     assertThat(json).isEqualTo(EXPECTED_OS);
   }
@@ -93,7 +93,7 @@ public class FormattingStyleTest {
     for (String indent : TEST_INDENTS) {
       for (String newline : TEST_NEWLINES) {
         FormattingStyle style = FormattingStyle.DEFAULT.withNewline(newline).withIndent(indent);
-        Gson gson = new GsonBuilder().setPrettyPrinting(style).create();
+        Gson gson = new GsonBuilder().setPrettyPrinting(style).build();
         String json = gson.toJson(INPUT);
         assertThat(json).isEqualTo(buildExpected(newline, indent));
       }
@@ -110,7 +110,7 @@ public class FormattingStyleTest {
     for (String indent : TEST_INDENTS) {
       for (String newline : TEST_NEWLINES) {
         FormattingStyle style = FormattingStyle.DEFAULT.withNewline(newline).withIndent(indent);
-        Gson gson = new GsonBuilder().setPrettyPrinting(style).create();
+        Gson gson = new GsonBuilder().setPrettyPrinting(style).build();
 
         String toParse = buildExpected(newline, indent);
         actualParsed = gson.fromJson(toParse, INPUT.getClass());

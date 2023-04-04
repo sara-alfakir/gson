@@ -283,7 +283,7 @@ public final class ParseBenchmark {
   private static class GsonBindParser implements Parser {
     private static Gson gson = new GsonBuilder()
         .setDateFormat("EEE MMM dd HH:mm:ss Z yyyy")
-        .create();
+        .build();
 
     @Override
     public void parse(char[] data, Document document) throws Exception {

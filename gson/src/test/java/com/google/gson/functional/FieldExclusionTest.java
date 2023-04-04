@@ -47,7 +47,7 @@ public class FieldExclusionTest {
     String result = gson.toJson(target);
     assertThat(result).isEqualTo(target.toJson());
 
-    gson = new GsonBuilder().create();
+    gson = new GsonBuilder().build();
     target = outer.new Inner(VALUE);
     result = gson.toJson(target);
     assertThat(result).isEqualTo(target.toJson());
@@ -55,7 +55,7 @@ public class FieldExclusionTest {
 
   @Test
   public void testInnerClassExclusion() {
-    Gson gson = new GsonBuilder().disableInnerClassSerialization().create();
+    Gson gson = new GsonBuilder().disableInnerClassSerialization().build();
     Outer.Inner target = outer.new Inner(VALUE);
     String result = gson.toJson(target);
     assertThat(result).isEqualTo("null");
@@ -68,7 +68,7 @@ public class FieldExclusionTest {
     String result = gson.toJson(target);
     assertThat(result).isEqualTo(target.toJson());
 
-    gson = new GsonBuilder().create();
+    gson = new GsonBuilder().build();
     target = outer.new Inner(VALUE);
     result = gson.toJson(target);
     assertThat(result).isEqualTo(target.toJson());

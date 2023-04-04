@@ -91,7 +91,7 @@ public class UncategorizedTest {
    */
   @Test
   public void testReturningDerivedClassesDuringDeserialization() {
-    Gson gson = new GsonBuilder().registerTypeAdapter(Base.class, new BaseTypeAdapter()).create();
+    Gson gson = new GsonBuilder().registerTypeAdapter(Base.class, new BaseTypeAdapter()).build();
     String json = "{\"opType\":\"OP1\"}";
     Base base = gson.fromJson(json, Base.class);
     assertThat(base).isInstanceOf(Derived1.class);

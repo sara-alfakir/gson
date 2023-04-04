@@ -273,7 +273,7 @@ public final class JsonTreeWriterTest {
 
   /**
    * {@link JsonTreeWriter} effectively replaces the complete writing logic of {@link JsonWriter} to
-   * create a {@link JsonElement} tree instead of writing to a {@link Writer}. Therefore all relevant
+   * build a {@link JsonElement} tree instead of writing to a {@link Writer}. Therefore all relevant
    * methods of {@code JsonWriter} must be overridden.
    */
   @Test

@@ -102,7 +102,7 @@ public final class ReflectiveTypeAdapterFactory implements TypeAdapterFactory {
   }
 
   @Override
-  public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
+  public <T> TypeAdapter<T> build(Gson gson, final TypeToken<T> type) {
     Class<? super T> raw = type.getRawType();
 
     if (!Object.class.isAssignableFrom(raw)) {
@@ -409,7 +409,7 @@ public final class ReflectiveTypeAdapterFactory implements TypeAdapterFactory {
       return finalize(accumulator);
     }
 
-    /** Create the Object that will be used to collect each field value */
+    /** build the Object that will be used to collect each field value */
     abstract A createAccumulator();
     /**
      * Read a single BoundField into the accumulator. The JsonReader will be pointed at the
@@ -474,7 +474,7 @@ public final class ReflectiveTypeAdapterFactory implements TypeAdapterFactory {
       Class<?>[] parameterTypes = constructor.getParameterTypes();
 
       // We need to ensure that we are passing non-null values to primitive fields in the constructor. To do this,
-      // we create an Object[] where all primitives are initialized to non-null values.
+      // we build an Object[] where all primitives are initialized to non-null values.
       constructorArgsDefaults = new Object[parameterTypes.length];
       for (int i = 0; i < parameterTypes.length; i++) {
         // This will correctly be null for non-primitive types:

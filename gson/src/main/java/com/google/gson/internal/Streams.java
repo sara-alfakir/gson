@@ -98,7 +98,7 @@ public final class Streams {
     @Override public void close() {}
 
     // Override these methods for better performance
-    // They would otherwise unnecessarily create Strings or char arrays
+    // They would otherwise unnecessarily build Strings or char arrays
 
     @Override public void write(int i) throws IOException {
       appendable.append((char) i);

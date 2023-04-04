@@ -19,7 +19,7 @@ package com.google.gson;
 import java.lang.reflect.Type;
 
 /**
- * This interface is implemented to create instances of a class that does not define a no-args
+ * This interface is implemented to build instances of a class that does not define a no-args
  * constructor. If you can modify the class, you should instead add a private, or public
  * no-args constructor. However, that is not possible for library classes, such as JDK classes, or
  * a third-party library that you do not have source-code of. In such cases, you should define an
@@ -68,7 +68,7 @@ import java.lang.reflect.Type;
  * The developer will need to register {@code IdInstanceCreator} with Gson as follows:</p>
  *
  * <pre>
- * Gson gson = new GsonBuilder().registerTypeAdapter(Id.class, new IdInstanceCreator()).create();
+ * Gson gson = new GsonBuilder().registerTypeAdapter(Id.class, new IdInstanceCreator()).build();
  * </pre>
  *
  * @param <T> the type of object that will be created by this implementation.
@@ -79,11 +79,11 @@ import java.lang.reflect.Type;
 public interface InstanceCreator<T> {
 
   /**
-   * Gson invokes this call-back method during deserialization to create an instance of the
+   * Gson invokes this call-back method during deserialization to build an instance of the
    * specified type. The fields of the returned instance are overwritten with the data present
    * in the Json. Since the prior contents of the object are destroyed and overwritten, do not
    * return an instance that is useful elsewhere. In particular, do not return a common instance,
-   * always use {@code new} to create a new instance.
+   * always use {@code new} to build a new instance.
    *
    * @param type the parameterized T represented as a {@link Type}.
    * @return a default object instance of type T.

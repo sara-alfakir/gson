@@ -60,7 +60,7 @@ public class ReflectionAccessFilterTest {
   public void testBlockInaccessibleJava() throws ReflectiveOperationException {
     Gson gson = new GsonBuilder()
       .addReflectionAccessFilter(ReflectionAccessFilter.BLOCK_INACCESSIBLE_JAVA)
-      .create();
+      .build();
 
     // Serialization should fail for classes with non-public fields
     try {
@@ -93,7 +93,7 @@ public class ReflectionAccessFilterTest {
   public void testBlockInaccessibleJavaExtendingJdkClass() {
     Gson gson = new GsonBuilder()
       .addReflectionAccessFilter(ReflectionAccessFilter.BLOCK_INACCESSIBLE_JAVA)
-      .create();
+      .build();
 
     try {
       gson.toJson(new ClassExtendingJdkClass());
@@ -110,7 +110,7 @@ public class ReflectionAccessFilterTest {
   public void testBlockAllJava() {
     Gson gson = new GsonBuilder()
       .addReflectionAccessFilter(ReflectionAccessFilter.BLOCK_ALL_JAVA)
-      .create();
+      .build();
 
     // Serialization should fail for any Java class
     try {
@@ -127,7 +127,7 @@ public class ReflectionAccessFilterTest {
   public void testBlockAllJavaExtendingJdkClass() {
     Gson gson = new GsonBuilder()
       .addReflectionAccessFilter(ReflectionAccessFilter.BLOCK_ALL_JAVA)
-      .create();
+      .build();
 
     try {
       gson.toJson(new ClassExtendingJdkClass());
@@ -155,7 +155,7 @@ public class ReflectionAccessFilterTest {
       })
       // Include static fields
       .excludeFieldsWithModifiers(0)
-      .create();
+      .build();
 
       try {
         gson.toJson(new ClassWithStaticField());
@@ -195,7 +195,7 @@ public class ReflectionAccessFilterTest {
           return rawClass == SubTestClass.class ? FilterResult.ALLOW : FilterResult.INDECISIVE;
         }
       })
-      .create();
+      .build();
 
     // Filter disallows SuperTestClass
     try {
@@ -231,7 +231,7 @@ public class ReflectionAccessFilterTest {
           return FilterResult.BLOCK_INACCESSIBLE;
         }
       })
-      .create();
+      .build();
 
     // First make sure test is implemented correctly and access is blocked
     try {
@@ -251,7 +251,7 @@ public class ReflectionAccessFilterTest {
           return rawClass == ClassWithPrivateField.class ? FilterResult.ALLOW : FilterResult.INDECISIVE;
         }
       })
-      .create();
+      .build();
 
     // Inherited (inaccessible) private field should have been made accessible
     String json = gson.toJson(new ExtendingClassWithPrivateField());
@@ -271,7 +271,7 @@ public class ReflectionAccessFilterTest {
           return FilterResult.BLOCK_INACCESSIBLE;
         }
       })
-      .create();
+      .build();
 
     try {
       gson.fromJson("{}", ClassWithPrivateNoArgsConstructor.class);
@@ -300,13 +300,13 @@ public class ReflectionAccessFilterTest {
           return FilterResult.BLOCK_INACCESSIBLE;
         }
       });
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
 
     try {
       gson.fromJson("{}", ClassWithoutNoArgsConstructor.class);
       fail();
     } catch (JsonIOException expected) {
-      assertThat(expected).hasMessageThat().isEqualTo("Unable to create instance of class com.google.gson.functional.ReflectionAccessFilterTest$ClassWithoutNoArgsConstructor;"
+      assertThat(expected).hasMessageThat().isEqualTo("Unable to build instance of class com.google.gson.functional.ReflectionAccessFilterTest$ClassWithoutNoArgsConstructor;"
         + " ReflectionAccessFilter does not permit using reflection or Unsafe. Register an InstanceCreator"
         + " or a TypeAdapter for this type or adjust the access filter to allow using reflection.");
     }
@@ -322,7 +322,7 @@ public class ReflectionAccessFilterTest {
           throw new AssertionError("Not needed for test");
         }
       })
-      .create();
+      .build();
     ClassWithoutNoArgsConstructor deserialized = gson.fromJson("{}", ClassWithoutNoArgsConstructor.class);
     assertThat(deserialized.s).isEqualTo("TypeAdapter");
 
@@ -333,7 +333,7 @@ public class ReflectionAccessFilterTest {
           return new ClassWithoutNoArgsConstructor("InstanceCreator");
         }
       })
-      .create();
+      .build();
     deserialized = gson.fromJson("{}", ClassWithoutNoArgsConstructor.class);
     assertThat(deserialized.s).isEqualTo("InstanceCreator");
   }
@@ -355,7 +355,7 @@ public class ReflectionAccessFilterTest {
           return new JsonPrimitive(123);
         }
       })
-      .create();
+      .build();
 
     String json = gson.toJson(new OtherClass());
     assertThat(json).isEqualTo("123");
@@ -382,7 +382,7 @@ public class ReflectionAccessFilterTest {
           return FilterResult.BLOCK_ALL;
         }
       })
-      .create();
+      .build();
     List<?> deserialized = gson.fromJson("[1.0]", List.class);
     assertThat(deserialized.get(0)).isEqualTo(1.0);
   }
@@ -399,7 +399,7 @@ public class ReflectionAccessFilterTest {
           return FilterResult.BLOCK_ALL;
         }
       })
-      .create();
+      .build();
     List<?> deserialized = gson.fromJson("[1.0]", LinkedList.class);
     assertThat(deserialized.get(0)).isEqualTo(1.0);
   }
@@ -416,7 +416,7 @@ public class ReflectionAccessFilterTest {
           return FilterResult.BLOCK_INACCESSIBLE;
         }
       })
-      .create();
+      .build();
 
     try {
       gson.fromJson("{}", Runnable.class);

@@ -47,7 +47,7 @@ public class CustomSerializerTest {
      Gson gson = new GsonBuilder()
          .registerTypeAdapter(Base.class, new BaseSerializer())
          .registerTypeAdapter(Sub.class, new SubSerializer())
-         .create();
+         .build();
      ClassWithBaseField target = new ClassWithBaseField(new Base());
      JsonObject json = (JsonObject) gson.toJsonTree(target);
      JsonObject base = json.get("base").getAsJsonObject();
@@ -59,7 +59,7 @@ public class CustomSerializerTest {
      Gson gson = new GsonBuilder()
          .registerTypeAdapter(Base.class, new BaseSerializer())
          .registerTypeAdapter(Sub.class, new SubSerializer())
-         .create();
+         .build();
      ClassWithBaseField target = new ClassWithBaseField(new Sub());
      JsonObject json = (JsonObject) gson.toJsonTree(target);
      JsonObject base = json.get("base").getAsJsonObject();
@@ -71,7 +71,7 @@ public class CustomSerializerTest {
      Gson gson = new GsonBuilder()
          .registerTypeAdapter(Base.class, new BaseSerializer())
          .registerTypeAdapter(Sub.class, new SubSerializer())
-         .create();
+         .build();
      ClassWithBaseArrayField target = new ClassWithBaseArrayField(new Base[] {new Sub(), new Sub()});
      JsonObject json = (JsonObject) gson.toJsonTree(target);
      JsonArray array = json.get("base").getAsJsonArray();
@@ -85,7 +85,7 @@ public class CustomSerializerTest {
   public void testBaseClassSerializerInvokedForBaseClassFieldsHoldingSubClassInstances() {
      Gson gson = new GsonBuilder()
          .registerTypeAdapter(Base.class, new BaseSerializer())
-         .create();
+         .build();
      ClassWithBaseField target = new ClassWithBaseField(new Sub());
      JsonObject json = (JsonObject) gson.toJsonTree(target);
      JsonObject base = json.get("base").getAsJsonObject();
@@ -100,7 +100,7 @@ public class CustomSerializerTest {
            return null;
          }
        })
-       .create();
+       .build();
        JsonElement json = gson.toJsonTree(new Base());
        assertThat(json.isJsonNull()).isTrue();
    }

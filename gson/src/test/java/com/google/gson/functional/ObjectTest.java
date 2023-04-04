@@ -358,7 +358,7 @@ public class ObjectTest {
                   ClassWithNoFields src, Type typeOfSrc, JsonSerializationContext context) {
                 return new JsonObject();
               }
-            }).create();
+            }).build();
 
     assertThat(gson.toJson(new ClassWithNoFields() {
       // empty anonymous class
@@ -405,7 +405,7 @@ public class ObjectTest {
       @Override public Parent.Child createInstance(Type type) {
         return p.new Child();
       }
-    }).create();
+    }).build();
     String json = "{'value2':3}";
     Parent.Child c = gson.fromJson(json, Parent.Child.class);
     assertThat(c.value2).isEqualTo(3);
@@ -525,7 +525,7 @@ public class ObjectTest {
 
   @Test
   public void testJsonObjectSerialization() {
-    Gson gson = new GsonBuilder().serializeNulls().create();
+    Gson gson = new GsonBuilder().serializeNulls().build();
     JsonObject obj = new JsonObject();
     String json = gson.toJson(obj);
     assertThat(json).isEqualTo("{}");
@@ -593,7 +593,7 @@ public class ObjectTest {
     Gson gson = new GsonBuilder()
         // Include static fields
         .excludeFieldsWithModifiers(0)
-        .create();
+        .build();
 
     String json = gson.toJson(new ClassWithStaticField());
     assertThat(json).isEqualTo("{\"s\":\"initial\"}");
@@ -617,7 +617,7 @@ public class ObjectTest {
     Gson gson = new GsonBuilder()
         // Include static fields
         .excludeFieldsWithModifiers(0)
-        .create();
+        .build();
 
     String oldValue = ClassWithStaticField.s;
     try {

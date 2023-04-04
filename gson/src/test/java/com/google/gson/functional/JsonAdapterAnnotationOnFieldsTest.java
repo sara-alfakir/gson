@@ -57,7 +57,7 @@ public final class JsonAdapterAnnotationOnFieldsTest {
   public void testRegisteredTypeAdapterTakesPrecedenceOverClassAnnotationAdapter() {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(User.class, new RegisteredUserAdapter())
-        .create();
+        .build();
     String json = gson.toJson(new Computer(new User("Inderjeet Singh")));
     assertThat(json).isEqualTo("{\"user\":\"RegisteredUserAdapter\"}");
     Computer computer = gson.fromJson("{'user':'Inderjeet Singh'}", Computer.class);
@@ -74,7 +74,7 @@ public final class JsonAdapterAnnotationOnFieldsTest {
         @Override public Part read(JsonReader in) {
           throw new AssertionError();
         }
-      }).create();
+      }).build();
     String json = gson.toJson(new Gadget(new Part("screen")));
     assertThat(json).isEqualTo("{\"part\":\"PartJsonFieldAnnotationAdapter\"}");
     Gadget gadget = gson.fromJson("{'part':'screen'}", Gadget.class);
@@ -124,7 +124,7 @@ public final class JsonAdapterAnnotationOnFieldsTest {
   }
 
   private static class GizmoPartTypeAdapterFactory implements TypeAdapterFactory {
-    @Override public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
+    @Override public <T> TypeAdapter<T> build(Gson gson, final TypeToken<T> type) {
       return new TypeAdapter<T>() {
         @Override public void write(JsonWriter out, T value) throws IOException {
           out.value("GizmoPartTypeAdapterFactory");
@@ -270,7 +270,7 @@ public final class JsonAdapterAnnotationOnFieldsTest {
       }
     };
     @SuppressWarnings("unchecked")
-    @Override public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
+    @Override public <T> TypeAdapter<T> build(Gson gson, final TypeToken<T> type) {
       Class<?> cls = type.getRawType();
       if (Long.class.isAssignableFrom(cls)) {
         return (TypeAdapter<T>) ADAPTER;
@@ -300,7 +300,7 @@ public final class JsonAdapterAnnotationOnFieldsTest {
   }
 
   private static class Gizmo2PartTypeAdapterFactory implements TypeAdapterFactory {
-    @Override public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
+    @Override public <T> TypeAdapter<T> build(Gson gson, final TypeToken<T> type) {
       return new TypeAdapter<T>() {
         @Override public void write(JsonWriter out, T value) throws IOException {
           out.value("GizmoPartTypeAdapterFactory");

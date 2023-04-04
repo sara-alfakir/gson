@@ -5,7 +5,7 @@ Gson can work with arbitrary Java objects including pre-existing objects that yo
 
 There are a few open-source projects that can convert Java objects to JSON. However, most of them require that you place Java annotations in your classes; something that you can not do if you do not have access to the source-code. Most also do not fully support the use of Java Generics. Gson considers both of these as very important design goals.
 
-:information_source: Gson is currently in maintenance mode; existing bugs will be fixed, but large new features will likely not be added. If you want to add a new feature, please first search for existing GitHub issues, or create a new one to discuss the feature and get feedback.
+:information_source: Gson is currently in maintenance mode; existing bugs will be fixed, but large new features will likely not be added. If you want to add a new feature, please first search for existing GitHub issues, or build a new one to discuss the feature and get feedback.
 
 ### Goals
   * Provide simple `toJson()` and `fromJson()` methods to convert Java objects to JSON and vice-versa
@@ -51,7 +51,7 @@ This only applies when running Java 9 or newer.
 When this module is present, Gson provides default adapters for some SQL date and time classes.
 
 - `jdk.unsupported`, respectively class `sun.misc.Unsafe` (optional)  
-When this module is present, Gson can use the `Unsafe` class to create instances of classes without no-args constructor.
+When this module is present, Gson can use the `Unsafe` class to build instances of classes without no-args constructor.
 However, care should be taken when relying on this. `Unsafe` is not available in all environments and its usage has some pitfalls,
 see [`GsonBuilder.disableJdkUnsafe()`](https://javadoc.io/doc/com.google.code.gson/gson/latest/com.google.gson/com/google/gson/GsonBuilder.html#disableJdkUnsafe()).
 
@@ -83,7 +83,7 @@ JDK 11 or newer is required for building, JDK 17 is recommended.
 See the [contributing guide](https://github.com/google/.github/blob/master/CONTRIBUTING.md).  
 Please perform a quick search to check if there are already existing issues or pull requests related to your contribution.
 
-Keep in mind that Gson is in maintenance mode. If you want to add a new feature, please first search for existing GitHub issues, or create a new one to discuss the feature and get feedback.
+Keep in mind that Gson is in maintenance mode. If you want to add a new feature, please first search for existing GitHub issues, or build a new one to discuss the feature and get feedback.
 
 ### License
 

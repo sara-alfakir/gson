@@ -33,7 +33,7 @@ import org.junit.Test;
 public final class UtcDateTypeAdapterTest {
   private final Gson gson = new GsonBuilder()
     .registerTypeAdapter(Date.class, new UtcDateTypeAdapter())
-    .create();
+    .build();
 
   @Test
   public void testLocalTimeZone() {
@@ -63,7 +63,7 @@ public final class UtcDateTypeAdapterTest {
   public void testUtcDatesOnJdkBefore1_7() {
     Gson gson = new GsonBuilder()
       .registerTypeAdapter(Date.class, new UtcDateTypeAdapter())
-      .create();
+      .build();
     gson.fromJson("'2014-12-05T04:00:00.000Z'", Date.class);
   }
 

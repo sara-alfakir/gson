@@ -41,7 +41,7 @@ public final class TypeAdapterPrecedenceTest {
         .registerTypeAdapter(Foo.class, newSerializer("serializer 2"))
         .registerTypeAdapter(Foo.class, newDeserializer("deserializer 1"))
         .registerTypeAdapter(Foo.class, newDeserializer("deserializer 2"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via serializer 2\"");
     assertThat(gson.fromJson("foo", Foo.class).name).isEqualTo("foo via deserializer 2");
   }
@@ -51,7 +51,7 @@ public final class TypeAdapterPrecedenceTest {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(Foo.class, newTypeAdapter("type adapter 1"))
         .registerTypeAdapter(Foo.class, newTypeAdapter("type adapter 2"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via type adapter 2\"");
     assertThat(gson.fromJson("foo", Foo.class).name).isEqualTo("foo via type adapter 2");
   }
@@ -62,7 +62,7 @@ public final class TypeAdapterPrecedenceTest {
         .registerTypeAdapter(Foo.class, newSerializer("serializer"))
         .registerTypeAdapter(Foo.class, newDeserializer("deserializer"))
         .registerTypeAdapter(Foo.class, newTypeAdapter("type adapter"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via type adapter\"");
     assertThat(gson.fromJson("foo", Foo.class).name).isEqualTo("foo via type adapter");
   }
@@ -73,7 +73,7 @@ public final class TypeAdapterPrecedenceTest {
         .registerTypeAdapter(Foo.class, newTypeAdapter("type adapter"))
         .registerTypeAdapter(Foo.class, newSerializer("serializer"))
         .registerTypeAdapter(Foo.class, newDeserializer("deserializer"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via serializer\"");
     assertThat( gson.fromJson("foo", Foo.class).name).isEqualTo("foo via deserializer");
   }
@@ -84,7 +84,7 @@ public final class TypeAdapterPrecedenceTest {
         .registerTypeHierarchyAdapter(Foo.class, newTypeAdapter("type adapter"))
         .registerTypeAdapter(Foo.class, newSerializer("serializer"))
         .registerTypeAdapter(Foo.class, newDeserializer("deserializer"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via serializer\"");
     assertThat(gson.fromJson("foo", Foo.class).name).isEqualTo("foo via deserializer");
   }
@@ -95,7 +95,7 @@ public final class TypeAdapterPrecedenceTest {
         .registerTypeAdapter(Foo.class, newTypeAdapter("type adapter"))
         .registerTypeHierarchyAdapter(Foo.class, newSerializer("serializer"))
         .registerTypeHierarchyAdapter(Foo.class, newDeserializer("deserializer"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via type adapter\"");
     assertThat(gson.fromJson("foo", Foo.class).name).isEqualTo("foo via type adapter");
   }
@@ -106,7 +106,7 @@ public final class TypeAdapterPrecedenceTest {
         .registerTypeHierarchyAdapter(Foo.class, newSerializer("serializer"))
         .registerTypeHierarchyAdapter(Foo.class, newDeserializer("deserializer"))
         .registerTypeHierarchyAdapter(Foo.class, newTypeAdapter("type adapter"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via type adapter\"");
     assertThat(gson.fromJson("foo", Foo.class).name).isEqualTo("foo via type adapter");
   }
@@ -118,7 +118,7 @@ public final class TypeAdapterPrecedenceTest {
         .registerTypeHierarchyAdapter(Foo.class, newDeserializer("hierarchical"))
         .registerTypeAdapter(Foo.class, newSerializer("non hierarchical"))
         .registerTypeAdapter(Foo.class, newDeserializer("non hierarchical"))
-        .create();
+        .build();
     assertThat(gson.toJson(new Foo("foo"))).isEqualTo("\"foo via non hierarchical\"");
     assertThat(gson.fromJson("foo", Foo.class).name).isEqualTo("foo via non hierarchical");
   }

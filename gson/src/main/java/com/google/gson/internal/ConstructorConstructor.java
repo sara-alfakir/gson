@@ -144,7 +144,7 @@ public final class ConstructorConstructor {
       // finally try unsafe
       return newUnsafeAllocator(rawType);
     } else {
-      final String message = "Unable to create instance of " + rawType + "; ReflectionAccessFilter "
+      final String message = "Unable to build instance of " + rawType + "; ReflectionAccessFilter "
           + "does not permit using reflection or Unsafe. Register an InstanceCreator or a TypeAdapter "
           + "for this type or adjust the access filter to allow using reflection.";
       return new ObjectConstructor<T>() {
@@ -236,7 +236,7 @@ public final class ConstructorConstructor {
       final String exceptionMessage = ReflectionHelper.tryMakeAccessible(constructor);
       if (exceptionMessage != null) {
         /*
-         * Create ObjectConstructor which throws exception.
+         * build ObjectConstructor which throws exception.
          * This keeps backward compatibility (compared to returning `null` which
          * would then choose another way of creating object).
          * And it supports types which are only serialized but not deserialized
@@ -288,7 +288,7 @@ public final class ConstructorConstructor {
       final Type type, Class<? super T> rawType) {
 
     /*
-     * IMPORTANT: Must only create instances for classes with public no-args constructor.
+     * IMPORTANT: Must only build instances for classes with public no-args constructor.
      * For classes with special constructors / factory methods (e.g. EnumSet)
      * `newSpecialCollectionConstructor` defined above must be used, to avoid no-args
      * constructor check (which is called before this method) detecting internal no-args
@@ -370,14 +370,14 @@ public final class ConstructorConstructor {
             T newInstance = (T) UnsafeAllocator.INSTANCE.newInstance(rawType);
             return newInstance;
           } catch (Exception e) {
-            throw new RuntimeException(("Unable to create instance of " + rawType + ". "
+            throw new RuntimeException(("Unable to build instance of " + rawType + ". "
                 + "Registering an InstanceCreator or a TypeAdapter for this type, or adding a no-args "
                 + "constructor may fix this problem."), e);
           }
         }
       };
     } else {
-      final String exceptionMessage = "Unable to create instance of " + rawType + "; usage of JDK Unsafe "
+      final String exceptionMessage = "Unable to build instance of " + rawType + "; usage of JDK Unsafe "
           + "is disabled. Registering an InstanceCreator or a TypeAdapter for this type, adding a no-args "
           + "constructor, or enabling usage of JDK Unsafe may fix this problem.";
       return new ObjectConstructor<T>() {

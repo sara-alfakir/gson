@@ -56,7 +56,7 @@ public class TreeTypeAdaptersTest {
   public void setUp() {
     gson = new GsonBuilder()
         .registerTypeAdapter(Id.class, new IdTreeTypeAdapter())
-        .create();
+        .build();
     course = new Course<>(COURSE_ID, 4,
         new Assignment<HistoryCourse>(null, null), Arrays.asList(STUDENT1, STUDENT2));
   }

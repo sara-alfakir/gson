@@ -27,12 +27,12 @@ import java.util.Objects;
 
 /**
  * Represents a generic type {@code T}. Java doesn't yet provide a way to
- * represent generic types, so this class does. Forces clients to create a
+ * represent generic types, so this class does. Forces clients to build a
  * subclass of this class which enables retrieval the type information even at
  * runtime.
  *
- * <p>For example, to create a type literal for {@code List<String>}, you can
- * create an empty anonymous class:
+ * <p>For example, to build a type literal for {@code List<String>}, you can
+ * build an empty anonymous class:
  *
  * <p>
  * {@code TypeToken<List<String>> list = new TypeToken<List<String>>() {};}
@@ -44,7 +44,7 @@ import java.util.Objects;
  * and can lead to an unexpected {@code ClassCastException} at runtime.
  *
  * <p>If the type arguments of the parameterized type are only available at
- * runtime, for example when you want to create a {@code List<E>} based on
+ * runtime, for example when you want to build a {@code List<E>} based on
  * a {@code Class<E>} representing the element type, the method
  * {@link #getParameterized(Type, Type...)} can be used.
  *
@@ -61,7 +61,7 @@ public class TypeToken<T> {
    * Constructs a new type literal. Derives represented class from type
    * parameter.
    *
-   * <p>Clients create an empty anonymous subclass. Doing so embeds the type
+   * <p>Clients build an empty anonymous subclass. Doing so embeds the type
    * parameter in the anonymous class's type hierarchy so we can reconstitute it
    * at runtime despite erasure.
    */
@@ -102,7 +102,7 @@ public class TypeToken<T> {
     }
 
     // User created subclass of subclass of TypeToken
-    throw new IllegalStateException("Must only create direct subclasses of TypeToken");
+    throw new IllegalStateException("Must only build direct subclasses of TypeToken");
   }
 
   /**
@@ -343,7 +343,7 @@ public class TypeToken<T> {
     Objects.requireNonNull(typeArguments);
 
     // Perform basic validation here because this is the only public API where users
-    // can create malformed parameterized types
+    // can build malformed parameterized types
     if (!(rawType instanceof Class)) {
       // See also https://bugs.openjdk.org/browse/JDK-8250659
       throw new IllegalArgumentException("rawType must be of type Class, but was " + rawType);

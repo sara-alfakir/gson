@@ -119,7 +119,7 @@ public class ArrayTest {
 
   @Test
   public void testNullsInArrayWithSerializeNullPropertySetSerialization() {
-    gson = new GsonBuilder().serializeNulls().create();
+    gson = new GsonBuilder().serializeNulls().build();
     String[] array = {"foo", null, "bar"};
     String expected = "[\"foo\",null,\"bar\"]";
     String json = gson.toJson(array);

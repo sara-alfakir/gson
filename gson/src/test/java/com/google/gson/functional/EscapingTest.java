@@ -75,8 +75,8 @@ public class EscapingTest {
   
   @Test
   public void testGsonAcceptsEscapedAndNonEscapedJsonDeserialization() {
-    Gson escapeHtmlGson = new GsonBuilder().create();
-    Gson noEscapeHtmlGson = new GsonBuilder().disableHtmlEscaping().create();
+    Gson escapeHtmlGson = new GsonBuilder().build();
+    Gson noEscapeHtmlGson = new GsonBuilder().disableHtmlEscaping().build();
     
     BagOfPrimitives target = new BagOfPrimitives(1L, 1, true, "test' / w'ith\" / \\ <script>");
     String escapedJsonForm = escapeHtmlGson.toJson(target);

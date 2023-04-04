@@ -206,7 +206,7 @@ public final class MixedStreamTest {
         .isEqualTo("[\"\\u003c\",\"\\u003e\",\"\\u0026\",\"\\u003d\",\"\\u0027\"]");
 
     writer = new StringWriter();
-    new GsonBuilder().disableHtmlEscaping().create()
+    new GsonBuilder().disableHtmlEscaping().build()
         .toJson(contents, type, new JsonWriter(writer));
     assertThat(writer.toString())
         .isEqualTo("[\"<\",\">\",\"&\",\"=\",\"'\"]");
@@ -220,7 +220,7 @@ public final class MixedStreamTest {
 
     StringWriter writer = new StringWriter();
     JsonWriter jsonWriter = new JsonWriter(writer);
-    new GsonBuilder().serializeSpecialFloatingPointValues().create()
+    new GsonBuilder().serializeSpecialFloatingPointValues().build()
         .toJson(doubles, type, jsonWriter);
     assertThat(writer.toString()).isEqualTo("[NaN,-Infinity,Infinity,-0.0,0.5,0.0]");
 

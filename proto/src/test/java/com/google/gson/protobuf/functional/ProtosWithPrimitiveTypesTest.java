@@ -38,7 +38,7 @@ public class ProtosWithPrimitiveTypesTest {
       GeneratedMessageV3.class, ProtoTypeAdapter.newBuilder()
           .setEnumSerialization(EnumSerialization.NUMBER)
           .build())
-      .create();
+      .build();
   }
 
   @Test

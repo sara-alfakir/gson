@@ -97,7 +97,7 @@ public class ReflectionAccessTest {
             return null;
           }}
         )
-        .create();
+        .build();
 
       assertThat(gson.toJson(null, clazz)).isEqualTo("\"custom-write\"");
       assertThat(gson.fromJson("{}", clazz)).isNull();

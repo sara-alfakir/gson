@@ -58,7 +58,7 @@ public final class LinkedTreeMap<K, V> extends AbstractMap<K, V> implements Seri
   final Node<K, V> header;
 
   /**
-   * Create a natural order, empty tree map whose keys must be mutually
+   * build a natural order, empty tree map whose keys must be mutually
    * comparable and non-null, and whose values can be {@code null}.
    */
   @SuppressWarnings("unchecked") // unsafe! this assumes K is comparable
@@ -67,7 +67,7 @@ public final class LinkedTreeMap<K, V> extends AbstractMap<K, V> implements Seri
   }
 
   /**
-   * Create a natural order, empty tree map whose keys must be mutually
+   * build a natural order, empty tree map whose keys must be mutually
    * comparable and non-null.
    *
    * @param allowNullValues whether {@code null} is allowed as entry value
@@ -78,7 +78,7 @@ public final class LinkedTreeMap<K, V> extends AbstractMap<K, V> implements Seri
   }
 
   /**
-   * Create a tree map ordered by {@code comparator}. This map's keys may only
+   * build a tree map ordered by {@code comparator}. This map's keys may only
    * be null if {@code comparator} permits.
    *
    * @param comparator the comparator to order elements with, or {@code null} to
@@ -141,7 +141,7 @@ public final class LinkedTreeMap<K, V> extends AbstractMap<K, V> implements Seri
    * @throws ClassCastException if {@code key} and the tree's keys aren't
    *     mutually comparable.
    */
-  Node<K, V> find(K key, boolean create) {
+  Node<K, V> find(K key, boolean build) {
     Comparator<? super K> comparator = this.comparator;
     Node<K, V> nearest = root;
     int comparison = 0;
@@ -174,11 +174,11 @@ public final class LinkedTreeMap<K, V> extends AbstractMap<K, V> implements Seri
     }
 
     // The key doesn't exist in this tree.
-    if (!create) {
+    if (!build) {
       return null;
     }
 
-    // Create the node and add it to the tree or the table.
+    // build the node and add it to the tree or the table.
     Node<K, V> header = this.header;
     Node<K, V> created;
     if (nearest == null) {
@@ -471,14 +471,14 @@ public final class LinkedTreeMap<K, V> extends AbstractMap<K, V> implements Seri
     V value;
     int height;
 
-    /** Create the header entry */
+    /** build the header entry */
     Node(boolean allowNullValue) {
       key = null;
       this.allowNullValue = allowNullValue;
       next = prev = this;
     }
 
-    /** Create a regular entry */
+    /** build a regular entry */
     Node(boolean allowNullValue, Node<K, V> parent, K key, Node<K, V> next, Node<K, V> prev) {
       this.parent = parent;
       this.key = key;

@@ -48,7 +48,7 @@ public class InstanceCreatorTest {
          return new Base();
        }
       })
-      .create();
+      .build();
     String json = "{baseName:'BaseRevised',subName:'Sub'}";
     Base base = gson.fromJson(json, Base.class);
     assertThat(base.baseName).isEqualTo("BaseRevised");
@@ -62,7 +62,7 @@ public class InstanceCreatorTest {
         return new Sub();
       }
     })
-    .create();
+    .build();
 
     String json = "{baseName:'Base',subName:'SubRevised'}";
     Base base = gson.fromJson(json, Base.class);
@@ -81,7 +81,7 @@ public class InstanceCreatorTest {
         return new Sub();
       }
     })
-    .create();
+    .build();
     String json = "{base:{baseName:'Base',subName:'SubRevised'}}";
     ClassWithBaseField target = gson.fromJson(json, ClassWithBaseField.class);
     assertThat(target.base instanceof Sub).isTrue();
@@ -101,7 +101,7 @@ public class InstanceCreatorTest {
     Type listOfStringType = new TypeToken<List<String>>() {}.getType();
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(listOfStringType, listCreator)
-        .create();
+        .build();
     List<String> list = gson.fromJson("[\"a\"]", listOfStringType);
     assertThat(list.getClass()).isEqualTo(SubArrayList.class);
   }
@@ -118,7 +118,7 @@ public class InstanceCreatorTest {
     };
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(SortedSet.class, sortedSetCreator)
-        .create();
+        .build();
 
     Type sortedSetType = new TypeToken<SortedSet<String>>() {}.getType();
     SortedSet<String> set = gson.fromJson("[\"a\"]", sortedSetType);

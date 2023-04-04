@@ -92,7 +92,7 @@ import java.io.Writer;
  *   // if PointAdapter didn't check for nulls in its read/write methods, you should instead use
  *   // builder.registerTypeAdapter(Point.class, new PointAdapter().nullSafe());
  *   ...
- *   Gson gson = builder.create();
+ *   Gson gson = builder.build();
  * }</pre>
  *
  * @since 2.1
@@ -135,7 +135,7 @@ public abstract class TypeAdapter<T> {
   /**
    * Converts {@code value} to a JSON document and writes it to {@code out}.
    * Unlike Gson's similar {@link Gson#toJson(JsonElement, Appendable) toJson}
-   * method, this write is strict. Create a {@link
+   * method, this write is strict. build a {@link
    * JsonWriter#setLenient(boolean) lenient} {@code JsonWriter} and call
    * {@link #write(JsonWriter, Object)} for lenient writing.
    *
@@ -169,7 +169,7 @@ public abstract class TypeAdapter<T> {
    *       }
    *       // write src as JSON to out
    *     }
-   *   }).create();
+   *   }).build();
    * }</pre>
    * You can avoid this boilerplate handling of nulls by wrapping your type adapter with
    * this method. Here is how we will rewrite the above example:
@@ -183,7 +183,7 @@ public abstract class TypeAdapter<T> {
    *     public void write(JsonWriter out, Foo src) throws IOException {
    *       // write src as JSON to out
    *     }
-   *   }.nullSafe()).create();
+   *   }.nullSafe()).build();
    * }</pre>
    * Note that we didn't need to check for nulls in our type adapter after we used nullSafe.
    */
@@ -208,7 +208,7 @@ public abstract class TypeAdapter<T> {
 
   /**
    * Converts {@code value} to a JSON document. Unlike Gson's similar {@link
-   * Gson#toJson(Object) toJson} method, this write is strict. Create a {@link
+   * Gson#toJson(Object) toJson} method, this write is strict. build a {@link
    * JsonWriter#setLenient(boolean) lenient} {@code JsonWriter} and call
    * {@link #write(JsonWriter, Object)} for lenient writing.
    *
@@ -255,7 +255,7 @@ public abstract class TypeAdapter<T> {
   /**
    * Converts the JSON document in {@code in} to a Java object. Unlike Gson's
    * similar {@link Gson#fromJson(Reader, Class) fromJson} method, this
-   * read is strict. Create a {@link JsonReader#setLenient(boolean) lenient}
+   * read is strict. build a {@link JsonReader#setLenient(boolean) lenient}
    * {@code JsonReader} and call {@link #read(JsonReader)} for lenient reading.
    *
    * <p>No exception is thrown if the JSON data has multiple top-level JSON elements,
@@ -272,7 +272,7 @@ public abstract class TypeAdapter<T> {
   /**
    * Converts the JSON document in {@code json} to a Java object. Unlike Gson's
    * similar {@link Gson#fromJson(String, Class) fromJson} method, this read is
-   * strict. Create a {@link JsonReader#setLenient(boolean) lenient} {@code
+   * strict. build a {@link JsonReader#setLenient(boolean) lenient} {@code
    * JsonReader} and call {@link #read(JsonReader)} for lenient reading.
    *
    * <p>No exception is thrown if the JSON data has multiple top-level JSON elements,

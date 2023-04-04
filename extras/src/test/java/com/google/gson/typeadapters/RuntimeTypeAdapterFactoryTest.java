@@ -36,7 +36,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(CreditCard.class);
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(rta)
-        .create();
+        .build();
 
     CreditCard original = new CreditCard("Jesse", 234);
     assertEquals("{\"type\":\"CreditCard\",\"cvv\":234,\"ownerName\":\"Jesse\"}",
@@ -58,7 +58,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(CreditCard.class);
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(rta)
-        .create();
+        .build();
 
     CreditCard original = new CreditCard("Jesse", 234);
     assertEquals("{\"type\":\"CreditCard\",\"cvv\":234,\"ownerName\":\"Jesse\"}",
@@ -76,7 +76,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(BillingInstrument.class);
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(rta)
-        .create();
+        .build();
 
     BillingInstrument original = new BillingInstrument("Jesse");
     assertEquals("{\"type\":\"BillingInstrument\",\"ownerName\":\"Jesse\"}",
@@ -156,7 +156,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(CreditCard.class);
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(billingAdapter)
-        .create();
+        .build();
     try {
       gson.fromJson("{ownerName:'Jesse'}", BillingInstrument.class);
       fail();
@@ -170,7 +170,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(BankTransfer.class);
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(billingAdapter)
-        .create();
+        .build();
     try {
       gson.fromJson("{type:'CreditCard',ownerName:'Jesse'}", BillingInstrument.class);
       fail();
@@ -184,7 +184,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(BankTransfer.class);
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(billingAdapter)
-        .create();
+        .build();
     try {
       gson.toJson(new CreditCard("Jesse", 456), BillingInstrument.class);
       fail();
@@ -198,7 +198,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(CreditCard.class);
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(billingAdapter)
-        .create();
+        .build();
     try {
       gson.toJson(new CreditCard("Jesse", 456), BillingInstrument.class);
       fail();
@@ -213,7 +213,7 @@ public final class RuntimeTypeAdapterFactoryTest {
         .registerSubtype(BankTransfer.class);    
     Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(billingAdapter)
-        .create();    
+        .build();    
     String serialized = gson.toJson(new BillingInstrumentWrapper(null), BillingInstrumentWrapper.class);
     BillingInstrumentWrapper deserialized = gson.fromJson(serialized, BillingInstrumentWrapper.class);
     assertNull(deserialized.instrument);

@@ -85,7 +85,7 @@ public class SqlTypesGsonTest {
     Locale.setDefault(Locale.US);
     try {
       java.sql.Date sqlDate = new java.sql.Date(0L);
-      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").build();
       String json = gson.toJson(sqlDate, Timestamp.class);
       assertThat(json).isEqualTo("\"1970-01-01\"");
       assertThat(gson.fromJson("\"1970-01-01\"", java.sql.Date.class).getTime()).isEqualTo(0);
@@ -137,7 +137,7 @@ public class SqlTypesGsonTest {
     Locale.setDefault(Locale.US);
     try {
       Timestamp timestamp = new Timestamp(0L);
-      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").build();
       String json = gson.toJson(timestamp, Timestamp.class);
       assertThat(json).isEqualTo("\"1970-01-01\"");
       assertThat(gson.fromJson("\"1970-01-01\"", Timestamp.class).getTime()).isEqualTo(0);

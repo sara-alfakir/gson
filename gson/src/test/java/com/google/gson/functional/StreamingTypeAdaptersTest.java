@@ -41,7 +41,7 @@ import java.util.Map;
 import org.junit.Test;
 
 public final class StreamingTypeAdaptersTest {
-  private Gson miniGson = new GsonBuilder().create();
+  private Gson miniGson = new GsonBuilder().build();
   private TypeAdapter<Truck> truckAdapter = miniGson.getAdapter(Truck.class);
   private TypeAdapter<Map<String, Double>> mapAdapter
       = miniGson.getAdapter(new TypeToken<Map<String, Double>>() {});
@@ -121,7 +121,7 @@ public final class StreamingTypeAdaptersTest {
         out.value(value.name);
       }
     };
-    miniGson = new GsonBuilder().registerTypeAdapter(Person.class, personNameAdapter).create();
+    miniGson = new GsonBuilder().registerTypeAdapter(Person.class, personNameAdapter).build();
     truckAdapter = miniGson.getAdapter(Truck.class);
   }
 
@@ -181,7 +181,7 @@ public final class StreamingTypeAdaptersTest {
       }
     };
     Gson gson = new GsonBuilder().registerTypeAdapter(
-        Person.class, typeAdapter).create();
+        Person.class, typeAdapter).build();
     Truck truck = new Truck();
     truck.horsePower = 1.0D;
     truck.passengers = new ArrayList<>();
@@ -196,7 +196,7 @@ public final class StreamingTypeAdaptersTest {
       gson.fromJson(json, Truck.class);
       fail();
     } catch (JsonSyntaxException expected) {}
-    gson = new GsonBuilder().registerTypeAdapter(Person.class, typeAdapter.nullSafe()).create();
+    gson = new GsonBuilder().registerTypeAdapter(Person.class, typeAdapter.nullSafe()).build();
     assertThat(gson.toJson(truck, Truck.class))
         .isEqualTo("{\"horsePower\":1.0,\"passengers\":[null,\"jesse,30\"]}");
     truck = gson.fromJson(json, Truck.class);

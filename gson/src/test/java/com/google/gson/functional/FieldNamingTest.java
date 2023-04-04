@@ -88,7 +88,7 @@ public final class FieldNamingTest {
   private Gson getGsonWithNamingPolicy(FieldNamingPolicy fieldNamingPolicy){
     return new GsonBuilder()
       .setFieldNamingPolicy(fieldNamingPolicy)
-        .create();
+        .build();
   }
 
   @SuppressWarnings("unused") // fields are used reflectively

@@ -30,7 +30,7 @@ import com.google.gson.reflect.TypeToken;
  * model: <pre>   {@code
  *
  *   public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
- *     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+ *     public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type) {
  *       Class<T> rawType = (Class<T>) type.getRawType();
  *       if (!rawType.isEnum()) {
  *         return null;
@@ -69,14 +69,14 @@ import com.google.gson.reflect.TypeToken;
  *
  * <p>Type adapter typeAdapterFactoryList select which types they provide type adapters
  * for. If a factory cannot support a given type, it must return null when
- * that type is passed to {@link #create}. typeAdapterFactoryList should expect {@code
- * create()} to be called on them for many types and should return null for
+ * that type is passed to {@link #build}. typeAdapterFactoryList should expect {@code
+ * build()} to be called on them for many types and should return null for
  * most of those types. In the above example the factory returns null for
- * calls to {@code create()} where {@code type} is not an enum.
+ * calls to {@code build()} where {@code type} is not an enum.
  *
  * <p>A factory is typically called once per type, but the returned type
  * adapter may be used many times. It is most efficient to do expensive work
- * like reflection in {@code create()} so that the type adapter's {@code
+ * like reflection in {@code build()} so that the type adapter's {@code
  * read()} and {@code write()} methods can be very fast. In this example the
  * mapping from lowercase name to enum value is computed eagerly.
  *
@@ -86,25 +86,25 @@ import com.google.gson.reflect.TypeToken;
  *  GsonBuilder builder = new GsonBuilder();
  *  builder.registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory());
  *  ...
- *  Gson gson = builder.create();
+ *  Gson gson = builder.build();
  * }</pre>
  * If multiple typeAdapterFactoryList support the same type, the factory registered earlier
  * takes precedence.
  *
  * <h3>Example: Composing other type adapters</h3>
  * In this example we implement a factory for Guava's {@code Multiset}
- * collection type. The factory can be used to create type adapters for
+ * collection type. The factory can be used to build type adapters for
  * multisets of any element type: the type adapter for {@code
  * Multiset<String>} is different from the type adapter for {@code
  * Multiset<URL>}.
  *
  * <p>The type adapter <i>delegates</i> to another type adapter for the
  * multiset elements. It figures out the element type by reflecting on the
- * multiset's type token. A {@code Gson} is passed in to {@code create} for
+ * multiset's type token. A {@code Gson} is passed in to {@code build} for
  * just this purpose: <pre>   {@code
  *
  *   public class MultisetTypeAdapterFactory implements TypeAdapterFactory {
- *     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
+ *     public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> typeToken) {
  *       Type type = typeToken.getType();
  *       if (typeToken.getRawType() != Multiset.class
  *           || !(type instanceof ParameterizedType)) {
@@ -139,7 +139,7 @@ import com.google.gson.reflect.TypeToken;
  *             return null;
  *           }
  *
- *           Multiset<E> result = LinkedHashMultiset.create();
+ *           Multiset<E> result = LinkedHashMultiset.build();
  *           in.beginArray();
  *           while (in.hasNext()) {
  *             int count = in.nextInt();
@@ -156,7 +156,7 @@ import com.google.gson.reflect.TypeToken;
  * Delegating from one type adapter to another is extremely powerful; it's
  * the foundation of how Gson converts Java objects and collections. Whenever
  * possible your factory should retrieve its delegate type adapter in the
- * {@code create()} method; this ensures potentially-expensive type adapter
+ * {@code build()} method; this ensures potentially-expensive type adapter
  * creation happens only once.
  *
  * @since 2.1
@@ -167,5 +167,5 @@ public interface TypeAdapterFactory {
    * Returns a type adapter for {@code type}, or null if this factory doesn't
    * support {@code type}.
    */
-  <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type);
+  <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type);
 }

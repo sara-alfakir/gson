@@ -43,7 +43,7 @@ import java.lang.annotation.Target;
  * If you created Gson with {@code new Gson()}, the {@code toJson()} and {@code fromJson()}
  * methods will use the {@code password} field along-with {@code firstName}, {@code lastName},
  * and {@code emailAddress} for serialization and deserialization. However, if you created Gson
- * with {@code Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()}
+ * with {@code Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().build()}
  * then the {@code toJson()} and {@code fromJson()} methods of Gson will exclude the
  * {@code password} field. This is because the {@code password} field is not marked with the
  * {@code @Expose} annotation. Gson will also exclude {@code lastName} and {@code emailAddress}

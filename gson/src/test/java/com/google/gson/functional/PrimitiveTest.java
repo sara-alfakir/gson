@@ -194,7 +194,7 @@ public class PrimitiveTest {
     // (This widening conversion is actually lossy)
     assertThat(gson.toJson(Long.MAX_VALUE - 10L, Float.class)).isEqualTo(Float.toString((float) (Long.MAX_VALUE - 10L)));
     // Should perform narrowing conversion
-    gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+    gson = new GsonBuilder().serializeSpecialFloatingPointValues().build();
     assertThat(gson.toJson(Double.MAX_VALUE, Float.class)).isEqualTo("Infinity");
   }
 
@@ -548,7 +548,7 @@ public class PrimitiveTest {
 
   @Test
   public void testDoubleNaNSerialization() {
-    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().build();
     double nan = Double.NaN;
     assertThat(gson.toJson(nan)).isEqualTo("NaN");
     assertThat(gson.toJson(Double.NaN)).isEqualTo("NaN");
@@ -577,7 +577,7 @@ public class PrimitiveTest {
 
   @Test
   public void testFloatNaNSerialization() {
-    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().build();
     float nan = Float.NaN;
     assertThat(gson.toJson(nan)).isEqualTo("NaN");
     assertThat(gson.toJson(Float.NaN)).isEqualTo("NaN");
@@ -615,7 +615,7 @@ public class PrimitiveTest {
 
   @Test
   public void testDoubleInfinitySerialization() {
-    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().build();
     double infinity = Double.POSITIVE_INFINITY;
     assertThat(gson.toJson(infinity)).isEqualTo("Infinity");
     assertThat(gson.toJson(Double.POSITIVE_INFINITY)).isEqualTo("Infinity");
@@ -644,7 +644,7 @@ public class PrimitiveTest {
 
   @Test
   public void testFloatInfinitySerialization() {
-    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().build();
     float infinity = Float.POSITIVE_INFINITY;
     assertThat(gson.toJson(infinity)).isEqualTo("Infinity");
     assertThat(gson.toJson(Float.POSITIVE_INFINITY)).isEqualTo("Infinity");
@@ -682,7 +682,7 @@ public class PrimitiveTest {
 
   @Test
   public void testNegativeInfinitySerialization() {
-    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().build();
     double negativeInfinity = Double.NEGATIVE_INFINITY;
     assertThat(gson.toJson(negativeInfinity)).isEqualTo("-Infinity");
     assertThat(gson.toJson(Double.NEGATIVE_INFINITY)).isEqualTo("-Infinity");
@@ -711,7 +711,7 @@ public class PrimitiveTest {
 
   @Test
   public void testNegativeInfinityFloatSerialization() {
-    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+    Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().build();
     float negativeInfinity = Float.NEGATIVE_INFINITY;
     assertThat(gson.toJson(negativeInfinity)).isEqualTo("-Infinity");
     assertThat(gson.toJson(Float.NEGATIVE_INFINITY)).isEqualTo("-Infinity");
@@ -734,7 +734,7 @@ public class PrimitiveTest {
 
   @Test
   public void testLongAsStringSerialization() {
-    gson = new GsonBuilder().setLongSerializationPolicy(LongSerializationPolicy.STRING).create();
+    gson = new GsonBuilder().setLongSerializationPolicy(LongSerializationPolicy.STRING).build();
     String result = gson.toJson(15L);
     assertThat(result).isEqualTo("\"15\"");
 
@@ -748,7 +748,7 @@ public class PrimitiveTest {
     long value = gson.fromJson("\"15\"", long.class);
     assertThat(value).isEqualTo(15);
 
-    gson = new GsonBuilder().setLongSerializationPolicy(LongSerializationPolicy.STRING).create();
+    gson = new GsonBuilder().setLongSerializationPolicy(LongSerializationPolicy.STRING).build();
     value = gson.fromJson("\"25\"", long.class);
     assertThat(value).isEqualTo(25);
   }
@@ -780,7 +780,7 @@ public class PrimitiveTest {
     String result = gson.toJson(target);
     assertThat(result).isNotEqualTo('"' + target + '"');
 
-    gson = new GsonBuilder().disableHtmlEscaping().create();
+    gson = new GsonBuilder().disableHtmlEscaping().build();
     result = gson.toJson(target);
     assertThat(result).isEqualTo('"' + target + '"');
   }

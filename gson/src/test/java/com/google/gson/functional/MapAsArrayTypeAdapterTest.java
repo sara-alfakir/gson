@@ -37,7 +37,7 @@ public class MapAsArrayTypeAdapterTest {
     Type type = new TypeToken<Map<Point, String>>() {}.getType();
     Gson gson = new GsonBuilder()
         .enableComplexMapKeySerialization()
-        .create();
+        .build();
 
     Map<Point, String> original = new LinkedHashMap<>();
     original.put(new Point(5, 5), "a");
@@ -62,7 +62,7 @@ public class MapAsArrayTypeAdapterTest {
   public void disabled_testTwoTypesCollapseToOneSerialize() {
     Gson gson = new GsonBuilder()
         .enableComplexMapKeySerialization()
-        .create();
+        .build();
 
     Map<Number, String> original = new LinkedHashMap<>();
     original.put(1.0D, "a");
@@ -78,7 +78,7 @@ public class MapAsArrayTypeAdapterTest {
   public void testTwoTypesCollapseToOneDeserialize() {
     Gson gson = new GsonBuilder()
         .enableComplexMapKeySerialization()
-        .create();
+        .build();
 
     String s = "[[\"1.00\",\"a\"],[\"1.0\",\"b\"]]";
     try {
@@ -94,7 +94,7 @@ public class MapAsArrayTypeAdapterTest {
     Gson gson = new GsonBuilder()
         .enableComplexMapKeySerialization()
         .enableComplexMapKeySerialization()
-        .create();
+        .build();
 
     Map<Point, String> original = new LinkedHashMap<>();
     original.put(new Point(6, 5), "abc");
@@ -106,7 +106,7 @@ public class MapAsArrayTypeAdapterTest {
 
   @Test
   public void testMapWithTypeVariableSerialization() {
-    Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+    Gson gson = new GsonBuilder().enableComplexMapKeySerialization().build();
     PointWithProperty<Point> map = new PointWithProperty<>();
     map.map.put(new Point(2, 3), new Point(4, 5));
     Type type = new TypeToken<PointWithProperty<Point>>(){}.getType();
@@ -116,7 +116,7 @@ public class MapAsArrayTypeAdapterTest {
 
   @Test
   public void testMapWithTypeVariableDeserialization() {
-    Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+    Gson gson = new GsonBuilder().enableComplexMapKeySerialization().build();
     String json = "{map:[[{x:2,y:3},{x:4,y:5}]]}";
     Type type = new TypeToken<PointWithProperty<Point>>(){}.getType();
     PointWithProperty<Point> map = gson.fromJson(json, type);

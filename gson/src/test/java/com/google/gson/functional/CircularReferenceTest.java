@@ -91,7 +91,7 @@ public class CircularReferenceTest {
         obj.add("child", context.serialize(src.child));
         return obj;
       }
-    }).create();
+    }).build();
     try {
       gson.toJson(obj);
       fail("Circular reference to self can not be serialized!");

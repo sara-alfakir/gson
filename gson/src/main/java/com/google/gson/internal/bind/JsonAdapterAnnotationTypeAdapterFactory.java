@@ -40,7 +40,7 @@ public final class JsonAdapterAnnotationTypeAdapterFactory implements TypeAdapte
 
   @SuppressWarnings("unchecked") // this is not safe; requires that user has specified correct adapter class for @JsonAdapter
   @Override
-  public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> targetType) {
+  public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> targetType) {
     Class<? super T> rawType = targetType.getRawType();
     JsonAdapter annotation = rawType.getAnnotation(JsonAdapter.class);
     if (annotation == null) {
@@ -58,7 +58,7 @@ public final class JsonAdapterAnnotationTypeAdapterFactory implements TypeAdapte
     if (instance instanceof TypeAdapter) {
       typeAdapter = (TypeAdapter<?>) instance;
     } else if (instance instanceof TypeAdapterFactory) {
-      typeAdapter = ((TypeAdapterFactory) instance).create(gson, type);
+      typeAdapter = ((TypeAdapterFactory) instance).build(gson, type);
     } else if (instance instanceof JsonSerializer || instance instanceof JsonDeserializer) {
       JsonSerializer<?> serializer = instance instanceof JsonSerializer
           ? (JsonSerializer<?>) instance

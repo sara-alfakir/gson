@@ -89,7 +89,7 @@ public final class GsonTest {
 
     Gson clone = original.newBuilder()
         .registerTypeAdapter(Object.class, new TestTypeAdapter())
-        .create();
+        .build();
 
     assertThat(clone.typeAdapterFactoryList).hasSize(original.typeAdapterFactoryList.size() + 1);
   }
@@ -132,11 +132,11 @@ public final class GsonTest {
         .registerTypeAdapterFactory(new TypeAdapterFactory() {
           private volatile boolean isFirstCall = true;
 
-          @Override public <T> TypeAdapter<T> create(final Gson gson, TypeToken<T> type) {
+          @Override public <T> TypeAdapter<T> build(final Gson gson, TypeToken<T> type) {
             if (isFirstCall) {
               isFirstCall = false;
 
-              // Create a separate thread which requests an adapter for the same type
+              // build a separate thread which requests an adapter for the same type
               // This will cause this factory to return a different adapter instance than
               // the one it is currently creating
               Thread thread = new Thread() {
@@ -152,12 +152,12 @@ public final class GsonTest {
               }
             }
 
-            // Create a new dummy adapter instance
+            // build a new dummy adapter instance
             adapterInstancesCreated.incrementAndGet();
             return new DummyAdapter<>();
           }
         })
-        .create();
+        .build();
 
     TypeAdapter<?> adapter = gson.getAdapter(requestedType);
     assertThat(adapterInstancesCreated.get()).isEqualTo(2);
@@ -216,7 +216,7 @@ public final class GsonTest {
         volatile boolean isFirstCaller = true;
 
         @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+        public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type) {
           Class<?> raw = type.getRawType();
 
           if (raw == CustomClass1.class) {
@@ -248,7 +248,7 @@ public final class GsonTest {
           }
         }
       })
-      .create();
+      .build();
 
     final AtomicReference<TypeAdapter<?>> otherThreadAdapter = new AtomicReference<>();
     Thread thread = new Thread() {
@@ -303,7 +303,7 @@ public final class GsonTest {
       .setPrettyPrinting()
       .serializeNulls()
       .setLenient()
-      .create()
+      .build()
       .newJsonWriter(writer);
     jsonWriter.beginObject();
     jsonWriter.name("test");
@@ -336,7 +336,7 @@ public final class GsonTest {
     String json = "test"; // String without quotes
     JsonReader jsonReader = new GsonBuilder()
       .setLenient()
-      .create()
+      .build()
       .newJsonReader(new StringReader(json));
     assertThat(jsonReader.nextString()).isEqualTo("test");
     jsonReader.close();
@@ -374,10 +374,10 @@ public final class GsonTest {
 
     assertDefaultGson(gson);
     // New GsonBuilder created from `gson` should not have been affected by changes either
-    assertDefaultGson(gson.newBuilder().create());
+    assertDefaultGson(gson.newBuilder().build());
 
     // But new Gson instance from `gsonBuilder` should use custom adapters
-    assertCustomGson(gsonBuilder.create());
+    assertCustomGson(gsonBuilder.build());
   }
 
   private static void assertDefaultGson(Gson gson) {
@@ -421,7 +421,7 @@ public final class GsonTest {
           return new CustomClass3("custom-instance");
         }
       })
-      .create();
+      .build();
 
     assertCustomGson(gson);
 
@@ -450,10 +450,10 @@ public final class GsonTest {
     // `gson` object should not have been affected by changes to new GsonBuilder
     assertCustomGson(gson);
     // New GsonBuilder based on `gson` should not have been affected either
-    assertCustomGson(gson.newBuilder().create());
+    assertCustomGson(gson.newBuilder().build());
 
     // But new Gson instance from `gsonBuilder` should be affected by changes
-    Gson otherGson = gsonBuilder.create();
+    Gson otherGson = gsonBuilder.build();
     String json1 = otherGson.toJson(new CustomClass1());
     assertThat(json1).isEqualTo("\"overwritten custom-adapter\"");
 

@@ -85,7 +85,7 @@ import java.lang.annotation.Target;
  * Using {@link TypeAdapterFactory} makes it possible to delegate
  * to the enclosing {@link Gson} instance.
  *
- * <p>{@code Gson} instances might cache the adapter they create for
+ * <p>{@code Gson} instances might cache the adapter they build for
  * a {@code @JsonAdapter} annotation. It is not guaranteed that a new
  * adapter is created every time the annotated class or field is serialized
  * or deserialized.

@@ -71,7 +71,7 @@ public class ParameterizedTypesTest {
     BagOfPrimitives bagDefaultInstance = new BagOfPrimitives();
     Gson gson = new GsonBuilder().registerTypeAdapter(
         expectedType, new MyParameterizedTypeInstanceCreator<>(bagDefaultInstance))
-        .create();
+        .build();
 
     String json = expected.getExpectedJson();
     MyParameterizedType<BagOfPrimitives> actual = gson.fromJson(json, expectedType);
@@ -110,7 +110,7 @@ public class ParameterizedTypesTest {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(ptIntegerType, new MyParameterizedTypeAdapter<Integer>())
         .registerTypeAdapter(ptStringType, new MyParameterizedTypeAdapter<String>())
-        .create();
+        .build();
     MyParameterizedType<Integer> intTarget = new MyParameterizedType<>(10);
     String json = gson.toJson(intTarget, ptIntegerType);
     assertThat(json).isEqualTo(MyParameterizedTypeAdapter.<Integer>getExpectedJson(intTarget));
@@ -129,7 +129,7 @@ public class ParameterizedTypesTest {
         .registerTypeAdapter(ptStringType, new MyParameterizedTypeAdapter<String>())
         .registerTypeAdapter(ptStringType, new MyParameterizedTypeInstanceCreator<>(""))
         .registerTypeAdapter(ptIntegerType, new MyParameterizedTypeInstanceCreator<>(0))
-        .create();
+        .build();
 
     MyParameterizedType<Integer> src = new MyParameterizedType<>(10);
     String json = MyParameterizedTypeAdapter.<Integer>getExpectedJson(src);
@@ -159,7 +159,7 @@ public class ParameterizedTypesTest {
     BagOfPrimitives bagDefaultInstance = new BagOfPrimitives();
     Gson gson = new GsonBuilder().registerTypeAdapter(
         expectedType, new MyParameterizedTypeInstanceCreator<>(bagDefaultInstance))
-        .create();
+        .build();
 
     Reader json = new StringReader(expected.getExpectedJson());
     MyParameterizedType<BagOfPrimitives> actual = gson.fromJson(json, expectedType);

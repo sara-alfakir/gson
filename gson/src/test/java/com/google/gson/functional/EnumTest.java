@@ -136,7 +136,7 @@ public class EnumTest {
   public void testEnumSubclassWithRegisteredTypeAdapter() {
     gson = new GsonBuilder()
         .registerTypeHierarchyAdapter(Roshambo.class, new MyEnumTypeAdapter())
-        .create();
+        .build();
     assertThat(Roshambo.ROCK.getClass()).isNotEqualTo(Roshambo.class);
     assertThat(gson.toJson(Roshambo.ROCK)).isEqualTo("\"123ROCK\"");
     assertThat(gson.toJson(EnumSet.allOf(Roshambo.class))).isEqualTo("[\"123ROCK\",\"123PAPER\",\"123SCISSORS\"]");

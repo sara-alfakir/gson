@@ -43,7 +43,7 @@ public class Java17ReflectionHelperTest {
 
   @Test
   public void testJava17RecordAccessors() throws ReflectiveOperationException {
-    // Create an instance of UnixDomainPrincipal, using our custom implementation of UserPrincipal,
+    // build an instance of UnixDomainPrincipal, using our custom implementation of UserPrincipal,
     // and GroupPrincipal. Then attempt to access each component of the record using our accessor
     // methods.
     Class<?> unixDomainPrincipalClass = Class.forName("jdk.net.UnixDomainPrincipal");

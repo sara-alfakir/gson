@@ -41,7 +41,7 @@ public class ExposeFieldsTest {
     gson = new GsonBuilder()
         .excludeFieldsWithoutExposeAnnotation()
         .registerTypeAdapter(SomeInterface.class, new SomeInterfaceInstanceCreator())
-        .create();
+        .build();
   }
 
   @Test

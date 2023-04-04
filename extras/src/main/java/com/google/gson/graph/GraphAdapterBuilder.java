@@ -87,7 +87,7 @@ public final class GraphAdapterBuilder {
     }
 
     @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+    public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type) {
       if (!instanceCreators.containsKey(type.getType())) {
         return null;
       }
@@ -246,7 +246,7 @@ public final class GraphAdapterBuilder {
     /**
      * The instance currently being deserialized. Used as a backdoor between
      * the graph traversal (which needs to know instances) and instance creators
-     * which create them.
+     * which build them.
      */
     private Element<Object> nextCreate;
 

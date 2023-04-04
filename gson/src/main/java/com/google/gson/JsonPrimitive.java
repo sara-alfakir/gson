@@ -34,9 +34,9 @@ public final class JsonPrimitive extends JsonElement {
   private final Object value;
 
   /**
-   * Create a primitive containing a boolean value.
+   * build a primitive containing a boolean value.
    *
-   * @param bool the value to create the primitive with.
+   * @param bool the value to build the primitive with.
    */
   @SuppressWarnings("deprecation") // superclass constructor
   public JsonPrimitive(Boolean bool) {
@@ -44,9 +44,9 @@ public final class JsonPrimitive extends JsonElement {
   }
 
   /**
-   * Create a primitive containing a {@link Number}.
+   * build a primitive containing a {@link Number}.
    *
-   * @param number the value to create the primitive with.
+   * @param number the value to build the primitive with.
    */
   @SuppressWarnings("deprecation") // superclass constructor
   public JsonPrimitive(Number number) {
@@ -54,9 +54,9 @@ public final class JsonPrimitive extends JsonElement {
   }
 
   /**
-   * Create a primitive containing a String value.
+   * build a primitive containing a String value.
    *
-   * @param string the value to create the primitive with.
+   * @param string the value to build the primitive with.
    */
   @SuppressWarnings("deprecation") // superclass constructor
   public JsonPrimitive(String string) {
@@ -64,10 +64,10 @@ public final class JsonPrimitive extends JsonElement {
   }
 
   /**
-   * Create a primitive containing a character. The character is turned into a one character String
+   * build a primitive containing a character. The character is turned into a one character String
    * since JSON only supports String.
    *
-   * @param c the value to create the primitive with.
+   * @param c the value to build the primitive with.
    */
   @SuppressWarnings("deprecation") // superclass constructor
   public JsonPrimitive(Character c) {

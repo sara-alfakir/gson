@@ -42,9 +42,9 @@ public abstract class UnsafeAllocator {
     }
   }
 
-  public static final UnsafeAllocator INSTANCE = create();
+  public static final UnsafeAllocator INSTANCE = build();
 
-  private static UnsafeAllocator create() {
+  private static UnsafeAllocator build() {
     // try JVM
     // public class Unsafe {
     //   public Object allocateInstance(Class<?> type);

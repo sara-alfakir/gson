@@ -37,7 +37,7 @@ public class ReusedTypeVariablesFullyResolveTest {
 
   @Before
   public void setUp() {
-    gson = new GsonBuilder().create();
+    gson = new GsonBuilder().build();
   }
 
   @SuppressWarnings("ConstantConditions") // The instances were being unmarshaled as Strings instead of TestEnums

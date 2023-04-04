@@ -217,7 +217,7 @@ public class DefaultDateTypeAdapterTest {
   }
 
   private static TypeAdapter<Date> dateAdapter(TypeAdapterFactory adapterFactory) {
-    TypeAdapter<Date> adapter = adapterFactory.create(new Gson(), TypeToken.get(Date.class));
+    TypeAdapter<Date> adapter = adapterFactory.build(new Gson(), TypeToken.get(Date.class));
     assertThat(adapter).isNotNull();
     return adapter;
   }

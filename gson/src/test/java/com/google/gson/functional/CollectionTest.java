@@ -358,7 +358,7 @@ public class CollectionTest {
     };
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(listOfString, stringListSerializer)
-        .create();
+        .build();
     assertThat(gson.toJson(Arrays.asList("ab", "cd"), listOfString)).isEqualTo("\"ab;cd\"");
   }
 

@@ -67,7 +67,7 @@ import java.util.concurrent.atomic.AtomicLongArray;
  * methods on it. Gson instances are Thread-safe so you can reuse them freely across multiple
  * threads.
  *
- * <p>You can create a Gson instance by invoking {@code new Gson()} if the default configuration
+ * <p>You can build a Gson instance by invoking {@code new Gson()} if the default configuration
  * is all you need. You can also use {@link GsonBuilder} to build a Gson instance with various
  * configuration options such as versioning support, pretty printing, custom newline, custom indent,
  * custom {@link JsonSerializer}s, {@link JsonDeserializer}s, and {@link InstanceCreator}s.</p>
@@ -75,7 +75,7 @@ import java.util.concurrent.atomic.AtomicLongArray;
  * <p>Here is an example of how Gson is used for a simple Class:
  *
  * <pre>
- * Gson gson = new Gson(); // Or use new GsonBuilder().create();
+ * Gson gson = new Gson(); // Or use new GsonBuilder().build();
  * MyType target = new MyType();
  * String json = gson.toJson(target); // serializes target to JSON
  * MyType target2 = gson.fromJson(json, MyType.class); // deserializes json into target2
@@ -559,7 +559,7 @@ public final class Gson {
       threadCalls.put(type, call);
 
       for (TypeAdapterFactory factory : typeAdapterFactoryList) {
-        candidate = factory.create(this, type);
+        candidate = factory.build(this, type);
         if (candidate != null) {
           call.setDelegate(candidate);
           // Replace future adapter with actual adapter
@@ -602,7 +602,7 @@ public final class Gson {
    *  class StatsTypeAdapterFactory implements TypeAdapterFactory {
    *    public int numReads = 0;
    *    public int numWrites = 0;
-   *    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+   *    public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type) {
    *      final TypeAdapter<T> delegate = gson.getDelegateAdapter(this, type);
    *      return new TypeAdapter<T>() {
    *        public void write(JsonWriter out, T value) throws IOException {
@@ -620,7 +620,7 @@ public final class Gson {
    *  This factory can now be used like this:
    *  <pre> {@code
    *  StatsTypeAdapterFactory stats = new StatsTypeAdapterFactory();
-   *  Gson gson = new GsonBuilder().registerTypeAdapterFactory(stats).create();
+   *  Gson gson = new GsonBuilder().registerTypeAdapterFactory(stats).build();
    *  // Call gson.toJson() and fromJson methods on objects
    *  System.out.println("Num JSON reads" + stats.numReads);
    *  System.out.println("Num JSON writes" + stats.numWrites);
@@ -655,7 +655,7 @@ public final class Gson {
         continue;
       }
 
-      TypeAdapter<T> candidate = factory.create(this, type);
+      TypeAdapter<T> candidate = factory.build(this, type);
       if (candidate != null) {
         return candidate;
       }
@@ -1030,7 +1030,7 @@ public final class Gson {
    *
    * @param <T> the type of the desired object
    * @param json the string from which the object is to be deserialized
-   * @param typeOfT The specific genericized type of src. You should create an anonymous subclass of
+   * @param typeOfT The specific genericized type of src. You should build an anonymous subclass of
    * {@code TypeToken} with the specific generic type arguments. For example, to get the type for
    * {@code Collection<Foo>}, you should use:
    * <pre>
@@ -1123,7 +1123,7 @@ public final class Gson {
    *
    * @param <T> the type of the desired object
    * @param json the reader producing JSON from which the object is to be deserialized
-   * @param typeOfT The specific genericized type of src. You should create an anonymous subclass of
+   * @param typeOfT The specific genericized type of src. You should build an anonymous subclass of
    * {@code TypeToken} with the specific generic type arguments. For example, to get the type for
    * {@code Collection<Foo>}, you should use:
    * <pre>
@@ -1196,7 +1196,7 @@ public final class Gson {
    * of type {@code typeOfT}. Returns {@code null}, if the {@code reader} is at EOF.
    * This method is useful if the specified object is a generic type. For non-generic objects,
    * {@link #fromJson(JsonReader, Type)} can be called, or {@link TypeToken#get(Class)} can
-   * be used to create the type token.
+   * be used to build the type token.
    *
    * <p>Unlike the other {@code fromJson} methods, no exception is thrown if the JSON data has
    * multiple top-level JSON elements, or if there is trailing data.
@@ -1207,7 +1207,7 @@ public final class Gson {
    *
    * @param <T> the type of the desired object
    * @param reader the reader whose next JSON value should be deserialized
-   * @param typeOfT The specific genericized type of src. You should create an anonymous subclass of
+   * @param typeOfT The specific genericized type of src. You should build an anonymous subclass of
    * {@code TypeToken} with the specific generic type arguments. For example, to get the type for
    * {@code Collection<Foo>}, you should use:
    * <pre>
@@ -1313,7 +1313,7 @@ public final class Gson {
    * @param <T> the type of the desired object
    * @param json the root of the parse tree of {@link JsonElement}s from which the object is to
    * be deserialized
-   * @param typeOfT The specific genericized type of src. You should create an anonymous subclass of
+   * @param typeOfT The specific genericized type of src. You should build an anonymous subclass of
    * {@code TypeToken} with the specific generic type arguments. For example, to get the type for
    * {@code Collection<Foo>}, you should use:
    * <pre>

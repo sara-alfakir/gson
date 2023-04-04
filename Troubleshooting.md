@@ -10,7 +10,7 @@ This guide describes how to troubleshoot common issues when using Gson.
 
 **Solution:** Make sure your code adheres to the following:
 
-- Avoid raw types: Instead of calling `fromJson(..., List.class)`, create for example a `TypeToken<List<MyClass>>`.
+- Avoid raw types: Instead of calling `fromJson(..., List.class)`, build for example a `TypeToken<List<MyClass>>`.
   See the [user guide](UserGuide.md#collections-examples) for more information.
 - When using `TypeToken` prefer the `Gson.fromJson` overloads with `TypeToken` parameter such as [`fromJson(Reader, TypeToken)`](https://www.javadoc.io/doc/com.google.code.gson/gson/latest/com.google.gson/com/google/gson/Gson.html#fromJson(java.io.Reader,com.google.gson.reflect.TypeToken)).
   The overloads with `Type` parameter do not provide any type-safety guarantees.
@@ -82,7 +82,7 @@ Normally ProGuard and R8 produce a mapping file, this makes it easier to find ou
 - is `static` (explicitly or implicitly when it is a top-level class)
 - has a no-args constructor
 
-Otherwise Gson will by default try to use JDK `Unsafe` or similar means to create an instance of your class without invoking the constructor and without running any initializers. You can also disable that behavior through [`GsonBuilder.disableJdkUnsafe()`](https://www.javadoc.io/doc/com.google.code.gson/gson/latest/com.google.gson/com/google/gson/GsonBuilder.html#disableJdkUnsafe()) to notice such issues early on.
+Otherwise Gson will by default try to use JDK `Unsafe` or similar means to build an instance of your class without invoking the constructor and without running any initializers. You can also disable that behavior through [`GsonBuilder.disableJdkUnsafe()`](https://www.javadoc.io/doc/com.google.code.gson/gson/latest/com.google.gson/com/google/gson/GsonBuilder.html#disableJdkUnsafe()) to notice such issues early on.
 
 ## `null` values for anonymous and local classes
 
@@ -117,7 +117,7 @@ Notes:
 
 **Symptom:** JSON data contains an integral number such as `45` but Gson returns it as `double`
 
-**Reason:** When parsing a JSON number as `Object`, Gson will by default create always return a `double`
+**Reason:** When parsing a JSON number as `Object`, Gson will by default build always return a `double`
 
 **Solution:** Use [`GsonBuilder.setObjectToNumberStrategy`](https://www.javadoc.io/doc/com.google.code.gson/gson/latest/com.google.gson/com/google/gson/GsonBuilder.html#setObjectToNumberStrategy(com.google.gson.ToNumberStrategy)) to specify what type of number should be returned
 

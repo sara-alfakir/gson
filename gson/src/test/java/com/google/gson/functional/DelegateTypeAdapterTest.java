@@ -46,7 +46,7 @@ public class DelegateTypeAdapterTest {
     stats = new StatsTypeAdapterFactory();
     gson = new GsonBuilder()
       .registerTypeAdapterFactory(stats)
-      .create();
+      .build();
   }
 
   @Test
@@ -76,7 +76,7 @@ public class DelegateTypeAdapterTest {
     public int numReads = 0;
     public int numWrites = 0;
 
-    @Override public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+    @Override public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type) {
       final TypeAdapter<T> delegate = gson.getDelegateAdapter(this, type);
       return new TypeAdapter<T>() {
         @Override

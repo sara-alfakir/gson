@@ -123,7 +123,7 @@ public class ExclusionStrategyFunctionalTest {
   public void testExcludeTopLevelClassSerialization() {
     Gson gson = new GsonBuilder()
         .addSerializationExclusionStrategy(EXCLUDE_SAMPLE_OBJECT_FOR_TEST)
-        .create();
+        .build();
     assertThat(gson.toJson(new SampleObjectForTest(), SampleObjectForTest.class)).isEqualTo("null");
   }
 
@@ -131,7 +131,7 @@ public class ExclusionStrategyFunctionalTest {
   public void testExcludeTopLevelClassSerializationDoesNotImpactDeserialization() {
     Gson gson = new GsonBuilder()
         .addSerializationExclusionStrategy(EXCLUDE_SAMPLE_OBJECT_FOR_TEST)
-        .create();
+        .build();
     String json = "{\"annotatedField\":1,\"stringField\":\"x\",\"longField\":2}";
     SampleObjectForTest value = gson.fromJson(json, SampleObjectForTest.class);
     assertThat(value.annotatedField).isEqualTo(1);
@@ -143,7 +143,7 @@ public class ExclusionStrategyFunctionalTest {
   public void testExcludeTopLevelClassDeserialization() {
     Gson gson = new GsonBuilder()
         .addDeserializationExclusionStrategy(EXCLUDE_SAMPLE_OBJECT_FOR_TEST)
-        .create();
+        .build();
     String json = "{\"annotatedField\":1,\"stringField\":\"x\",\"longField\":2}";
     SampleObjectForTest value = gson.fromJson(json, SampleObjectForTest.class);
     assertThat(value).isNull();
@@ -153,7 +153,7 @@ public class ExclusionStrategyFunctionalTest {
   public void testExcludeTopLevelClassDeserializationDoesNotImpactSerialization() {
     Gson gson = new GsonBuilder()
         .addDeserializationExclusionStrategy(EXCLUDE_SAMPLE_OBJECT_FOR_TEST)
-        .create();
+        .build();
     String json = gson.toJson(new SampleObjectForTest(), SampleObjectForTest.class);
     assertThat(json).contains("\"stringField\"");
     assertThat(json).contains("\"annotatedField\"");
@@ -169,7 +169,7 @@ public class ExclusionStrategyFunctionalTest {
     }
     return gsonBuilder
         .serializeNulls()
-        .create();
+        .build();
   }
 
   @Retention(RetentionPolicy.RUNTIME)

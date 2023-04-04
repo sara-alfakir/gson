@@ -37,7 +37,7 @@ public class VersioningTest {
   private static final int D = 3;
 
   private static Gson gsonWithVersion(double version) {
-    return new GsonBuilder().setVersion(version).create();
+    return new GsonBuilder().setVersion(version).build();
   }
 
   @Test

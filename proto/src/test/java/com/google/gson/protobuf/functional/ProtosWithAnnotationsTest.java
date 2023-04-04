@@ -50,17 +50,17 @@ public class ProtosWithAnnotationsTest {
         .addSerializedEnumValueExtension(Annotations.serializedValue);
     gson = new GsonBuilder()
         .registerTypeHierarchyAdapter(GeneratedMessageV3.class, protoTypeAdapter.build())
-        .create();
+        .build();
     gsonWithEnumNumbers = new GsonBuilder()
         .registerTypeHierarchyAdapter(GeneratedMessageV3.class, protoTypeAdapter
             .setEnumSerialization(EnumSerialization.NUMBER)
             .build())
-        .create();
+        .build();
     gsonWithLowerHyphen = new GsonBuilder()
         .registerTypeHierarchyAdapter(GeneratedMessageV3.class, protoTypeAdapter
             .setFieldNameSerializationFormat(CaseFormat.LOWER_UNDERSCORE, CaseFormat.LOWER_HYPHEN)
             .build())
-        .create();
+        .build();
   }
 
   @Test

@@ -86,7 +86,7 @@ public final class JsonAdapterAnnotationOnClassesTest {
     };
     Gson gson = new GsonBuilder()
       .registerTypeAdapter(A.class, typeAdapter)
-      .create();
+      .build();
     String json = gson.toJson(new A("abcd"));
     assertThat(json).isEqualTo("\"registeredAdapter\"");
   }
@@ -104,7 +104,7 @@ public final class JsonAdapterAnnotationOnClassesTest {
     };
     Gson gson = new GsonBuilder()
       .registerTypeAdapter(A.class, serializer)
-      .create();
+      .build();
     String json = gson.toJson(new A("abcd"));
     assertThat(json).isEqualTo("\"registeredSerializer\"");
     A target = gson.fromJson("abcd", A.class);
@@ -124,7 +124,7 @@ public final class JsonAdapterAnnotationOnClassesTest {
     };
     Gson gson = new GsonBuilder()
       .registerTypeAdapter(A.class, deserializer)
-      .create();
+      .build();
     String json = gson.toJson(new A("abcd"));
     assertThat(json).isEqualTo("\"jsonAdapter\"");
     A target = gson.fromJson("abcd", A.class);
@@ -176,7 +176,7 @@ public final class JsonAdapterAnnotationOnClassesTest {
       this.value = value;
     }
     static final class JsonAdapterFactory implements TypeAdapterFactory {
-      @Override public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
+      @Override public <T> TypeAdapter<T> build(Gson gson, final TypeToken<T> type) {
         return new TypeAdapter<T>() {
           @Override public void write(JsonWriter out, T value) throws IOException {
             out.value("jsonAdapterFactory");

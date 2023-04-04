@@ -45,7 +45,7 @@ public class JsonReaderPathTest {
   public Factory factory;
 
   @Test public void path() throws IOException {
-    JsonReader reader = factory.create("{\"a\":[2,true,false,null,\"b\",{\"c\":\"d\"},[3]]}");
+    JsonReader reader = factory.build("{\"a\":[2,true,false,null,\"b\",{\"c\":\"d\"},[3]]}");
     assertThat(reader.getPreviousPath()).isEqualTo("$");
     assertThat(reader.getPath()).isEqualTo("$");
     reader.beginObject();
@@ -102,7 +102,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void objectPath() throws IOException {
-    JsonReader reader = factory.create("{\"a\":1,\"b\":2}");
+    JsonReader reader = factory.build("{\"a\":1,\"b\":2}");
     assertThat(reader.getPreviousPath()).isEqualTo("$");
     assertThat(reader.getPath()).isEqualTo("$");
 
@@ -157,7 +157,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void arrayPath() throws IOException {
-    JsonReader reader = factory.create("[1,2]");
+    JsonReader reader = factory.build("[1,2]");
     assertThat(reader.getPreviousPath()).isEqualTo("$");
     assertThat(reader.getPath()).isEqualTo("$");
 
@@ -200,7 +200,7 @@ public class JsonReaderPathTest {
   @Test public void multipleTopLevelValuesInOneDocument() throws IOException {
     assumeTrue(factory == Factory.STRING_READER);
 
-    JsonReader reader = factory.create("[][]");
+    JsonReader reader = factory.build("[][]");
     reader.setLenient(true);
     reader.beginArray();
     reader.endArray();
@@ -213,7 +213,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void skipArrayElements() throws IOException {
-    JsonReader reader = factory.create("[1,2,3]");
+    JsonReader reader = factory.build("[1,2,3]");
     reader.beginArray();
     reader.skipValue();
     reader.skipValue();
@@ -222,7 +222,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void skipArrayEnd() throws IOException {
-    JsonReader reader = factory.create("[[],1]");
+    JsonReader reader = factory.build("[[],1]");
     reader.beginArray();
     reader.beginArray();
     assertThat(reader.getPreviousPath()).isEqualTo("$[0][0]");
@@ -233,7 +233,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void skipObjectNames() throws IOException {
-    JsonReader reader = factory.create("{\"a\":[]}");
+    JsonReader reader = factory.build("{\"a\":[]}");
     reader.beginObject();
     reader.skipValue();
     assertThat(reader.getPreviousPath()).isEqualTo("$.<skipped>");
@@ -245,7 +245,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void skipObjectValues() throws IOException {
-    JsonReader reader = factory.create("{\"a\":1,\"b\":2}");
+    JsonReader reader = factory.build("{\"a\":1,\"b\":2}");
     reader.beginObject();
     assertThat(reader.getPreviousPath()).isEqualTo("$.");
     assertThat(reader.getPath()).isEqualTo("$.");
@@ -259,7 +259,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void skipObjectEnd() throws IOException {
-    JsonReader reader = factory.create("{\"a\":{},\"b\":2}");
+    JsonReader reader = factory.build("{\"a\":{},\"b\":2}");
     reader.beginObject();
     reader.nextName();
     reader.beginObject();
@@ -271,7 +271,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void skipNestedStructures() throws IOException {
-    JsonReader reader = factory.create("[[1,2,3],4]");
+    JsonReader reader = factory.build("[[1,2,3],4]");
     reader.beginArray();
     reader.skipValue();
     assertThat(reader.getPreviousPath()).isEqualTo("$[0]");
@@ -279,7 +279,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void skipEndOfDocument() throws IOException {
-    JsonReader reader = factory.create("[]");
+    JsonReader reader = factory.build("[]");
     reader.beginArray();
     reader.endArray();
     assertThat(reader.getPreviousPath()).isEqualTo("$");
@@ -293,7 +293,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void arrayOfObjects() throws IOException {
-    JsonReader reader = factory.create("[{},{},{}]");
+    JsonReader reader = factory.build("[{},{},{}]");
     reader.beginArray();
     assertThat(reader.getPreviousPath()).isEqualTo("$[0]");
     assertThat(reader.getPath()).isEqualTo("$[0]");
@@ -321,7 +321,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void arrayOfArrays() throws IOException {
-    JsonReader reader = factory.create("[[],[],[]]");
+    JsonReader reader = factory.build("[[],[],[]]");
     reader.beginArray();
     assertThat(reader.getPreviousPath()).isEqualTo("$[0]");
     assertThat(reader.getPath()).isEqualTo("$[0]");
@@ -349,7 +349,7 @@ public class JsonReaderPathTest {
   }
 
   @Test public void objectOfObjects() throws IOException {
-    JsonReader reader = factory.create("{\"a\":{\"a1\":1,\"a2\":2},\"b\":{\"b1\":1}}");
+    JsonReader reader = factory.build("{\"a\":{\"a1\":1,\"a2\":2},\"b\":{\"b1\":1}}");
     reader.beginObject();
     assertThat(reader.getPreviousPath()).isEqualTo("$.");
     assertThat(reader.getPath()).isEqualTo("$.");
@@ -396,17 +396,17 @@ public class JsonReaderPathTest {
 
   public enum Factory {
     STRING_READER {
-      @Override public JsonReader create(String data) {
+      @Override public JsonReader build(String data) {
         return new JsonReader(new StringReader(data));
       }
     },
     OBJECT_READER {
-      @Override public JsonReader create(String data) {
+      @Override public JsonReader build(String data) {
         JsonElement element = Streams.parse(new JsonReader(new StringReader(data)));
         return new JsonTreeReader(element);
       }
     };
 
-    abstract JsonReader create(String data);
+    abstract JsonReader build(String data);
   }
 }

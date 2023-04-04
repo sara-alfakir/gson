@@ -48,7 +48,7 @@ public final class NumberTypeAdapter extends TypeAdapter<Number> {
     final NumberTypeAdapter adapter = new NumberTypeAdapter(toNumberStrategy);
     return new TypeAdapterFactory() {
       @SuppressWarnings("unchecked")
-      @Override public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+      @Override public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> type) {
         return type.getRawType() == Number.class ? (TypeAdapter<T>) adapter : null;
       }
     };

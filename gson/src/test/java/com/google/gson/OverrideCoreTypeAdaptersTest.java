@@ -53,7 +53,7 @@ public class OverrideCoreTypeAdaptersTest {
   public void testOverrideWrapperBooleanAdapter() {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
-        .create();
+        .build();
     assertThat(gson.toJson(true, boolean.class)).isEqualTo("true");
     assertThat(gson.toJson(true, Boolean.class)).isEqualTo("1");
     assertThat(gson.fromJson("true", boolean.class)).isEqualTo(Boolean.TRUE);
@@ -65,7 +65,7 @@ public class OverrideCoreTypeAdaptersTest {
   public void testOverridePrimitiveBooleanAdapter() {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
-        .create();
+        .build();
     assertThat(gson.toJson(true, boolean.class)).isEqualTo("1");
     assertThat(gson.toJson(true, Boolean.class)).isEqualTo("true");
     assertThat(gson.fromJson("1", boolean.class)).isEqualTo(Boolean.TRUE);
@@ -77,7 +77,7 @@ public class OverrideCoreTypeAdaptersTest {
   public void testOverrideStringAdapter() {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(String.class, swapCaseStringAdapter)
-        .create();
+        .build();
     assertThat(gson.toJson("Hello", String.class)).isEqualTo("\"HELLO\"");
     assertThat(gson.fromJson("\"Hello\"", String.class)).isEqualTo("hello");
   }

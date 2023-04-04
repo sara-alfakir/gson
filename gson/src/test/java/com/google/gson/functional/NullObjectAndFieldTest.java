@@ -50,7 +50,7 @@ public class NullObjectAndFieldTest {
 
   @Test
   public void testTopLevelNullObjectSerialization() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     String actual = gson.toJson(null);
     assertThat(actual).isEqualTo("null");
 
@@ -60,14 +60,14 @@ public class NullObjectAndFieldTest {
 
   @Test
   public void testTopLevelNullObjectDeserialization() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     String actual = gson.fromJson("null", String.class);
     assertThat(actual).isNull();
   }
 
   @Test
   public void testExplicitSerializationOfNulls() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     ClassWithObjects target = new ClassWithObjects(null);
     String actual = gson.toJson(target);
     String expected = "{\"bag\":null}";
@@ -76,14 +76,14 @@ public class NullObjectAndFieldTest {
 
   @Test
   public void testExplicitDeserializationOfNulls() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     ClassWithObjects target = gson.fromJson("{\"bag\":null}", ClassWithObjects.class);
     assertThat(target.bag).isNull();
   }
   
   @Test
   public void testExplicitSerializationOfNullArrayMembers() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     ClassWithMembers target = new ClassWithMembers();
     String json = gson.toJson(target);
     assertThat(json).contains("\"array\":null");
@@ -94,7 +94,7 @@ public class NullObjectAndFieldTest {
    */
   @Test
   public void testNullWrappedPrimitiveMemberSerialization() {
-    Gson gson = gsonBuilder.serializeNulls().create();
+    Gson gson = gsonBuilder.serializeNulls().build();
     ClassWithNullWrappedPrimitive target = new ClassWithNullWrappedPrimitive();
     String json = gson.toJson(target);
     assertThat(json).contains("\"value\":null");
@@ -105,7 +105,7 @@ public class NullObjectAndFieldTest {
    */
   @Test
   public void testNullWrappedPrimitiveMemberDeserialization() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     String json = "{'value':null}";
     ClassWithNullWrappedPrimitive target = gson.fromJson(json, ClassWithNullWrappedPrimitive.class);
     assertThat(target.value).isNull();
@@ -113,7 +113,7 @@ public class NullObjectAndFieldTest {
   
   @Test
   public void testExplicitSerializationOfNullCollectionMembers() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     ClassWithMembers target = new ClassWithMembers();
     String json = gson.toJson(target);
     assertThat(json).contains("\"col\":null");
@@ -121,7 +121,7 @@ public class NullObjectAndFieldTest {
   
   @Test
   public void testExplicitSerializationOfNullStringMembers() {
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     ClassWithMembers target = new ClassWithMembers();
     String json = gson.toJson(target);
     assertThat(json).contains("\"str\":null");
@@ -130,7 +130,7 @@ public class NullObjectAndFieldTest {
   @Test
   public void testCustomSerializationOfNulls() {
     gsonBuilder.registerTypeAdapter(ClassWithObjects.class, new ClassWithObjectsSerializer());
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     ClassWithObjects target = new ClassWithObjects(new BagOfPrimitives());
     String actual = gson.toJson(target);
     String expected = "{\"bag\":null}";
@@ -140,11 +140,11 @@ public class NullObjectAndFieldTest {
   @Test
   public void testPrintPrintingObjectWithNulls() {
     gsonBuilder = new GsonBuilder();
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     String result = gson.toJson(new ClassWithMembers());
     assertThat(result).isEqualTo("{}");
 
-    gson = gsonBuilder.serializeNulls().create();
+    gson = gsonBuilder.serializeNulls().build();
     result = gson.toJson(new ClassWithMembers());
     assertThat(result).contains("\"str\":null");
   }
@@ -152,11 +152,11 @@ public class NullObjectAndFieldTest {
   @Test
   public void testPrintPrintingArraysWithNulls() {
     gsonBuilder = new GsonBuilder();
-    Gson gson = gsonBuilder.create();
+    Gson gson = gsonBuilder.build();
     String result = gson.toJson(new String[] { "1", null, "3" });
     assertThat(result).isEqualTo("[\"1\",null,\"3\"]");
 
-    gson = gsonBuilder.serializeNulls().create();
+    gson = gsonBuilder.serializeNulls().build();
     result = gson.toJson(new String[] { "1", null, "3" });
     assertThat(result).isEqualTo("[\"1\",null,\"3\"]");
   }
@@ -230,7 +230,7 @@ public class NullObjectAndFieldTest {
               JsonSerializationContext context) {
             return context.serialize(null);
           }
-        }).create();
+        }).build();
     ObjectWithField target = new ObjectWithField();
     target.value = "value1";
     String json = gson.toJson(target);
@@ -245,7 +245,7 @@ public class NullObjectAndFieldTest {
               JsonDeserializationContext context) {
             return context.deserialize(null, type);
           }
-        }).create();
+        }).build();
     String json = "{value:'value1'}";
     ObjectWithField target = gson.fromJson(json, ObjectWithField.class);
     assertThat(target).isNull();

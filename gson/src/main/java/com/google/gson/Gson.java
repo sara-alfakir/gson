@@ -648,69 +648,35 @@ public final class Gson {
     if (!typeAdapterFactoryList.contains(skipPast)) {
       skipPast = jsonAdapterFactory;
     }
+    return this.searchTypeAdapterFactory(skipPast, type);
     
-    boolean skipPastFound = false;
-    /*
-    for (TypeAdapterFactory factory : typeAdapterFactoryList) {
-      if (!skipPastFound) {
-        if (factory == skipPast) {
-          skipPastFound = true;
-        }
-        continue; //on passe à l'itération suivante 
-      }
-
-      TypeAdapter<T> candidate = factory.build(this, type);
-      if (candidate != null) {
-        return candidate;
-      }
-    }
-    throw new IllegalArgumentException("GSON cannot serialize " + type);
-    */
-    Iterator<TypeAdapterFactory> iterator = typeAdapterFactoryList.iterator();
-    while (iterator.hasNext()) {
-    	TypeAdapterFactory factory = iterator.next();
-        if (!skipPastFound) {
-          if (factory == skipPast) {
-            skipPastFound = true;
-          }
-        }
-        
-        else {
-        	TypeAdapter<T> candidate = factory.build(this, type);
-            if (candidate != null) {
-              return candidate;
-            }
-        	
-        }
-        
-        
-      }
-      throw new IllegalArgumentException("GSON cannot serialize " + type);
-     
- //new 
-    /*
-    boolean skipPastFound = false;
-    Iterator<TypeAdapterFactory> iterator = typeAdapterFactoryList.iterator();
-    while (iterator.hasNext()) {
-      TypeAdapterFactory factory = iterator.next();
-      if (!skipPastFound) {
-        if (factory == skipPast) {
-          skipPastFound = true;
-        }
-        continue;
-      }
-
-      TypeAdapter<T> candidate = factory.build(this, type);
-      if (candidate != null) {
-        return candidate;
-      }
-    }
-
-    throw new IllegalArgumentException("GSON cannot serialize " + type);
-    */
-  
   }
-
+  
+  private <T> TypeAdapter<T> searchForDelegateAdapter(TypeAdapterFactory skipPast, TypeToken<T> type) {
+	  boolean skipPastFound = false;
+	    Iterator<TypeAdapterFactory> iterator = typeAdapterFactoryList.iterator();
+	    while (iterator.hasNext()) {
+	    	TypeAdapterFactory factory = iterator.next();
+	        if (!skipPastFound) {
+	          if (factory == skipPast) {
+	            skipPastFound = true;
+	          }
+	        }
+	        
+	        else {
+	        	TypeAdapter<T> candidate = factory.build(this, type);
+	            if (candidate != null) {
+	              return candidate;
+	            }
+	        	
+	        }
+	      }
+	      throw new IllegalArgumentException("GSON cannot serialize " + type);
+	    
+	}
+  
+  
+  
   /**
    * Returns the type adapter for {@code type}.
    *

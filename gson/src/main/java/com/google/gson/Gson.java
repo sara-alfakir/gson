@@ -402,6 +402,10 @@ public final class Gson {
       }
     };
   }
+  
+  private String generateAssertionErrorMessage(Exception e) {
+	    return ASSERTION_ERROR_MSG + e.getMessage();
+	}
 
   static void checkValidFloatingPoint(double value) {
     if (Double.isNaN(value) || Double.isInfinite(value)) {
@@ -866,7 +870,7 @@ public final class Gson {
     } catch (IOException e) {
       throw new JsonIOException(e);
     } catch (AssertionError e) {
-      throw new AssertionError(ASSERTION_ERROR_MSG + e.getMessage(), e);
+      throw new AssertionError(generateAssertionErrorMessage(Exception e));
     } finally {
       writer.setLenient(oldLenient);
       writer.setHtmlSafe(oldHtmlSafe);
@@ -968,7 +972,7 @@ public final class Gson {
     } catch (IOException e) {
       throw new JsonIOException(e);
     } catch (AssertionError e) {
-      throw new AssertionError(ASSERTION_ERROR_MSG + e.getMessage(), e);
+      throw new AssertionError(generateAssertionErrorMessage(Exception e));
     } finally {
       writer.setLenient(oldLenient);
       writer.setHtmlSafe(oldHtmlSafe);
@@ -1262,7 +1266,7 @@ public final class Gson {
       // TODO(inder): Figure out whether it is indeed right to rethrow this as JsonSyntaxException
       throw new JsonSyntaxException(e);
     } catch (AssertionError e) {
-      throw new AssertionError(ASSERTION_ERROR_MSG + e.getMessage(), e);
+      throw new AssertionError(generateAssertionErrorMessage(Exception e));
     } finally {
       reader.setLenient(oldLenient);
     }

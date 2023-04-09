@@ -60,6 +60,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicLongArray;
+import java.util.Iterator;
 
 /**
  * This is the main class for using Gson. Gson is typically used by first constructing a
@@ -649,7 +650,49 @@ public final class Gson {
     }
     
     boolean skipPastFound = false;
+    /*
     for (TypeAdapterFactory factory : typeAdapterFactoryList) {
+      if (!skipPastFound) {
+        if (factory == skipPast) {
+          skipPastFound = true;
+        }
+        continue; //on passe à l'itération suivante 
+      }
+
+      TypeAdapter<T> candidate = factory.build(this, type);
+      if (candidate != null) {
+        return candidate;
+      }
+    }
+    throw new IllegalArgumentException("GSON cannot serialize " + type);
+    */
+    Iterator<TypeAdapterFactory> iterator = typeAdapterFactoryList.iterator();
+    while (iterator.hasNext()) {
+    	TypeAdapterFactory factory = iterator.next();
+        if (!skipPastFound) {
+          if (factory == skipPast) {
+            skipPastFound = true;
+          }
+        }
+        
+        else {
+        	TypeAdapter<T> candidate = factory.build(this, type);
+            if (candidate != null) {
+              return candidate;
+            }
+        	
+        }
+        
+        
+      }
+      throw new IllegalArgumentException("GSON cannot serialize " + type);
+     
+ //new 
+    /*
+    boolean skipPastFound = false;
+    Iterator<TypeAdapterFactory> iterator = typeAdapterFactoryList.iterator();
+    while (iterator.hasNext()) {
+      TypeAdapterFactory factory = iterator.next();
       if (!skipPastFound) {
         if (factory == skipPast) {
           skipPastFound = true;
@@ -662,9 +705,9 @@ public final class Gson {
         return candidate;
       }
     }
+
     throw new IllegalArgumentException("GSON cannot serialize " + type);
-    
-   
+    */
   
   }
 

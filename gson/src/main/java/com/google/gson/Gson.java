@@ -154,6 +154,9 @@ public final class Gson {
   static final ToNumberStrategy DEFAULT_NUMBER_TO_NUMBER_STRATEGY = ToNumberPolicy.LAZILY_PARSED_NUMBER;
 
   private static final String JSON_NON_EXECUTABLE_PREFIX = ")]}'\n";
+  
+  private static final String GSON_VERSION = GsonBuildConfig.VERSION;
+  private static final String ASSERTION_ERROR_MSG = "AssertionError (GSON " + GSON_VERSION + "): ";
 
   /**
    * This thread local guards against reentrant calls to {@link #getAdapter(TypeToken)}.
@@ -863,7 +866,7 @@ public final class Gson {
     } catch (IOException e) {
       throw new JsonIOException(e);
     } catch (AssertionError e) {
-      throw new AssertionError("AssertionError (GSON " + GsonBuildConfig.VERSION + "): " + e.getMessage(), e);
+      throw new AssertionError(ASSERTION_ERROR_MSG + e.getMessage(), e);
     } finally {
       writer.setLenient(oldLenient);
       writer.setHtmlSafe(oldHtmlSafe);
@@ -965,7 +968,7 @@ public final class Gson {
     } catch (IOException e) {
       throw new JsonIOException(e);
     } catch (AssertionError e) {
-      throw new AssertionError("AssertionError (GSON " + GsonBuildConfig.VERSION + "): " + e.getMessage(), e);
+      throw new AssertionError(ASSERTION_ERROR_MSG + e.getMessage(), e);
     } finally {
       writer.setLenient(oldLenient);
       writer.setHtmlSafe(oldHtmlSafe);
@@ -1259,12 +1262,12 @@ public final class Gson {
       // TODO(inder): Figure out whether it is indeed right to rethrow this as JsonSyntaxException
       throw new JsonSyntaxException(e);
     } catch (AssertionError e) {
-      throw new AssertionError("AssertionError (GSON " + GsonBuildConfig.VERSION + "): " + e.getMessage(), e);
+      throw new AssertionError(ASSERTION_ERROR_MSG + e.getMessage(), e);
     } finally {
       reader.setLenient(oldLenient);
     }
   }
-
+ 
   /**
    * This method deserializes the JSON read from the specified parse tree into an object of the
    * specified type. It is not suitable to use if the specified class is a generic type since it

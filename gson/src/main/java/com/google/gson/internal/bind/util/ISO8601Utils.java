@@ -25,10 +25,18 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
+ * Provides utility methods for parsing and formatting dates in ISO8601 format. This class is much faster and GC-friendly
+ 
  * Utilities methods for manipulating dates in iso8601 format. This is much much faster and GC friendly than using SimpleDateFormat so
  * highly suitable if you (un)serialize lots of date objects.
  * 
  * Supported parse format: [yyyy-MM-dd|yyyyMMdd][T(hh:mm[:ss[.sss]]|hhmm[ss[.sss]])]?[Z|[+-]hh[:]mm]]
+ * 
+ *  The ISO 8601 format is widely used for representing dates and times in a standardized way, and is particularly
+ * important for interoperability in distributed systems.
+ * 
+ * Note that this class was adapted from the `ISO8601Utils` class in the Jackson databind library, which provides a similar
+ * set of utility methods for working with ISO8601 dates.
  * 
  * @see <a href="http://www.w3.org/TR/NOTE-datetime">this specification</a>
  */

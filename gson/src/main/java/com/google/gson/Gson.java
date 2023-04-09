@@ -648,7 +648,7 @@ public final class Gson {
     if (!typeAdapterFactoryList.contains(skipPast)) {
       skipPast = jsonAdapterFactory;
     }
-    return this.searchTypeAdapterFactory(skipPast, type);
+    return this.searchForDelegateAdapter(skipPast, type);
     
   }
   

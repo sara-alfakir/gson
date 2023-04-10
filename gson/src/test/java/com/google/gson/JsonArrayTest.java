@@ -32,6 +32,13 @@ import org.junit.Test;
  */
 public final class JsonArrayTest {
 
+   private JsonArray array;
+
+    @Before
+    public void setUp() {
+        array = new JsonArray();
+    }
+
   @Test
   public void testEqualsOnEmptyArray() {
     MoreAsserts.assertEqualsAndHashCode(new JsonArray(), new JsonArray());
@@ -39,30 +46,28 @@ public final class JsonArrayTest {
 
   @Test
   public void testEqualsNonEmptyArray() {
-    JsonArray a = new JsonArray();
     JsonArray b = new JsonArray();
 
     new EqualsTester().addEqualityGroup(a).testEquals();
 
-    a.add(new JsonObject());
-    assertThat(a.equals(b)).isFalse();
-    assertThat(b.equals(a)).isFalse();
+    array.add(new JsonObject());
+    assertThat(array.equals(b)).isFalse();
+    assertThat(b.equals(array)).isFalse();
 
     b.add(new JsonObject());
-    MoreAsserts.assertEqualsAndHashCode(a, b);
+    MoreAsserts.assertEqualsAndHashCode(array, b);
 
-    a.add(new JsonObject());
-    assertThat(a.equals(b)).isFalse();
-    assertThat(b.equals(a)).isFalse();
+    array.add(new JsonObject());
+    assertThat(array.equals(b)).isFalse();
+    assertThat(b.equals(array)).isFalse();
 
     b.add(JsonNull.INSTANCE);
-    assertThat(a.equals(b)).isFalse();
+    assertThat(array.equals(b)).isFalse();
     assertThat(b.equals(a)).isFalse();
   }
 
   @Test
   public void testRemove() {
-    JsonArray array = new JsonArray();
     try {
       array.remove(0);
       fail();
@@ -80,7 +85,6 @@ public final class JsonArrayTest {
 
   @Test
   public void testSet() {
-    JsonArray array = new JsonArray();
     try {
       array.set(0, new JsonPrimitive(1));
       fail();
@@ -121,7 +125,6 @@ public final class JsonArrayTest {
 
   @Test
   public void testIsEmpty() {
-    JsonArray array = new JsonArray();
     assertThat(array).isEmpty();
 
     JsonPrimitive a = new JsonPrimitive("a");
@@ -134,62 +137,62 @@ public final class JsonArrayTest {
 
   @Test
   public void testFailedGetArrayValues() {
-    JsonArray jsonArray = new JsonArray();
-    jsonArray.add(JsonParser.parseString("{" + "\"key1\":\"value1\"," + "\"key2\":\"value2\"," + "\"key3\":\"value3\"," + "\"key4\":\"value4\"" + "}"));
+    
+    array.add(JsonParser.parseString("{" + "\"key1\":\"value1\"," + "\"key2\":\"value2\"," + "\"key3\":\"value3\"," + "\"key4\":\"value4\"" + "}"));
     try {
-      jsonArray.getAsBoolean();
+      array.getAsBoolean();
       fail("expected getBoolean to fail");
     } catch (UnsupportedOperationException e) {
       assertWithMessage("Expected an exception message")
           .that(e).hasMessageThat().isEqualTo("JsonObject");
     }
     try {
-      jsonArray.get(-1);
+      array.get(-1);
       fail("expected get to fail");
     } catch (IndexOutOfBoundsException e) {
       assertWithMessage("Expected an exception message")
           .that(e).hasMessageThat().isEqualTo("Index -1 out of bounds for length 1");
     }
     try {
-      jsonArray.getAsString();
+      array.getAsString();
       fail("expected getString to fail");
     } catch (UnsupportedOperationException e) {
       assertWithMessage("Expected an exception message")
           .that(e).hasMessageThat().isEqualTo("JsonObject");
     }
 
-    jsonArray.remove(0);
-    jsonArray.add("hello");
+    array.remove(0);
+    array.add("hello");
     try {
-      jsonArray.getAsDouble();
+      array.getAsDouble();
       fail("expected getDouble to fail");
     } catch (NumberFormatException e) {
       assertWithMessage("Expected an exception message")
           .that(e).hasMessageThat().isEqualTo("For input string: \"hello\"");
     }
     try {
-      jsonArray.getAsInt();
+      array.getAsInt();
       fail("expected getInt to fail");
     } catch (NumberFormatException e) {
       assertWithMessage("Expected an exception message")
           .that(e).hasMessageThat().isEqualTo("For input string: \"hello\"");
     }
     try {
-      jsonArray.get(0).getAsJsonArray();
+      array.get(0).getAsJsonArray();
       fail("expected getJSONArray to fail");
     } catch (IllegalStateException e) {
       assertWithMessage("Expected an exception message")
           .that(e).hasMessageThat().isEqualTo("Not a JSON Array: \"hello\"");
     }
     try {
-      jsonArray.getAsJsonObject();
+      array.getAsJsonObject();
       fail("expected getJSONObject to fail");
     } catch (IllegalStateException e) {
       assertWithMessage("Expected an exception message")
           .that(e).hasMessageThat().isEqualTo( "Not a JSON Object: [\"hello\"]");
     }
     try {
-      jsonArray.getAsLong();
+      array.getAsLong();
       fail("expected getLong to fail");
     } catch (NumberFormatException e) {
       assertWithMessage("Expected an exception message")
@@ -199,18 +202,18 @@ public final class JsonArrayTest {
 
   @Test
   public void testGetAs_WrongArraySize() {
-    JsonArray jsonArray = new JsonArray();
+    
     try {
-      jsonArray.getAsByte();
+      array.getAsByte();
       fail();
     } catch (IllegalStateException e) {
       assertThat(e).hasMessageThat().isEqualTo("Array must have size 1, but has size 0");
     }
 
-    jsonArray.add(true);
-    jsonArray.add(false);
+    array.add(true);
+    array.add(false);
     try {
-      jsonArray.getAsByte();
+      array.getAsByte();
       fail();
     } catch (IllegalStateException e) {
       assertThat(e).hasMessageThat().isEqualTo("Array must have size 1, but has size 2");
@@ -219,157 +222,151 @@ public final class JsonArrayTest {
 
   @Test
   public void testStringPrimitiveAddition() {
-    JsonArray jsonArray = new JsonArray();
+    
 
-    jsonArray.add("Hello");
-    jsonArray.add("Goodbye");
-    jsonArray.add("Thank you");
-    jsonArray.add((String) null);
-    jsonArray.add("Yes");
+    array.add("Hello");
+    array.add("Goodbye");
+    array.add("Thank you");
+    array.add((String) null);
+    array.add("Yes");
 
-    assertThat(jsonArray.toString()).isEqualTo("[\"Hello\",\"Goodbye\",\"Thank you\",null,\"Yes\"]");
+    assertThat(array.toString()).isEqualTo("[\"Hello\",\"Goodbye\",\"Thank you\",null,\"Yes\"]");
   }
 
   @Test
   public void testIntegerPrimitiveAddition() {
-    JsonArray jsonArray = new JsonArray();
+  
 
     int x = 1;
-    jsonArray.add(x);
+    array.add(x);
 
     x = 2;
-    jsonArray.add(x);
+    array.add(x);
 
     x = -3;
-    jsonArray.add(x);
+    array.add(x);
 
-    jsonArray.add((Integer) null);
+    array.add((Integer) null);
 
     x = 4;
-    jsonArray.add(x);
+    array.add(x);
 
     x = 0;
-    jsonArray.add(x);
+    array.add(x);
 
-    assertThat(jsonArray.toString()).isEqualTo("[1,2,-3,null,4,0]");
+    assertThat(array.toString()).isEqualTo("[1,2,-3,null,4,0]");
   }
 
   @Test
   public void testDoublePrimitiveAddition() {
-    JsonArray jsonArray = new JsonArray();
-
+    
     double x = 1.0;
-    jsonArray.add(x);
+    array.add(x);
 
     x = 2.13232;
-    jsonArray.add(x);
+    array.add(x);
 
     x = 0.121;
-    jsonArray.add(x);
+    array.add(x);
 
-    jsonArray.add((Double) null);
+    array.add((Double) null);
 
     x = -0.00234;
-    jsonArray.add(x);
+    array.add(x);
 
-    jsonArray.add((Double) null);
+    array.add((Double) null);
 
-    assertThat(jsonArray.toString()).isEqualTo("[1.0,2.13232,0.121,null,-0.00234,null]");
+    assertThat(array.toString()).isEqualTo("[1.0,2.13232,0.121,null,-0.00234,null]");
   }
 
   @Test
   public void testBooleanPrimitiveAddition() {
-    JsonArray jsonArray = new JsonArray();
+    
+    array.add(true);
+    array.add(true);
+    array.add(false);
+    array.add(false);
+    array.add((Boolean) null);
+    array.add(true);
 
-    jsonArray.add(true);
-    jsonArray.add(true);
-    jsonArray.add(false);
-    jsonArray.add(false);
-    jsonArray.add((Boolean) null);
-    jsonArray.add(true);
-
-    assertThat(jsonArray.toString()).isEqualTo("[true,true,false,false,null,true]");
+    assertThat(array.toString()).isEqualTo("[true,true,false,false,null,true]");
   }
 
   @Test
   public void testCharPrimitiveAddition() {
-    JsonArray jsonArray = new JsonArray();
+   
+    array.add('a');
+    array.add('e');
+    array.add('i');
+    array.add((char) 111);
+    array.add((Character) null);
+    array.add('u');
+    array.add("and sometimes Y");
 
-    jsonArray.add('a');
-    jsonArray.add('e');
-    jsonArray.add('i');
-    jsonArray.add((char) 111);
-    jsonArray.add((Character) null);
-    jsonArray.add('u');
-    jsonArray.add("and sometimes Y");
-
-    assertThat(jsonArray.toString()).isEqualTo("[\"a\",\"e\",\"i\",\"o\",null,\"u\",\"and sometimes Y\"]");
+    assertThat(array.toString()).isEqualTo("[\"a\",\"e\",\"i\",\"o\",null,\"u\",\"and sometimes Y\"]");
   }
 
   @Test
   public void testMixedPrimitiveAddition() {
-    JsonArray jsonArray = new JsonArray();
+   
+    array.add('a');
+    array.add("apple");
+    array.add(12121);
+    array.add((char) 111);
 
-    jsonArray.add('a');
-    jsonArray.add("apple");
-    jsonArray.add(12121);
-    jsonArray.add((char) 111);
+    array.add((Boolean) null);
+    assertThat(array.get(array.size() - 1)).isEqualTo(JsonNull.INSTANCE);
 
-    jsonArray.add((Boolean) null);
-    assertThat(jsonArray.get(jsonArray.size() - 1)).isEqualTo(JsonNull.INSTANCE);
+    array.add((Character) null);
+    assertThat(array.get(array.size() - 1)).isEqualTo(JsonNull.INSTANCE);
 
-    jsonArray.add((Character) null);
-    assertThat(jsonArray.get(jsonArray.size() - 1)).isEqualTo(JsonNull.INSTANCE);
+    array.add(12.232);
+    array.add(BigInteger.valueOf(2323));
 
-    jsonArray.add(12.232);
-    jsonArray.add(BigInteger.valueOf(2323));
-
-    assertThat(jsonArray.toString()).isEqualTo("[\"a\",\"apple\",12121,\"o\",null,null,12.232,2323]");
+    assertThat(array.toString()).isEqualTo("[\"a\",\"apple\",12121,\"o\",null,null,12.232,2323]");
   }
 
   @Test
   public void testNullPrimitiveAddition() {
-    JsonArray jsonArray = new JsonArray();
+   
+    array.add((Character) null);
+    array.add((Boolean) null);
+    array.add((Integer) null);
+    array.add((Double) null);
+    array.add((Float) null);
+    array.add((BigInteger) null);
+    array.add((String) null);
+    array.add((Boolean) null);
+    array.add((Number) null);
 
-    jsonArray.add((Character) null);
-    jsonArray.add((Boolean) null);
-    jsonArray.add((Integer) null);
-    jsonArray.add((Double) null);
-    jsonArray.add((Float) null);
-    jsonArray.add((BigInteger) null);
-    jsonArray.add((String) null);
-    jsonArray.add((Boolean) null);
-    jsonArray.add((Number) null);
-
-    assertThat(jsonArray.toString()).isEqualTo("[null,null,null,null,null,null,null,null,null]");
-    for (int i = 0; i < jsonArray.size(); i++) {
+    assertThat(array.toString()).isEqualTo("[null,null,null,null,null,null,null,null,null]");
+    for (int i = 0; i < array.size(); i++) {
       // Verify that they are actually a JsonNull and not a Java null
-      assertThat(jsonArray.get(i)).isEqualTo(JsonNull.INSTANCE);
+      assertThat(array.get(i)).isEqualTo(JsonNull.INSTANCE);
     }
   }
 
   @Test
   public void testNullJsonElementAddition() {
-    JsonArray jsonArray = new JsonArray();
-    jsonArray.add((JsonElement) null);
-    assertThat(jsonArray.get(0)).isEqualTo(JsonNull.INSTANCE);
+ 
+    array.add((JsonElement) null);
+    assertThat(array.get(0)).isEqualTo(JsonNull.INSTANCE);
   }
 
   @Test
   public void testSameAddition() {
-    JsonArray jsonArray = new JsonArray();
+   
+    array.add('a');
+    array.add('a');
+    array.add(true);
+    array.add(true);
+    array.add(1212);
+    array.add(1212);
+    array.add(34.34);
+    array.add(34.34);
+    array.add((Boolean) null);
+    array.add((Boolean) null);
 
-    jsonArray.add('a');
-    jsonArray.add('a');
-    jsonArray.add(true);
-    jsonArray.add(true);
-    jsonArray.add(1212);
-    jsonArray.add(1212);
-    jsonArray.add(34.34);
-    jsonArray.add(34.34);
-    jsonArray.add((Boolean) null);
-    jsonArray.add((Boolean) null);
-
-    assertThat(jsonArray.toString()).isEqualTo("[\"a\",\"a\",true,true,1212,1212,34.34,34.34,null,null]");
+    assertThat(array.toString()).isEqualTo("[\"a\",\"a\",true,true,1212,1212,34.34,34.34,null,null]");
   }
 }

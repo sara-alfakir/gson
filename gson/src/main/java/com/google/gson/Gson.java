@@ -403,7 +403,7 @@ public final class Gson {
     };
   }
   
-  private String generateAssertionErrorMessage(Exception e) {
+  private String generateAssertionErrorMessage(Throwable e) {
 	    return ASSERTION_ERROR_MSG + e.getMessage();
 	}
 
@@ -870,7 +870,7 @@ public final class Gson {
     } catch (IOException e) {
       throw new JsonIOException(e);
     } catch (AssertionError e) {
-      throw new AssertionError(generateAssertionErrorMessage(Exception e));
+      throw new AssertionError(generateAssertionErrorMessage(e),e);
     } finally {
       writer.setLenient(oldLenient);
       writer.setHtmlSafe(oldHtmlSafe);
@@ -972,7 +972,7 @@ public final class Gson {
     } catch (IOException e) {
       throw new JsonIOException(e);
     } catch (AssertionError e) {
-      throw new AssertionError(generateAssertionErrorMessage(Exception e));
+      throw new AssertionError(generateAssertionErrorMessage(e),e);
     } finally {
       writer.setLenient(oldLenient);
       writer.setHtmlSafe(oldHtmlSafe);
@@ -1266,7 +1266,7 @@ public final class Gson {
       // TODO(inder): Figure out whether it is indeed right to rethrow this as JsonSyntaxException
       throw new JsonSyntaxException(e);
     } catch (AssertionError e) {
-      throw new AssertionError(generateAssertionErrorMessage(Exception e));
+      throw new AssertionError(generateAssertionErrorMessage(e),e);
     } finally {
       reader.setLenient(oldLenient);
     }

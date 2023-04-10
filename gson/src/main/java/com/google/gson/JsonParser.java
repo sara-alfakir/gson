@@ -109,7 +109,7 @@ public final class JsonParser {
   /** @deprecated Use {@link JsonParser#parseString} */
   @Deprecated
   @InlineMe(replacement = "JsonParser.parseString(json)", imports = "com.google.gson.JsonParser")
-  public JsonElement parse(String json) throws JsonSyntaxException {
+	public JsonElement parse(String json) throws JsonSyntaxException {
     return parseString(json);
   }
 

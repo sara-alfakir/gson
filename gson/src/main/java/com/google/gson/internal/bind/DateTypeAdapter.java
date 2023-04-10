@@ -65,17 +65,6 @@ public final class DateTypeAdapter extends TypeAdapter<Date> {
 	        PreJava9DateFormatProvider.getUSDateTimeFormat(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT)
 	    );
   
-  /*
-  public DateTypeAdapter() {
-    dateFormats.add(DateFormat.getDateTimeInstance(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT, Locale.US));
-    if (!Locale.getDefault().equals(Locale.US)) {
-      dateFormats.add(DateFormat.getDateTimeInstance(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT));
-    }
-    if (JavaVersion.isJava9OrLater()) {
-      dateFormats.add(PreJava9DateFormatProvider.getUSDateTimeFormat(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT));
-    }
-  }
-	*/
   
   
   @Override public Date read(JsonReader in) throws IOException {

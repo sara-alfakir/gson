@@ -33,6 +33,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -44,6 +45,9 @@ import java.util.Locale;
  * to synchronize its read and write methods.
  */
 public final class DateTypeAdapter extends TypeAdapter<Date> {
+	private static final int DEFAULT_DATE_FORMAT = DateFormat.DEFAULT;
+	 
+	 
   public static final TypeAdapterFactory FACTORY = new TypeAdapterFactory() {
     @SuppressWarnings("unchecked") // we use a runtime check to make sure the 'T's equal
     @Override public <T> TypeAdapter<T> build(Gson gson, TypeToken<T> typeToken) {
@@ -54,19 +58,26 @@ public final class DateTypeAdapter extends TypeAdapter<Date> {
   /**
    * List of 1 or more different date formats used for de-serialization attempts.
    * The first of them (default US format) is used for serialization as well.
-   */
-  private final List<DateFormat> dateFormats = new ArrayList<>();
-
+   */ 
+  private final List<DateFormat> dateFormats = Arrays.asList(
+	        DateFormat.getDateTimeInstance(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT, Locale.US),
+	        DateFormat.getDateTimeInstance(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT),
+	        PreJava9DateFormatProvider.getUSDateTimeFormat(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT)
+	    );
+  
+  /*
   public DateTypeAdapter() {
-    dateFormats.add(DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT, Locale.US));
+    dateFormats.add(DateFormat.getDateTimeInstance(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT, Locale.US));
     if (!Locale.getDefault().equals(Locale.US)) {
-      dateFormats.add(DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT));
+      dateFormats.add(DateFormat.getDateTimeInstance(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT));
     }
     if (JavaVersion.isJava9OrLater()) {
-      dateFormats.add(PreJava9DateFormatProvider.getUSDateTimeFormat(DateFormat.DEFAULT, DateFormat.DEFAULT));
+      dateFormats.add(PreJava9DateFormatProvider.getUSDateTimeFormat(DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT));
     }
   }
-
+	*/
+  
+  
   @Override public Date read(JsonReader in) throws IOException {
     if (in.peek() == JsonToken.NULL) {
       in.nextNull();

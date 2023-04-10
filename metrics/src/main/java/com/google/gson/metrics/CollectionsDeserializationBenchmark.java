@@ -98,6 +98,10 @@ public class CollectionsDeserializationBenchmark {
       jr.endArray();
     }
   }
+  
+  
+  
+  
 
   /**
    * This benchmark measures the ideal Gson performance: the cost of parsing a JSON stream and

@@ -129,22 +129,26 @@ public class CollectionsDeserializationBenchmark {
   private void setField(String name, BagOfPrimitives bag, JsonReader jr) throws Exception {
 	    for (Field field : BagOfPrimitives.class.getDeclaredFields()) {
 	        if (fieldEqualsName(field, name)) {
-	            Class<?> fieldType = field.getType();
-	            if (fieldType.equals(long.class)) {
-	                field.setLong(bag, jr.nextLong());
-	            } else if (fieldType.equals(int.class)) {
-	                field.setInt(bag, jr.nextInt());
-	            } else if (fieldType.equals(boolean.class)) {
-	                field.setBoolean(bag, jr.nextBoolean());
-	            } else if (fieldType.equals(String.class)) {
-	                field.set(bag, jr.nextString());
-	            } else {
-	                throw new RuntimeException("Unexpected: type: " + fieldType + ", name: " + name);
-	            }
+	        	this.setFieldDependingOnTheType(field, bag, jr, name);
 	        }
 	    }
 	}
   
+  private void setFieldDependingOnTheType(Field field,BagOfPrimitives bag, JsonReader jr, String name) throws IllegalArgumentException, IllegalAccessException, IOException {
+	  Class<?> fieldType = field.getType();
+      if (fieldType.equals(long.class)) {
+          field.setLong(bag, jr.nextLong());
+      } else if (fieldType.equals(int.class)) {
+          field.setInt(bag, jr.nextInt());
+      } else if (fieldType.equals(boolean.class)) {
+          field.setBoolean(bag, jr.nextBoolean());
+      } else if (fieldType.equals(String.class)) {
+          field.set(bag, jr.nextString());
+      } else {
+          throw new RuntimeException("Unexpected: type: " + fieldType + ", name: " + name);
+      }
+  }
+	  
   
   private boolean fieldEqualsName(Field field, String name) {
 	    return field.getName().equals(name);

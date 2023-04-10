@@ -73,6 +73,10 @@
       <!--
         Plugins for source generation and compilation
       -->
+      
+      <!-- ce que j'ai ajouté -->
+	
+      
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>templating-maven-plugin</artifactId>

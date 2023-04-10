@@ -35,14 +35,14 @@ import java.util.TimeZone;
  *  The ISO 8601 format is widely used for representing dates and times in a standardized way, and is particularly
  * important for interoperability in distributed systems.
  * 
- * Note that this class was adapted from the `ISO8601Utils` class in the Jackson databind library, which provides a similar
+ * Note that this class was adapted from the `ISO8601DateFormatUtils` class in the Jackson databind library, which provides a similar
  * set of utility methods for working with ISO8601 dates.
  * 
  * @see <a href="http://www.w3.org/TR/NOTE-datetime">this specification</a>
  */
-//Date parsing code from Jackson databind ISO8601Utils.java
-// https://github.com/FasterXML/jackson-databind/blob/master/src/main/java/com/fasterxml/jackson/databind/util/ISO8601Utils.java
-public class ISO8601Utils
+//Date parsing code from Jackson databind ISO8601DateFormatUtils.java
+// https://github.com/FasterXML/jackson-databind/blob/master/src/main/java/com/fasterxml/jackson/databind/util/ISO8601DateFormatUtils.java
+public class ISO8601DateFormatUtils
 {
     /**
      * ID to represent the 'UTC' string, default timezone since Jackson 2.7

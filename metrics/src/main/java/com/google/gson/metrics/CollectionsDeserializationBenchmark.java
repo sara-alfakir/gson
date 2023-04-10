@@ -128,7 +128,7 @@ public class CollectionsDeserializationBenchmark {
   
   private void setField(String name, BagOfPrimitives bag, JsonReader jr) throws Exception {
 	    for (Field field : BagOfPrimitives.class.getDeclaredFields()) {
-	        if (field.getName().equals(name)) {
+	        if (fieldEqualsName(field, name)) {
 	            Class<?> fieldType = field.getType();
 	            if (fieldType.equals(long.class)) {
 	                field.setLong(bag, jr.nextLong());
@@ -143,6 +143,11 @@ public class CollectionsDeserializationBenchmark {
 	            }
 	        }
 	    }
+	}
+  
+  
+  private boolean fieldEqualsName(Field field, String name) {
+	    return field.getName().equals(name);
 	}
 
 

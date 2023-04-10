@@ -108,20 +108,20 @@ public class CollectionsDeserializationBenchmark {
   public void timeCollectionsReflectionStreaming(int reps) throws Exception {
     for (int i=0; i<reps; ++i) {
       StringReader reader = new StringReader(json);
-      JsonReader jr = new JsonReader(reader);
-      jr.beginArray();
+      JsonReader jsonReader = new JsonReader(reader);
+      jsonReader.beginArray();
       List<BagOfPrimitives> bags = new ArrayList<>();
-      while(jr.hasNext()) {
-        jr.beginObject();
+      while(jsonReader.hasNext()) {
+    	  jsonReader.beginObject();
         BagOfPrimitives bag = new BagOfPrimitives();
-        while(jr.hasNext()) {
-          String name = jr.nextName();
-          this.setField(name, bag, jr);
+        while(jsonReader.hasNext()) {
+          String name = jsonReader.nextName();
+          this.setField(name, bag, jsonReader);
         }
-        jr.endObject();
+        jsonReader.endObject();
         bags.add(bag);
       }
-      jr.endArray();
+      jsonReader.endArray();
     }
   }
   
